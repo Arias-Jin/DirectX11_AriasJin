@@ -57,7 +57,7 @@ namespace arias
 
 	public:
 		static void Initialize();
-		static void Tick();
+		static void Update();
 
 		static __forceinline eKeyState GetKeyState(eKeyCode keyCode) 
 		{ 

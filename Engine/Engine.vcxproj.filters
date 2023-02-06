@@ -40,6 +40,16 @@
     <ClInclude Include="Renderer.h">
       <Filter>Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="Scene.h" />
+    <ClInclude Include="MeshRenderer.h" />
+    <ClInclude Include="Mesh.h" />
+    <ClInclude Include="Layer.h" />
+    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Component.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Math.cpp">
@@ -69,6 +79,16 @@
     <ClCompile Include="Renderer.cpp">
       <Filter>Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="MeshRenderer.cpp" />
+    <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="Layer.cpp" />
+    <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="Component.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Common">

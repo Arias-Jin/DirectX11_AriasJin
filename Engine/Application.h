@@ -18,6 +18,7 @@ namespace arias
 		std::unique_ptr<graphics::GraphicDevice_DX11> mGraphicDevice;
 
 		HWND mHwnd;
+		HDC mHdc;
 		UINT mWidth;
 		UINT mHeight;
 

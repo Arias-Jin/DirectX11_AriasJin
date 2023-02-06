@@ -46,7 +46,7 @@ namespace arias
 		}
 	}
 
-	void Input::Tick()
+	void Input::Update()
 	{
 		if (GetFocus())
 		{

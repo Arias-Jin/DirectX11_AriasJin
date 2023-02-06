@@ -101,6 +101,7 @@ namespace arias::graphics
 
 	GraphicDevice_DX11::~GraphicDevice_DX11()
 	{
+		renderer::Release();
 	}
 
 	bool GraphicDevice_DX11::CreateSwapChain(DXGI_SWAP_CHAIN_DESC* desc)
@@ -235,12 +236,47 @@ namespace arias::graphics
 		mContext->RSSetViewports(1, viewPort);
 	}
 
+	void GraphicDevice_DX11::BindConstantBuffer(ID3D11Buffer* buffer, void* data, UINT size)
+	{
+		D3D11_MAPPED_SUBRESOURCE sub = {};
+		mContext->Map(buffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &sub);
+		memcpy(sub.pData, data, size);
+		mContext->Unmap(buffer, 0);
+	}
+
+	void GraphicDevice_DX11::SetConstantBuffer(eShaderStage stage, eCBType type, ID3D11Buffer* buffer)
+	{
+		switch (stage)
+		{
+		case arias::graphics::eShaderStage::VS:
+			mContext->VSSetConstantBuffers((UINT)type, 1, &buffer);
+			break;
+		case arias::graphics::eShaderStage::HS:
+			mContext->HSSetConstantBuffers((UINT)type, 1, &buffer);
+			break;
+		case arias::graphics::eShaderStage::DS:
+			mContext->DSSetConstantBuffers((UINT)type, 1, &buffer);
+			break;
+		case arias::graphics::eShaderStage::GS:
+			mContext->GSSetConstantBuffers((UINT)type, 1, &buffer);
+			break;
+		case arias::graphics::eShaderStage::PS:
+			mContext->PSSetConstantBuffers((UINT)type, 1, &buffer);
+			break;
+		case arias::graphics::eShaderStage::CS:
+			mContext->CSSetConstantBuffers((UINT)type, 1, &buffer);
+			break;
+		default:
+			break;
+		}
+	}
+
 	void GraphicDevice_DX11::Draw()
 	{
 		// 리소스 바인딩
 		D3D11_MAPPED_SUBRESOURCE sub = {};
 		mContext->Map(renderer::triangleBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &sub);
-		memcpy(sub.pData, renderer::vertexes, sizeof(renderer::Vertex) * 3);
+		memcpy(sub.pData, renderer::vertexes, sizeof(renderer::Vertex) * 4);
 		mContext->Unmap(renderer::triangleBuffer, 0);
 
 		// Clear RenderTarget
@@ -250,11 +286,15 @@ namespace arias::graphics
 		BindViewports(&mViewPort);
 		mContext->OMSetRenderTargets(1, mRenderTargetView.GetAddressOf(), mDepthStencilView.Get());
 
+		// 상수 버퍼를 셰이더에 세팅
+		SetConstantBuffer(eShaderStage::VS, eCBType::Transform, renderer::triangleConstantBuffer);
+
 		// Input Assembler 단계에 버텍스 버퍼 정보 지정
 		UINT vertexSize = sizeof(renderer::Vertex);
 		UINT offset = 0;
 
 		mContext->IASetVertexBuffers(0, 1, &renderer::triangleBuffer, &vertexSize, &offset);
+		mContext->IASetIndexBuffer(renderer::triangleIndexBuffer, DXGI_FORMAT_R32_UINT, 0);
 		mContext->IASetInputLayout(renderer::triangleLayout);
 		mContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
@@ -262,7 +302,7 @@ namespace arias::graphics
 		mContext->VSSetShader(renderer::triangleVS, 0, 0);
 		mContext->PSSetShader(renderer::trianglePS, 0, 0);
 		
-		mContext->Draw(3, 0);
+		mContext->DrawIndexed(6, 0, 0);
 
 		// 백버퍼에 그리기
 		mSwapChain->Present(0, 0);

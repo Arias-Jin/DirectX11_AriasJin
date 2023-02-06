@@ -22,7 +22,11 @@ namespace arias::graphics
 	enum class eShaderStage
 	{
 		VS,
+		HS,
+		DS,
+		GS,
 		PS,
+		CS,
 		Count,
 	};
 }

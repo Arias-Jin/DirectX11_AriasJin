@@ -1,6 +1,10 @@
 #include "Application.h"
 
+#include "Input.h"
+
 #include "Renderer.h"
+
+#include "Time.h"
 
 namespace arias
 {
@@ -29,12 +33,17 @@ namespace arias
 
     void Application::Initialize()
     {
+        Time::Initialize();
+        Input::Initialize();
+
         renderer::Initialize();
     }
 
     // CPU UPDATE
     void Application::Update()
     {
+        Time::Update();
+        Input::Update();
     }
 
     // GPU UPDATE
@@ -44,6 +53,7 @@ namespace arias
 
     void Application::Render()
     {
+        Time::Render(mHdc);
         mGraphicDevice->Draw();
     }
 
@@ -52,6 +62,7 @@ namespace arias
         if (mGraphicDevice == nullptr)
         {
             mHwnd = hwnd;
+            mHdc = GetDC(mHwnd);
             mWidth = width;
             mHeight = height;
 

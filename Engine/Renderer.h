@@ -17,10 +17,12 @@ namespace arias::renderer
 	};
 
 	// 정점 데이터
-	extern Vertex vertexes[3];
+	extern Vertex vertexes[4];
 
-	// 버텍스 버퍼
+	// 버퍼
 	extern ID3D11Buffer* triangleBuffer;
+	extern ID3D11Buffer* triangleIndexBuffer;
+	extern ID3D11Buffer* triangleConstantBuffer;
 	extern ID3DBlob* errorBlob;
 
 	// 버텍스 셰이더
