@@ -1,5 +1,7 @@
 #include "Application.h"
 
+#include "Renderer.h"
+
 namespace arias
 {
     using namespace graphics;
@@ -27,6 +29,7 @@ namespace arias
 
     void Application::Initialize()
     {
+        renderer::Initialize();
     }
 
     // CPU UPDATE
@@ -54,6 +57,7 @@ namespace arias
 
             ValidationMode validationMode = ValidationMode::Disabled;
             mGraphicDevice = std::make_unique<GraphicDevice_DX11>();
+            graphics::GetDevice() = mGraphicDevice.get();
         }
 
         RECT windowRect = { 0, 0, (LONG)width, (LONG)height };
