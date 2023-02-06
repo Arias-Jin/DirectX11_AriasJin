@@ -1,7 +1,11 @@
 #pragma once
 #include "Entity.h"
 
+#include "GameObject.h"
+
 #include "Layer.h"
+
+using namespace arias::enums;
 
 namespace arias
 {
@@ -14,9 +18,12 @@ namespace arias
 	private:
 		std::vector<Layer> mLayers;
 
+	public:
 		virtual void Initialize();
 		virtual void Update();
 		virtual void FixedUpdate();
 		virtual void Render();
+
+		void AddGameObject(const GameObject* gameObj, const eLayerType type);
 	};
 }

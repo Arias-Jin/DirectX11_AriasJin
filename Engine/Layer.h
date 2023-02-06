@@ -18,5 +18,7 @@ namespace arias
 		virtual void Update();
 		virtual void FixedUpdate();
 		virtual void Render();
+
+		void AddGameObject(const GameObject* gameObject);
 	};
 }

@@ -1,7 +1,16 @@
 #pragma once
 
-enum class eCBType
+namespace arias::enums
 {
-	Transform,
-	End,
-};
+	enum class eCBType
+	{
+		Transform,
+		End,
+	};
+
+	enum class eLayerType
+	{
+		None,
+		End,
+	};
+}

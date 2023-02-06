@@ -6,6 +6,10 @@ namespace arias
 {
 	class SceneManager
 	{
+	public:
+		SceneManager();
+		~SceneManager();
+
 	private:
 		static Scene* mPlayScene;
 

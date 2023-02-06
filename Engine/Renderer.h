@@ -6,6 +6,7 @@
 #include "GraphicDevice_DX11.h"
 
 #include "Mesh.h"
+#include "Shader.h"
 
 using namespace arias::math;
 using namespace arias::graphics;
@@ -26,18 +27,8 @@ namespace arias::renderer
 
 	// πˆ∆€
 	extern Microsoft::WRL::ComPtr<ID3D11Buffer> triangleConstantBuffer;
-	extern Microsoft::WRL::ComPtr<ID3DBlob> errorBlob;
 
-	// πˆ≈ÿΩ∫ ºŒ¿Ã¥ı
-	extern Microsoft::WRL::ComPtr<ID3DBlob> triangleVSBlob;
-	extern Microsoft::WRL::ComPtr<ID3D11VertexShader> triangleVS;
-
-	// «»ºø ºŒ¿Ã¥ı
-	extern Microsoft::WRL::ComPtr<ID3DBlob> trianglePSBlob;
-	extern Microsoft::WRL::ComPtr<ID3D11PixelShader> trianglePS;
-
-	// Input Layout
-	extern Microsoft::WRL::ComPtr<ID3D11InputLayout> triangleLayout;
+	extern Shader* shader;
 
 	void Initialize();
 	void Release();

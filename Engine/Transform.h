@@ -3,7 +3,7 @@
 
 namespace arias
 {
-	class MeshRenderer : public Component
+	class Transform : public Component
 	{
 	};
 }

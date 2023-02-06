@@ -67,6 +67,9 @@
     <ClInclude Include="Material.h">
       <Filter>Resource\Material</Filter>
     </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Math.cpp">
@@ -122,6 +125,9 @@
     </ClCompile>
     <ClCompile Include="Material.cpp">
       <Filter>Resource\Material</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>Component</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

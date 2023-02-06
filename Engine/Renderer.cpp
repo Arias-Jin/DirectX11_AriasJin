@@ -10,18 +10,8 @@ namespace arias::renderer
 	// 버퍼
 	Mesh* mesh = nullptr;
 	Microsoft::WRL::ComPtr<ID3D11Buffer> triangleConstantBuffer = nullptr;
-	Microsoft::WRL::ComPtr<ID3DBlob> errorBlob = nullptr;
 
-	// 버텍스 셰이더
-	Microsoft::WRL::ComPtr<ID3DBlob> triangleVSBlob = nullptr;
-	Microsoft::WRL::ComPtr<ID3D11VertexShader> triangleVS = nullptr;
-
-	// 픽셀 셰이더
-	Microsoft::WRL::ComPtr<ID3DBlob> trianglePSBlob = nullptr;
-	Microsoft::WRL::ComPtr<ID3D11PixelShader> trianglePS = nullptr;
-
-	// Input Layout(정점 정보)
-	Microsoft::WRL::ComPtr<ID3D11InputLayout> triangleLayout = nullptr;
+	Shader* shader = nullptr;
 
 	void SetUpState()
 	{
@@ -44,9 +34,9 @@ namespace arias::renderer
 		GetDevice()->CreateInputLayout(
 			arrLayoutDesc,
 			2,
-			triangleVSBlob->GetBufferPointer(),
-			triangleVSBlob->GetBufferSize(),
-			&triangleLayout
+			shader->GetVSBlobBufferPointer(),
+			shader->GetVSBlobBufferSize(),
+			shader->GetInputLayoutAddressOf()
 		);
 	}
 
@@ -86,7 +76,9 @@ namespace arias::renderer
 
 	void LoadShader()
 	{
-		GetDevice()->CreateShader();
+		shader = new Shader();
+		shader->Create(eShaderStage::VS, L"TriangleVS.hlsl", "VS_Test");
+		shader->Create(eShaderStage::PS, L"TrianglePS.hlsl", "PS_Test");
 	}
 
 	void Initialize()
@@ -112,7 +104,9 @@ namespace arias::renderer
 	void Release()
 	{
 		delete mesh;
-		
 		mesh = nullptr;
+
+		delete shader;
+		shader = nullptr;
 	}
 }
