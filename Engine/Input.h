@@ -51,6 +51,9 @@ namespace arias
 		Input() = delete;
 		~Input() = delete;
 
+	private:
+		static std::vector<Key> mKeys;
+		static math::Vector2 mMousePosition;
 
 	public:
 		static void Initialize();
@@ -63,12 +66,7 @@ namespace arias
 
 		static __forceinline math::Vector2 GetMousPosition()
 		{
-			return mMousPosition;
+			return mMousePosition;
 		}
-
-
-	private:
-		static std::vector<Key> mKeys;
-		static math::Vector2 mMousPosition;
 	};
 }

@@ -155,7 +155,9 @@
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="CommonInclude.h" />
+    <ClInclude Include="Engine.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="Enums.h" />
     <ClInclude Include="GraphicDevice_DX11.h" />
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="Input.h" />

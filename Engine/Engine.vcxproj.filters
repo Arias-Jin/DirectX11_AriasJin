@@ -31,6 +31,12 @@
     <ClInclude Include="Graphics.h">
       <Filter>Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="Engine.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Enums.h">
+      <Filter>Common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Math.cpp">

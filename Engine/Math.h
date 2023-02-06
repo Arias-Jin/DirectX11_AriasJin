@@ -1,6 +1,6 @@
 #pragma once
 
-#include "CommonInclude.h"
+#include "Engine.h"
 
 #if __has_include("DirectXMath.h")
 // In this case, DirectXMath is coming from Windows SDK.
