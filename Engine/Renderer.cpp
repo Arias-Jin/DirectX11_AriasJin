@@ -1,26 +1,27 @@
 #include "Renderer.h"
 
+#include "Resources.h"
+
 namespace arias::renderer
 {
 	// 정점 데이터
 	Vertex vertexes[4] = {};
 
 	// 버퍼
-	ID3D11Buffer* triangleBuffer = nullptr;
-	ID3D11Buffer* triangleIndexBuffer = nullptr;
-	ID3D11Buffer* triangleConstantBuffer = nullptr;
-	ID3DBlob* errorBlob = nullptr;
+	Mesh* mesh = nullptr;
+	Microsoft::WRL::ComPtr<ID3D11Buffer> triangleConstantBuffer = nullptr;
+	Microsoft::WRL::ComPtr<ID3DBlob> errorBlob = nullptr;
 
 	// 버텍스 셰이더
-	ID3DBlob* triangleVSBlob = nullptr;
-	ID3D11VertexShader* triangleVS = nullptr;
+	Microsoft::WRL::ComPtr<ID3DBlob> triangleVSBlob = nullptr;
+	Microsoft::WRL::ComPtr<ID3D11VertexShader> triangleVS = nullptr;
 
 	// 픽셀 셰이더
-	ID3DBlob* trianglePSBlob = nullptr;
-	ID3D11PixelShader* trianglePS = nullptr;
+	Microsoft::WRL::ComPtr<ID3DBlob> trianglePSBlob = nullptr;
+	Microsoft::WRL::ComPtr<ID3D11PixelShader> trianglePS = nullptr;
 
 	// Input Layout(정점 정보)
-	ID3D11InputLayout* triangleLayout = nullptr;
+	Microsoft::WRL::ComPtr<ID3D11InputLayout> triangleLayout = nullptr;
 
 	void SetUpState()
 	{
@@ -51,19 +52,12 @@ namespace arias::renderer
 
 	void LoadBuffer()
 	{
-		// 버텍스 버퍼
-		D3D11_BUFFER_DESC triangleDesc = {};
-		triangleDesc.ByteWidth = sizeof(Vertex) * 4;
-		triangleDesc.BindFlags = D3D11_BIND_FLAG::D3D11_BIND_VERTEX_BUFFER;
-		triangleDesc.Usage = D3D11_USAGE::D3D11_USAGE_DYNAMIC;
-		triangleDesc.CPUAccessFlags = D3D11_CPU_ACCESS_FLAG::D3D11_CPU_ACCESS_WRITE;
+		// Create Mesh
+		mesh = new Mesh();
+		Resources::Insert<Mesh>(L"RectMesh", mesh);
 
-		D3D11_SUBRESOURCE_DATA triangleData = {};
-		triangleData.pSysMem = vertexes;
+		mesh->CreateVertexBuffer(vertexes, 4);
 
-		GetDevice()->CreateBuffer(&triangleDesc, &triangleData, &triangleBuffer);
-
-		// 인덱스 버퍼
 		std::vector<UINT> indexes;
 
 		indexes.push_back(0);
@@ -74,16 +68,7 @@ namespace arias::renderer
 		indexes.push_back(2);
 		indexes.push_back(3);
 
-		D3D11_BUFFER_DESC idxDesc = {};
-		idxDesc.ByteWidth = (UINT)indexes.size() * sizeof(UINT);
-		idxDesc.BindFlags = D3D11_BIND_FLAG::D3D11_BIND_INDEX_BUFFER;
-		idxDesc.Usage = D3D11_USAGE::D3D11_USAGE_DEFAULT;
-		idxDesc.CPUAccessFlags = 0;
-
-		D3D11_SUBRESOURCE_DATA idxData = {};
-		idxData.pSysMem = indexes.data();
-
-		GetDevice()->CreateBuffer(&idxDesc, &idxData, &triangleIndexBuffer);
+		mesh->CreateIndexBuffer(indexes.data(), (UINT)indexes.size());
 
 		// 상수 버퍼
 		D3D11_BUFFER_DESC csDesc = {};
@@ -92,11 +77,11 @@ namespace arias::renderer
 		csDesc.Usage = D3D11_USAGE::D3D11_USAGE_DYNAMIC;
 		csDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 
-		GetDevice()->CreateBuffer(&csDesc, nullptr, &triangleConstantBuffer);
+		GetDevice()->CreateBuffer(&csDesc, nullptr, triangleConstantBuffer.GetAddressOf());
 
 		Vector4 pos(0.0f, 0.0f, 0.0f, 0.0f);
 		
-		GetDevice()->BindConstantBuffer(triangleConstantBuffer, &pos, sizeof(Vector4));
+		GetDevice()->BindConstantBuffer(triangleConstantBuffer.Get(), &pos, sizeof(Vector4));
 	}
 
 	void LoadShader()
@@ -122,25 +107,12 @@ namespace arias::renderer
 		LoadShader();
 		SetUpState();
 		LoadBuffer();
-
-		// 리소스 바인딩
-		// D3D11_MAPPED_SUBRESOURCE sub = {};
-		// mContext->Map(renderer::triangleBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &sub);
-		// memcpy(sub.pData, renderer::vertexes, sizeof(renderer::Vertex) * 4);
-		// mContext->Unmap(renderer::triangleBuffer, 0);
 	}
 
 	void Release()
 	{
-		triangleBuffer->Release();
-		triangleIndexBuffer->Release();
-		triangleConstantBuffer->Release();
-
-		// 버텍스 셰이더
-		triangleVSBlob->Release();
-		triangleVS->Release();
-
-		// 인풋 레이아웃 (정점 정보)
-		triangleLayout->Release();
+		delete mesh;
+		
+		mesh = nullptr;
 	}
 }

@@ -9,7 +9,7 @@ namespace arias
 	{
 	public:
 		Scene();
-		~Scene();
+		virtual ~Scene();
 
 	private:
 		std::vector<Layer> mLayers;

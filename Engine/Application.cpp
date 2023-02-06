@@ -54,7 +54,7 @@ namespace arias
     void Application::Render()
     {
         Time::Render(mHdc);
-        mGraphicDevice->Draw();
+        mGraphicDevice->Render();
     }
 
     void Application::SetWindow(HWND hwnd, UINT width, UINT height)

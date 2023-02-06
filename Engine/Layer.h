@@ -8,7 +8,7 @@ namespace arias
 	{
 	public:
 		Layer();
-		~Layer();
+		virtual ~Layer();
 
 	private:
 		std::vector<GameObject*> mGameObjects;

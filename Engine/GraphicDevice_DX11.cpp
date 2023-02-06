@@ -4,6 +4,8 @@
 
 #include "Renderer.h"
 
+#include "Mesh.h"
+
 extern arias::Application application;
 
 namespace arias::graphics
@@ -180,9 +182,8 @@ namespace arias::graphics
 			D3D_COMPILE_STANDARD_FILE_INCLUDE,
 			"VS_Test",
 			"vs_5_0",
-			0,
-			0,
-			&renderer::triangleVSBlob,
+			0, 0,
+			renderer::triangleVSBlob.GetAddressOf(),
 			&errorBlob
 		);
 
@@ -190,7 +191,7 @@ namespace arias::graphics
 			renderer::triangleVSBlob->GetBufferPointer(),
 			renderer::triangleVSBlob->GetBufferSize(),
 			nullptr,
-			&renderer::triangleVS
+			renderer::triangleVS.GetAddressOf()
 		);
 
 		if (errorBlob)
@@ -210,7 +211,7 @@ namespace arias::graphics
 			"ps_5_0",
 			0,
 			0,
-			&renderer::trianglePSBlob,
+			renderer::trianglePSBlob.GetAddressOf(),
 			&errorBlob
 		);
 
@@ -225,10 +226,20 @@ namespace arias::graphics
 			renderer::trianglePSBlob->GetBufferPointer(),
 			renderer::trianglePSBlob->GetBufferSize(),
 			nullptr,
-			&renderer::trianglePS
+			renderer::trianglePS.GetAddressOf()
 		);
 
 		return true;
+	}
+
+	void GraphicDevice_DX11::BindVertexBuffer(UINT StartSlot, UINT NumBuffers, ID3D11Buffer* const* ppVertexBuffer, const UINT* pStrides, const UINT* pOffsets)
+	{
+		mContext->IASetVertexBuffers(StartSlot, NumBuffers, ppVertexBuffer, pStrides, pOffsets);
+	}
+
+	void GraphicDevice_DX11::BindIndexBuffer(ID3D11Buffer* pIndexBuffer, DXGI_FORMAT Format, UINT Offset)
+	{
+		mContext->IASetIndexBuffer(pIndexBuffer, Format, Offset);
 	}
 
 	void GraphicDevice_DX11::BindViewports(D3D11_VIEWPORT* viewPort)
@@ -271,40 +282,55 @@ namespace arias::graphics
 		}
 	}
 
-	void GraphicDevice_DX11::Draw()
+	void GraphicDevice_DX11::Clear()
 	{
-		// 리소스 바인딩
-		D3D11_MAPPED_SUBRESOURCE sub = {};
-		mContext->Map(renderer::triangleBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &sub);
-		memcpy(sub.pData, renderer::vertexes, sizeof(renderer::Vertex) * 4);
-		mContext->Unmap(renderer::triangleBuffer, 0);
-
-		// Clear RenderTarget
+		// Clear
 		FLOAT backgroundColor[4] = { 0.2f, 0.2f, 0.2f, 1.0f };
 		mContext->ClearRenderTargetView(mRenderTargetView.Get(), backgroundColor);
 		mContext->ClearDepthStencilView(mDepthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.f, 0);
+	}
+
+	void GraphicDevice_DX11::AdjustViewPorts()
+	{
+		// ViewPort, RenderTarget
+		RECT winRect;
+		GetClientRect(application.GetHwnd(), &winRect);
+		mViewPort = { 0.0f, 0.0f, FLOAT(winRect.right - winRect.left), FLOAT(winRect.bottom - winRect.top), 0.0f, 1.0f };
 		BindViewports(&mViewPort);
 		mContext->OMSetRenderTargets(1, mRenderTargetView.GetAddressOf(), mDepthStencilView.Get());
+	}
+
+	void GraphicDevice_DX11::Draw()
+	{
+		mContext->Draw(0, 0);
+	}
+	void GraphicDevice_DX11::DrawIndexed(UINT indexCount, UINT StartIndexLocation, UINT BaseVertexLocation)
+	{
+		mContext->DrawIndexed(indexCount, StartIndexLocation, BaseVertexLocation);
+	}
+	void GraphicDevice_DX11::Present()
+	{
+		mSwapChain->Present(0, 0);
+	}
+	void GraphicDevice_DX11::Render()
+	{
+		Clear();
 
 		// 상수 버퍼를 셰이더에 세팅
-		SetConstantBuffer(eShaderStage::VS, eCBType::Transform, renderer::triangleConstantBuffer);
+		SetConstantBuffer(eShaderStage::VS, eCBType::Transform, renderer::triangleConstantBuffer.Get());
 
-		// Input Assembler 단계에 버텍스 버퍼 정보 지정
-		UINT vertexSize = sizeof(renderer::Vertex);
-		UINT offset = 0;
+		AdjustViewPorts();
 
-		mContext->IASetVertexBuffers(0, 1, &renderer::triangleBuffer, &vertexSize, &offset);
-		mContext->IASetIndexBuffer(renderer::triangleIndexBuffer, DXGI_FORMAT_R32_UINT, 0);
-		mContext->IASetInputLayout(renderer::triangleLayout);
+		renderer::mesh->BindBuffer();
+
+		mContext->IASetInputLayout(renderer::triangleLayout.Get());
 		mContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 		// 생성된 셰이더 세팅
-		mContext->VSSetShader(renderer::triangleVS, 0, 0);
-		mContext->PSSetShader(renderer::trianglePS, 0, 0);
-		
-		mContext->DrawIndexed(6, 0, 0);
+		mContext->VSSetShader(renderer::triangleVS.Get(), 0, 0);
+		mContext->PSSetShader(renderer::trianglePS.Get(), 0, 0);
 
-		// 백버퍼에 그리기
-		mSwapChain->Present(0, 0);
+		renderer::mesh->Render();
+		Present();
 	}
 }

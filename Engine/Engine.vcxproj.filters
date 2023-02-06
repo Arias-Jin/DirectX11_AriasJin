@@ -25,9 +25,6 @@
     <ClInclude Include="Resource.h">
       <Filter>Resource</Filter>
     </ClInclude>
-    <ClInclude Include="Resources.h">
-      <Filter>Resource</Filter>
-    </ClInclude>
     <ClInclude Include="Graphics.h">
       <Filter>Graphics</Filter>
     </ClInclude>
@@ -40,16 +37,36 @@
     <ClInclude Include="Renderer.h">
       <Filter>Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="Shader.h">
-      <Filter>Resource</Filter>
+    <ClInclude Include="SceneManager.h">
+      <Filter>Scene</Filter>
     </ClInclude>
-    <ClInclude Include="SceneManager.h" />
-    <ClInclude Include="Scene.h" />
-    <ClInclude Include="MeshRenderer.h" />
-    <ClInclude Include="Mesh.h" />
-    <ClInclude Include="Layer.h" />
-    <ClInclude Include="GameObject.h" />
-    <ClInclude Include="Component.h" />
+    <ClInclude Include="Scene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Layer.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshRenderer.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Resource\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Resource\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources.h">
+      <Filter>Resource\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>Resource\Material</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Math.cpp">
@@ -73,22 +90,39 @@
     <ClCompile Include="Resource.cpp">
       <Filter>Resource</Filter>
     </ClCompile>
-    <ClCompile Include="Resources.cpp">
-      <Filter>Resource</Filter>
-    </ClCompile>
     <ClCompile Include="Renderer.cpp">
       <Filter>Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="Shader.cpp">
-      <Filter>Resource</Filter>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Scene</Filter>
     </ClCompile>
-    <ClCompile Include="SceneManager.cpp" />
-    <ClCompile Include="Scene.cpp" />
-    <ClCompile Include="MeshRenderer.cpp" />
-    <ClCompile Include="Mesh.cpp" />
-    <ClCompile Include="Layer.cpp" />
-    <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="Component.cpp" />
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Layer.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Component.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshRenderer.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Resource\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Resource\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Resources.cpp">
+      <Filter>Resource\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Material.cpp">
+      <Filter>Resource\Material</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Common">
@@ -114,6 +148,27 @@
     </Filter>
     <Filter Include="Renderer">
       <UniqueIdentifier>{f3fa4e65-be1c-4337-99c8-e9e2a3f68160}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component">
+      <UniqueIdentifier>{e39a579b-404c-4c64-8ccd-4710f4dcdc8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject">
+      <UniqueIdentifier>{57829258-32bf-4884-912e-87e419e0b91e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{cd1e2c9f-ffd2-4dd2-80ec-f70e4d25e1a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Manager">
+      <UniqueIdentifier>{6e8f8344-bba7-4e46-afde-ae79c50fa651}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Material">
+      <UniqueIdentifier>{f4f6b37e-6817-4297-bdb7-95c005420f44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Mesh">
+      <UniqueIdentifier>{25b53db0-e264-41ad-a157-ffdfec07f337}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Shader">
+      <UniqueIdentifier>{4057ae44-de39-4b69-ae31-f9926927bf5f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

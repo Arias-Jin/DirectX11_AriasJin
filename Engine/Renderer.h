@@ -5,6 +5,8 @@
 
 #include "GraphicDevice_DX11.h"
 
+#include "Mesh.h"
+
 using namespace arias::math;
 using namespace arias::graphics;
 
@@ -19,22 +21,23 @@ namespace arias::renderer
 	// 정점 데이터
 	extern Vertex vertexes[4];
 
+	// 메시
+	extern Mesh* mesh;
+
 	// 버퍼
-	extern ID3D11Buffer* triangleBuffer;
-	extern ID3D11Buffer* triangleIndexBuffer;
-	extern ID3D11Buffer* triangleConstantBuffer;
-	extern ID3DBlob* errorBlob;
+	extern Microsoft::WRL::ComPtr<ID3D11Buffer> triangleConstantBuffer;
+	extern Microsoft::WRL::ComPtr<ID3DBlob> errorBlob;
 
 	// 버텍스 셰이더
-	extern ID3DBlob* triangleVSBlob;
-	extern ID3D11VertexShader* triangleVS;
+	extern Microsoft::WRL::ComPtr<ID3DBlob> triangleVSBlob;
+	extern Microsoft::WRL::ComPtr<ID3D11VertexShader> triangleVS;
 
 	// 픽셀 셰이더
-	extern ID3DBlob* trianglePSBlob;
-	extern ID3D11PixelShader* trianglePS;
+	extern Microsoft::WRL::ComPtr<ID3DBlob> trianglePSBlob;
+	extern Microsoft::WRL::ComPtr<ID3D11PixelShader> trianglePS;
 
 	// Input Layout
-	extern ID3D11InputLayout* triangleLayout;
+	extern Microsoft::WRL::ComPtr<ID3D11InputLayout> triangleLayout;
 
 	void Initialize();
 	void Release();
