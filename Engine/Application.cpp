@@ -20,6 +20,9 @@ namespace arias
     // Running Main Engine Loop
     void Application::Run()
     {
+        Update();
+        FixedUpdate();
+        Render();
     }
 
     void Application::Initialize()
@@ -38,6 +41,7 @@ namespace arias
 
     void Application::Render()
     {
+        mGraphicDevice->Draw();
     }
 
     void Application::SetWindow(HWND hwnd, UINT width, UINT height)

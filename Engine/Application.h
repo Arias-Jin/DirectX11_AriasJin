@@ -9,9 +9,6 @@ namespace arias
 {
 	class Application
 	{
-	private:
-		HWND mHwnd;
-
 	public:
 		Application();
 		~Application();
@@ -41,5 +38,8 @@ namespace arias
 	public:
 		void SetHwnd(HWND hwnd) { mHwnd = hwnd; }
 		HWND GetHwnd() const { return mHwnd; }
+
+		UINT GetWidth() const { return mWidth; }
+		UINT GetHeight() const { return mHeight; }
 	};
 }

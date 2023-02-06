@@ -16,4 +16,3 @@
 #include <memory>
 
 #include <Windows.h>
-#include <wrl.h>
