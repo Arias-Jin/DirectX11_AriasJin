@@ -31,6 +31,14 @@ namespace arias::graphics
 		Count,
 	};
 
+	enum class eSamplerType
+	{
+		Point,
+		Linear,
+		Anisotropic,
+		End,
+	};
+
 	struct GpuBuffer
 	{
 		enum class eType

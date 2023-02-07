@@ -188,6 +188,16 @@ namespace arias::graphics
 		return true;
 	}
 
+	bool GraphicDevice_DX11::CreateSamplerState(const D3D11_SAMPLER_DESC* pSamplerDesc, ID3D11SamplerState** ppSamplerState)
+	{
+		if (FAILED(mDevice->CreateSamplerState(pSamplerDesc, ppSamplerState)))
+		{
+			return false;
+		}
+
+		return true;
+	}
+
 	void GraphicDevice_DX11::BindPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY topology)
 	{
 		mContext->IASetPrimitiveTopology(topology);
@@ -283,6 +293,42 @@ namespace arias::graphics
 		default:
 			break;
 		}
+	}
+
+	void GraphicDevice_DX11::BindSamplers(eShaderStage stage, UINT slot, UINT NumSamplers, ID3D11SamplerState* const* ppSamplers)
+	{
+		switch (stage)
+		{
+		case arias::graphics::eShaderStage::VS:
+			mContext->VSSetSamplers(slot, NumSamplers, ppSamplers);
+			break;
+		case arias::graphics::eShaderStage::HS:
+			mContext->HSSetSamplers(slot, NumSamplers, ppSamplers);
+			break;
+		case arias::graphics::eShaderStage::DS:
+			mContext->DSSetSamplers(slot, NumSamplers, ppSamplers);
+			break;
+		case arias::graphics::eShaderStage::GS:
+			mContext->GSSetSamplers(slot, NumSamplers, ppSamplers);
+			break;
+		case arias::graphics::eShaderStage::PS:
+			mContext->PSSetSamplers(slot, NumSamplers, ppSamplers);
+			break;
+		case arias::graphics::eShaderStage::CS:
+			mContext->CSSetSamplers(slot, NumSamplers, ppSamplers);
+			break;
+		default:
+			break;
+		}
+	}
+
+	void GraphicDevice_DX11::BindsSamplers(UINT slot, UINT NumSamplers, ID3D11SamplerState* const* ppSamplers)
+	{
+		mContext->VSSetSamplers(slot, NumSamplers, ppSamplers);
+		mContext->HSSetSamplers(slot, NumSamplers, ppSamplers);
+		mContext->DSSetSamplers(slot, NumSamplers, ppSamplers);
+		mContext->GSSetSamplers(slot, NumSamplers, ppSamplers);
+		mContext->PSSetSamplers(slot, NumSamplers, ppSamplers);
 	}
 
 	void GraphicDevice_DX11::Clear()

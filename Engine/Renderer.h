@@ -22,11 +22,9 @@ namespace arias::renderer
 		Vector2 uv;
 	};
 
-	// 정점 데이터
 	extern Vertex vertexes[4];
-
-	// 상수 버퍼
 	extern ConstantBuffer* constantBuffers[];
+	extern Microsoft::WRL::ComPtr<ID3D11SamplerState> samplerStates[];
 
 	void Initialize();
 	void Release();
