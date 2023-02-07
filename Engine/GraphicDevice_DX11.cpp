@@ -315,18 +315,4 @@ namespace arias::graphics
 	{
 		mSwapChain->Present(0, 0);
 	}
-	void GraphicDevice_DX11::Render()
-	{
-		Clear();
-
-		// renderer::triangleConstantBuffer[(UINT)eCBType::Transform]->SetPipeline(eShaderStage::VS);
-
-		AdjustViewPorts();
-
-		renderer::mesh->BindBuffer();
-		renderer::shader->Binds();
-		renderer::mesh->Render();
-
-		Present();
-	}
 }

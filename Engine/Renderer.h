@@ -25,15 +25,6 @@ namespace arias::renderer
 	// 정점 데이터
 	extern Vertex vertexes[4];
 
-	// 메시
-	extern Mesh* mesh;
-
-	// 버퍼
-	extern Microsoft::WRL::ComPtr<ID3D11Buffer> triangleConstantBuffer;
-
-	// 셰이더
-	extern Shader* shader;
-
 	// 상수 버퍼
 	extern ConstantBuffer* constantBuffers[];
 

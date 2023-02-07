@@ -59,7 +59,6 @@ namespace arias::graphics
 		void DrawIndexed(UINT indexCount, UINT StartIndexLocation, UINT BaseVertexLocation);
 
 		void Present();
-		void Render();
 
 	public:
 		ID3D11Device* GetID3D11Device() const { return mDevice.Get(); }

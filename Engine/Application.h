@@ -23,9 +23,6 @@ namespace arias
 		UINT mHeight;
 
 	public:
-		// Running Main Engine Loop
-		void Run();
-
 		virtual void Initialize();
 
 		// CPU UPDATE
@@ -34,6 +31,11 @@ namespace arias
 		// GPU UPDATE
 		virtual void FixedUpdate();
 		virtual void Render();
+
+		// Running Main Engine Loop
+		void Run();
+		void Release();
+
 		void SetWindow(HWND hwnd, UINT width, UINT height);
 
 	public:

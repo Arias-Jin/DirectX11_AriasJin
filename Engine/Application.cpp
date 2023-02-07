@@ -4,6 +4,8 @@
 
 #include "Renderer.h"
 
+#include "Resources.h"
+
 #include "SceneManager.h"
 
 #include "Time.h"
@@ -23,14 +25,6 @@ namespace arias
 
     Application::~Application()
     {
-    }
-
-    // Running Main Engine Loop
-    void Application::Run()
-    {
-        Update();
-        FixedUpdate();
-        Render();
     }
 
     void Application::Initialize()
@@ -67,6 +61,19 @@ namespace arias
         SceneManager::Render();
 
         mGraphicDevice->Present();
+    }
+
+    // Running Main Engine Loop
+    void Application::Run()
+    {
+        Update();
+        FixedUpdate();
+        Render();
+    }
+
+    void Application::Release()
+    {
+        Resources::Release();
     }
 
     void Application::SetWindow(HWND hwnd, UINT width, UINT height)
