@@ -60,9 +60,13 @@ namespace arias
     void Application::Render()
     {
         Time::Render(mHdc);
+
+        mGraphicDevice->Clear();
+        mGraphicDevice->AdjustViewPorts();
+
         SceneManager::Render();
 
-        mGraphicDevice->Render();
+        mGraphicDevice->Present();
     }
 
     void Application::SetWindow(HWND hwnd, UINT width, UINT height)
