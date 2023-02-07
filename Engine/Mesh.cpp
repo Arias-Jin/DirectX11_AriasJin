@@ -7,6 +7,7 @@
 namespace arias
 {
 	Mesh::Mesh() :
+		Resource(eResourceType::Mesh),
 		mVertexBuffer(nullptr),
 		mVBDesc{},
 		mIndexBuffer(nullptr),

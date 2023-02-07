@@ -5,7 +5,11 @@
 #include "Client.h"
 #include "Engine/Application.h"
 
+#ifdef _DEBUG
 #pragma comment (lib, "..\\x64\\Debug\\Lib\\Engine.lib")
+#else
+#pragma comment (lib, "..\\x64\\Release\\Lib\\Engine.lib")
+#endif
 
 #define MAX_LOADSTRING 100
 

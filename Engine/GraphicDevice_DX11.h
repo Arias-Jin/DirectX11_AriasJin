@@ -50,6 +50,7 @@ namespace arias::graphics
 		void BindViewports(D3D11_VIEWPORT* viewPort);
 		void BindConstantBuffer(ID3D11Buffer* buffer, void* data, UINT size);
 		void SetConstantBuffer(eShaderStage stage, eCBType type, ID3D11Buffer* buffer);
+		void SetShaderResource(eShaderStage stage, UINT slot, ID3D11ShaderResourceView* const* ppShaderResourceViews);
 
 		void Clear();
 		void AdjustViewPorts();
@@ -59,6 +60,9 @@ namespace arias::graphics
 
 		void Present();
 		void Render();
+
+	public:
+		ID3D11Device* GetID3D11Device() const { return mDevice.Get(); }
 	};
 
 	inline GraphicDevice_DX11*& GetDevice()

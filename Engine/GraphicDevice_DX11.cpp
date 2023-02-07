@@ -258,6 +258,33 @@ namespace arias::graphics
 		}
 	}
 
+	void GraphicDevice_DX11::SetShaderResource(eShaderStage stage, UINT slot, ID3D11ShaderResourceView* const* ppShaderResourceViews)
+	{
+		switch (stage)
+		{
+		case arias::graphics::eShaderStage::VS:
+			mContext->VSSetShaderResources(slot, 1, ppShaderResourceViews);
+			break;
+		case arias::graphics::eShaderStage::HS:
+			mContext->HSSetShaderResources(slot, 1, ppShaderResourceViews);
+			break;
+		case arias::graphics::eShaderStage::DS:
+			mContext->DSSetShaderResources(slot, 1, ppShaderResourceViews);
+			break;
+		case arias::graphics::eShaderStage::GS:
+			mContext->GSSetShaderResources(slot, 1, ppShaderResourceViews);
+			break;
+		case arias::graphics::eShaderStage::PS:
+			mContext->PSSetShaderResources(slot, 1, ppShaderResourceViews);
+			break;
+		case arias::graphics::eShaderStage::CS:
+			mContext->CSSetShaderResources(slot, 1, ppShaderResourceViews);
+			break;
+		default:
+			break;
+		}
+	}
+
 	void GraphicDevice_DX11::Clear()
 	{
 		// Clear

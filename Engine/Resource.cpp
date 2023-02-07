@@ -2,9 +2,10 @@
 
 namespace arias
 {
-	Resource::Resource() :
+	Resource::Resource(eResourceType type) :
 		mKey{},
-		mPath{}
+		mPath{},
+		mType(type)
 	{
 	}
 

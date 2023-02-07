@@ -7,6 +7,7 @@ using namespace arias::graphics;
 namespace arias
 {
 	Shader::Shader() :
+		Resource(eResourceType::GraphicShader),
 		mInputLayout(nullptr),
 		mTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST),
 		mStage{},

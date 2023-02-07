@@ -71,6 +71,9 @@
       <Filter>Component</Filter>
     </ClInclude>
     <ClInclude Include="ConstantBuffer.h" />
+    <ClInclude Include="Texture.h">
+      <Filter>Resource\Texture</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Math.cpp">
@@ -131,6 +134,9 @@
     <ClCompile Include="Transform.cpp">
       <Filter>Component</Filter>
     </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Resource\Texture</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Common">
@@ -177,6 +183,9 @@
     </Filter>
     <Filter Include="Common\Math">
       <UniqueIdentifier>{47db6de4-0b1e-4017-8f4b-8fbcd4d8eff7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Texture">
+      <UniqueIdentifier>{b02c7d0a-442b-4b7a-b477-a5b4ff2c6bc5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

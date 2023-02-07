@@ -2,17 +2,20 @@
 
 #include "Entity.h"
 
+using namespace arias::enums;
+
 namespace arias
 {
 	class Resource : public Entity
 	{
 	public:
-		Resource();
+		Resource(eResourceType type);
 		virtual ~Resource();
 
 	private:
 		std::wstring mKey;
 		std::wstring mPath;
+		eResourceType mType;
 
 	public:
 		virtual HRESULT Load(const std::wstring& path) = 0;
