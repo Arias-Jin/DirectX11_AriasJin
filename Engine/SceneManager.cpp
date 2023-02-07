@@ -5,6 +5,9 @@
 
 #include "Renderer.h"
 
+#include "Resources.h"
+#include "Texture.h"
+
 namespace arias
 {
 	Scene* SceneManager::mPlayScene = nullptr;
@@ -25,7 +28,7 @@ namespace arias
 		GameObject* obj = new GameObject();
 		Transform* tr = new Transform();
 
-		tr->SetPosition(Vector3(0.2f, 0.2f, 0.2f));
+		tr->SetPosition(Vector3(0.0f, 0.0f, 0.2f));
 		obj->AddComponent(tr);
 
 		MeshRenderer* mr = new MeshRenderer();
@@ -33,6 +36,9 @@ namespace arias
 
 		mr->SetShader(renderer::shader);
 		mr->SetMesh(renderer::mesh);
+
+		Texture* texture = Resources::Load<Texture>(L"SmileTexture", L"Smile.png");
+		texture->BindShader(eShaderStage::PS, 0);
 
 		mPlayScene->AddGameObject(obj, eLayerType::Player);
 	}

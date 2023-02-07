@@ -19,6 +19,7 @@ namespace arias::renderer
 	{
 		Vector3 pos;
 		Vector4 color;
+		Vector2 uv;
 	};
 
 	// 정점 데이터

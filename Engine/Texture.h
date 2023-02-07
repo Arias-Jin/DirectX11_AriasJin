@@ -28,7 +28,7 @@ namespace arias::graphics
 		D3D11_TEXTURE2D_DESC mDesc;
 
 	public:
-		virtual HRESULT Load(const std::wstring& path) override;
+		virtual HRESULT Load(const std::wstring& name) override;
 		void BindShader(eShaderStage stage, UINT slot);
 	};
 }
