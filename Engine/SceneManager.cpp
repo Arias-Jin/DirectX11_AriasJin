@@ -7,6 +7,8 @@
 
 namespace arias
 {
+	Scene* SceneManager::mPlayScene = nullptr;
+
 	SceneManager::SceneManager()
 	{
 	}
@@ -17,6 +19,16 @@ namespace arias
 
 	void SceneManager::Initialize()
 	{
+		mPlayScene = new Scene();
+		mPlayScene->Initialize();
+
+		GameObject* obj = new GameObject();
+		Transform* tr = new Transform();
+
+		tr->SetPosition(Vector3(0.2f, 0.2f, 0.2f));
+		obj->AddComponent(tr);
+
+		mPlayScene->AddGameObject(obj, eLayerType::Player);
 	}
 
 	void SceneManager::Update()

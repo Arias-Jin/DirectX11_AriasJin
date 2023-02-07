@@ -6,6 +6,8 @@
 
 #include "Mesh.h"
 
+#include "ConstantBuffer.h"
+
 extern arias::Application application;
 
 namespace arias::graphics
@@ -290,8 +292,7 @@ namespace arias::graphics
 	{
 		Clear();
 
-		// 상수 버퍼를 셰이더에 세팅
-		SetConstantBuffer(eShaderStage::VS, eCBType::Transform, renderer::triangleConstantBuffer.Get());
+		// renderer::triangleConstantBuffer[(UINT)eCBType::Transform]->SetPipeline(eShaderStage::VS);
 
 		AdjustViewPorts();
 

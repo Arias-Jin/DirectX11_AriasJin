@@ -52,9 +52,6 @@
     <ClInclude Include="Component.h">
       <Filter>Component</Filter>
     </ClInclude>
-    <ClInclude Include="MeshRenderer.h">
-      <Filter>Renderer</Filter>
-    </ClInclude>
     <ClInclude Include="Shader.h">
       <Filter>Resource\Shader</Filter>
     </ClInclude>
@@ -70,6 +67,10 @@
     <ClInclude Include="Transform.h">
       <Filter>Component</Filter>
     </ClInclude>
+    <ClInclude Include="MeshRenderer.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="ConstantBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Math.cpp">
@@ -111,9 +112,6 @@
     <ClCompile Include="Component.cpp">
       <Filter>Component</Filter>
     </ClCompile>
-    <ClCompile Include="MeshRenderer.cpp">
-      <Filter>Renderer</Filter>
-    </ClCompile>
     <ClCompile Include="Shader.cpp">
       <Filter>Resource\Shader</Filter>
     </ClCompile>
@@ -126,6 +124,10 @@
     <ClCompile Include="Material.cpp">
       <Filter>Resource\Material</Filter>
     </ClCompile>
+    <ClCompile Include="MeshRenderer.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="ConstantBuffer.cpp" />
     <ClCompile Include="Transform.cpp">
       <Filter>Component</Filter>
     </ClCompile>
@@ -148,9 +150,6 @@
     </Filter>
     <Filter Include="Time">
       <UniqueIdentifier>{b4a312f3-7112-4cb3-8e8f-f0572dce0cd1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Common\Math">
-      <UniqueIdentifier>{47db6de4-0b1e-4017-8f4b-8fbcd4d8eff7}</UniqueIdentifier>
     </Filter>
     <Filter Include="Renderer">
       <UniqueIdentifier>{f3fa4e65-be1c-4337-99c8-e9e2a3f68160}</UniqueIdentifier>
@@ -175,6 +174,9 @@
     </Filter>
     <Filter Include="Resource\Shader">
       <UniqueIdentifier>{4057ae44-de39-4b69-ae31-f9926927bf5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Math">
+      <UniqueIdentifier>{47db6de4-0b1e-4017-8f4b-8fbcd4d8eff7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -1,40 +1,34 @@
 #pragma once
-
 #include "Entity.h"
+
+#include "Math.h"
+
+using namespace arias::enums;
 
 namespace arias
 {
 	class GameObject;
 
-	class Component
+	class Component : public Entity
 	{
 	public:
-		enum class eType
-		{
-			None,
-			Transform,
-			Camera,
-
-			// Render
-			Mesh,
-			SkyBox,
-			Decal,
-
-			Script,
-			End,
-		};
-
-		Component();
+		Component(eComponentType type);
 		virtual ~Component();
 
 	private:
-		const eType mType;
+		const eComponentType mType;
 		GameObject* mOwner;
 
 	public:
-		virtual void Initialize();
-		virtual void Update();
-		virtual void FixedUpdate();
-		virtual void Render();
+		virtual void Initialize() = 0;
+		virtual void Update() = 0;
+		virtual void FixedUpdate() = 0;
+		virtual void Render() = 0;
+
+	public:
+		UINT GetOrder() const { return (UINT)mType; }
+
+		void SetOwner(GameObject* owner) { mOwner = owner; }
+		GameObject* GetOwner() const { return mOwner; }
 	};
 }

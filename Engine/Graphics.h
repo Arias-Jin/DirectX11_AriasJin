@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Math.h"
+#include "CommonInclude.h"
 
 #include <wrl.h>
 
@@ -28,5 +29,21 @@ namespace arias::graphics
 		PS,
 		CS,
 		Count,
+	};
+
+	struct GpuBuffer
+	{
+		enum class eType
+		{
+			Buffer,
+			Texture,
+			UnknownType,
+		} type = eType::UnknownType;
+
+		GpuBuffer() = default;
+		virtual ~GpuBuffer() = default;
+
+		D3D11_BUFFER_DESC desc;
+		Microsoft::WRL::ComPtr<ID3D11Buffer> buffer;
 	};
 }

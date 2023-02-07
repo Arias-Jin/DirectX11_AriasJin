@@ -1,10 +1,11 @@
 #pragma once
+#include "Entity.h"
 
 #include "GameObject.h"
 
 namespace arias
 {
-	class Layer
+	class Layer : public Entity
 	{
 	public:
 		Layer();
@@ -19,6 +20,6 @@ namespace arias
 		virtual void FixedUpdate();
 		virtual void Render();
 
-		void AddGameObject(const GameObject* gameObject);
+		void AddGameObject(GameObject* gameObject);
 	};
 }

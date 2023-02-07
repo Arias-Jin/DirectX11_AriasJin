@@ -8,6 +8,8 @@
 #include "Mesh.h"
 #include "Shader.h"
 
+#include "ConstantBuffer.h"
+
 using namespace arias::math;
 using namespace arias::graphics;
 
@@ -28,7 +30,11 @@ namespace arias::renderer
 	// 버퍼
 	extern Microsoft::WRL::ComPtr<ID3D11Buffer> triangleConstantBuffer;
 
+	// 셰이더
 	extern Shader* shader;
+
+	// 상수 버퍼
+	extern ConstantBuffer* constantBuffers[];
 
 	void Initialize();
 	void Release();

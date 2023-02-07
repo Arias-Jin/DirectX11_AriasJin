@@ -4,6 +4,8 @@
 
 #include "Renderer.h"
 
+#include "SceneManager.h"
+
 #include "Time.h"
 
 namespace arias
@@ -37,6 +39,7 @@ namespace arias
         Input::Initialize();
 
         renderer::Initialize();
+        SceneManager::Initialize();
     }
 
     // CPU UPDATE
@@ -44,16 +47,21 @@ namespace arias
     {
         Time::Update();
         Input::Update();
+
+        SceneManager::Update();
     }
 
     // GPU UPDATE
     void Application::FixedUpdate()
     {
+        SceneManager::FixedUpdate();
     }
 
     void Application::Render()
     {
         Time::Render(mHdc);
+        SceneManager::Render();
+
         mGraphicDevice->Render();
     }
 

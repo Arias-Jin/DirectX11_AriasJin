@@ -9,7 +9,7 @@ namespace arias::renderer
 
 	// 버퍼
 	Mesh* mesh = nullptr;
-	Microsoft::WRL::ComPtr<ID3D11Buffer> triangleConstantBuffer = nullptr;
+	ConstantBuffer* constantBuffers[(UINT)eCBType::End] = {};
 
 	Shader* shader = nullptr;
 
@@ -60,18 +60,11 @@ namespace arias::renderer
 
 		mesh->CreateIndexBuffer(indexes.data(), (UINT)indexes.size());
 
-		// 상수 버퍼
-		D3D11_BUFFER_DESC csDesc = {};
-		csDesc.ByteWidth = sizeof(Vector4);
-		csDesc.BindFlags = D3D11_BIND_FLAG::D3D11_BIND_CONSTANT_BUFFER;
-		csDesc.Usage = D3D11_USAGE::D3D11_USAGE_DYNAMIC;
-		csDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-
-		GetDevice()->CreateBuffer(&csDesc, nullptr, triangleConstantBuffer.GetAddressOf());
-
 		Vector4 pos(0.0f, 0.0f, 0.0f, 0.0f);
-		
-		GetDevice()->BindConstantBuffer(triangleConstantBuffer.Get(), &pos, sizeof(Vector4));
+
+		constantBuffers[(UINT)eCBType::Transform] = new ConstantBuffer();
+		constantBuffers[(UINT)eCBType::Transform]->Create(sizeof(Vector4));
+		constantBuffers[(UINT)eCBType::Transform]->Bind(&pos);
 	}
 
 	void LoadShader()
@@ -108,5 +101,11 @@ namespace arias::renderer
 
 		delete shader;
 		shader = nullptr;
+
+		for (size_t i = 0; i < (UINT)eCBType::End; ++i)
+		{
+			delete constantBuffers[i];
+			constantBuffers[i] = nullptr;
+		}
 	}
 }
