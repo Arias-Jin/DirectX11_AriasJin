@@ -4,7 +4,8 @@ namespace arias
 {
     GameObject::GameObject() :
         mState(eState::Active),
-        mComponents{}
+        mComponents{},
+        mScripts{}
     {
         mComponents.resize((UINT)eComponentType::End);
     }
@@ -24,6 +25,16 @@ namespace arias
 
             comp->Initialize();
         }
+
+        for (Component* script : mScripts)
+        {
+            if (script == nullptr)
+            {
+                continue;
+            }
+
+            script->Initialize();
+        }
     }
 
     void GameObject::Update()
@@ -36,6 +47,16 @@ namespace arias
             }
 
             comp->Update();
+        }
+
+        for (Component* script : mScripts)
+        {
+            if (script == nullptr)
+            {
+                continue;
+            }
+
+            script->Update();
         }
     }
 
@@ -50,6 +71,16 @@ namespace arias
 
             comp->FixedUpdate();
         }
+
+        for (Component* script : mScripts)
+        {
+            if (script == nullptr)
+            {
+                continue;
+            }
+
+            script->FixedUpdate();
+        }
     }
 
     void GameObject::Render()
@@ -63,13 +94,31 @@ namespace arias
 
             comp->Render();
         }
+
+        for (Component* script : mScripts)
+        {
+            if (script == nullptr)
+            {
+                continue;
+            }
+
+            script->Render();
+        }
     }
 
     void GameObject::AddComponent(Component* comp)
     {
-        int order = comp->GetOrder();
+        eComponentType order = comp->GetOrder();
 
-        mComponents[order] = comp;
-        mComponents[order]->SetOwner(this);
+        if (order != eComponentType::Script)
+        {
+            mComponents[(UINT)order] = comp;
+            mComponents[(UINT)order]->SetOwner(this);
+        }
+        else
+        {
+            mScripts.push_back(comp);
+            comp->SetOwner(this);
+        }
     }
 }

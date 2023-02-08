@@ -2,6 +2,7 @@
 
 #include "MeshRenderer.h"
 #include "Transform.h"
+#include "PlayerScript.h"
 
 #include "Renderer.h"
 
@@ -37,8 +38,14 @@ namespace arias
 		Mesh* mesh = Resources::Find<Mesh>(L"RectMesh");
 		Material* material = Resources::Find<Material>(L"RectMaterial");
 
+		Vector2 vec2(1.0f, 1.0f);
+		material->SetData(eGPUParam::Vector2, &vec2);
+
 		mr->SetMesh(mesh);
 		mr->SetMaterial(material);
+
+		PlayerScript* script = new PlayerScript();
+		obj->AddComponent(script);
 
 		Texture* texture = Resources::Load<Texture>(L"SmileTexture", L"Smile.png");
 		texture->BindShader(eShaderStage::PS, 0);

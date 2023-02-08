@@ -64,15 +64,21 @@
     <ClInclude Include="Material.h">
       <Filter>Resource\Material</Filter>
     </ClInclude>
-    <ClInclude Include="Transform.h">
-      <Filter>Component</Filter>
-    </ClInclude>
-    <ClInclude Include="MeshRenderer.h">
-      <Filter>Component</Filter>
-    </ClInclude>
     <ClInclude Include="ConstantBuffer.h" />
     <ClInclude Include="Texture.h">
       <Filter>Resource\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshRenderer.h">
+      <Filter>Component\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>Component\Transform</Filter>
+    </ClInclude>
+    <ClInclude Include="Script.h">
+      <Filter>Component\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerScript.h">
+      <Filter>Component\Script\Contents</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -127,15 +133,21 @@
     <ClCompile Include="Material.cpp">
       <Filter>Resource\Material</Filter>
     </ClCompile>
-    <ClCompile Include="MeshRenderer.cpp">
-      <Filter>Component</Filter>
-    </ClCompile>
     <ClCompile Include="ConstantBuffer.cpp" />
-    <ClCompile Include="Transform.cpp">
-      <Filter>Component</Filter>
-    </ClCompile>
     <ClCompile Include="Texture.cpp">
       <Filter>Resource\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshRenderer.cpp">
+      <Filter>Component\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>Component\Transform</Filter>
+    </ClCompile>
+    <ClCompile Include="Script.cpp">
+      <Filter>Component\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerScript.cpp">
+      <Filter>Component\Script\Contents</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -186,6 +198,18 @@
     </Filter>
     <Filter Include="Resource\Texture">
       <UniqueIdentifier>{b02c7d0a-442b-4b7a-b477-a5b4ff2c6bc5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\Transform">
+      <UniqueIdentifier>{ea85ae0d-6e23-4343-b4cf-f4e175f9fbc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\Script">
+      <UniqueIdentifier>{f69fee57-25ae-428a-ad20-c66fb04bdb9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\Renderer">
+      <UniqueIdentifier>{74afbdbe-e58e-4a44-b101-8cef04231813}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\Script\Contents">
+      <UniqueIdentifier>{3bf06ecb-fa13-4701-abc9-0240e837ba31}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

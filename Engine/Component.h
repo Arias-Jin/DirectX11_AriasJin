@@ -26,7 +26,7 @@ namespace arias
 		virtual void Render() = 0;
 
 	public:
-		UINT GetOrder() const { return (UINT)mType; }
+		eComponentType GetOrder() const { return mType; }
 
 		void SetOwner(GameObject* owner) { mOwner = owner; }
 		GameObject* GetOwner() const { return mOwner; }

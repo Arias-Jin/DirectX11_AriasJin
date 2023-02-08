@@ -2,6 +2,8 @@
 
 #include "Component.h"
 
+#include "Script.h"
+
 namespace arias
 {
 	class GameObject
@@ -20,6 +22,7 @@ namespace arias
 	private:
 		eState mState;
 		std::vector<Component*> mComponents;
+		std::vector<Component*> mScripts;
 
 	public:
 		virtual void Initialize();
