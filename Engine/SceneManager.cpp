@@ -28,17 +28,17 @@ namespace arias
 		GameObject* obj = new GameObject();
 		Transform* tr = new Transform();
 
-		tr->SetPosition(Vector3(0.0f, 0.0f, 0.2f));
+		tr->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
 		obj->AddComponent(tr);
 
 		MeshRenderer* mr = new MeshRenderer();
 		obj->AddComponent(mr);
 
-		Shader* shader = Resources::Find<Shader>(L"RectShader");
 		Mesh* mesh = Resources::Find<Mesh>(L"RectMesh");
+		Material* material = Resources::Find<Material>(L"RectMaterial");
 
-		mr->SetShader(shader);
 		mr->SetMesh(mesh);
+		mr->SetMaterial(material);
 
 		Texture* texture = Resources::Load<Texture>(L"SmileTexture", L"Smile.png");
 		texture->BindShader(eShaderStage::PS, 0);

@@ -2,7 +2,7 @@
 #include "Component.h"
 
 #include "Mesh.h"
-#include "Shader.h"
+#include "Material.h"
 
 using namespace arias::graphics;
 
@@ -16,7 +16,7 @@ namespace arias
 
 	private:
 		Mesh* mMesh;
-		Shader* mShader;
+		Material* mMaterial;
 
 	public:
 		virtual void Initialize() override;
@@ -27,6 +27,6 @@ namespace arias
 	public:
 		void SetMesh(Mesh* mesh) { mMesh = mesh; }
 
-		void SetShader(Shader* shader) { mShader = shader; }
+		void SetMaterial(Material* material) { mMaterial = material; }
 	};
 }

@@ -7,7 +7,9 @@
 namespace arias
 {
 	MeshRenderer::MeshRenderer() :
-		Component(eComponentType::Mesh)
+		Component(eComponentType::Mesh),
+		mMesh(nullptr),
+		mMaterial(nullptr)
 	{
 	}
 
@@ -31,7 +33,7 @@ namespace arias
 	{
 		GetOwner()->GetComponent<Transform>()->SetConstantBuffer();
 
-		mShader->Binds();
+		mMaterial->Bind();
 		mMesh->BindBuffer();
 
 		mMesh->Render();

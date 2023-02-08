@@ -11,6 +11,11 @@
 #pragma comment (lib, "d3d11.lib")
 #pragma comment (lib, "d3dcompiler.lib")
 
+#define CB_GETBINDSLOT(name) __CBUFFERBINDSLOT__##name##__
+#define CBUFFER(name, slot) static const int CB_GETBINDSLOT(name) = slot; struct alignas(16) name
+#define CBSLOT_TRANSFORM 0
+#define CBSLOT_MATERIAL 1
+
 namespace arias::graphics
 {
 	enum class ValidationMode
@@ -53,5 +58,22 @@ namespace arias::graphics
 
 		D3D11_BUFFER_DESC desc;
 		Microsoft::WRL::ComPtr<ID3D11Buffer> buffer;
+	};
+
+	enum class eCBType
+	{
+		Transform,
+		Material,
+		End,
+	};
+
+	enum class eGPUParam
+	{
+		Int,
+		Float,
+		Vector2,
+		Vector3,
+		Vector4,
+		Matrix,
 	};
 }
