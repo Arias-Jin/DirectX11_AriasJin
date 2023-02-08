@@ -1,6 +1,6 @@
 #include "Renderer.h"
 
-#include "Resources.h"
+#include "ResourceManager.h"
 #include "Material.h"
 
 namespace arias::renderer
@@ -34,7 +34,7 @@ namespace arias::renderer
 		arrLayoutDesc[2].SemanticName = "TEXCOORD";
 		arrLayoutDesc[2].SemanticIndex = 0;
 
-		Shader* shader = Resources::Find<Shader>(L"RectShader");
+		std::shared_ptr<Shader> shader = ResourceManager::Find<Shader>(L"RectShader");
 
 		GetDevice()->CreateInputLayout(
 			arrLayoutDesc,
@@ -79,8 +79,8 @@ namespace arias::renderer
 	void LoadBuffer()
 	{
 		// Create Mesh
-		Mesh* mesh = new Mesh();
-		Resources::Insert<Mesh>(L"RectMesh", mesh);
+		std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
+		ResourceManager::Insert<Mesh>(L"RectMesh", mesh);
 
 		mesh->CreateVertexBuffer(vertexes, 4);
 
@@ -105,21 +105,21 @@ namespace arias::renderer
 
 	void LoadShader()
 	{
-		Shader* shader = new Shader();
+		std::shared_ptr<Shader> shader = std::make_shared<Shader>();
 		shader->Create(eShaderStage::VS, L"TriangleVS.hlsl", "VS_Test");
 		shader->Create(eShaderStage::PS, L"TrianglePS.hlsl", "PS_Test");
 
-		Resources::Insert<Shader>(L"RectShader", shader);
+		ResourceManager::Insert<Shader>(L"RectShader", shader);
 	}
 
 	void LoadMaterial()
 	{
-		Shader* shader = Resources::Find<Shader>(L"RectShader");
+		std::shared_ptr<Shader> shader = ResourceManager::Find<Shader>(L"RectShader");
 
-		Material* material = new Material();
-		material->SetShader(shader);
+		std::shared_ptr<Material> material = std::make_shared<Material>();
+		material->SetShader(shader.get());
 
-		Resources::Insert<Material>(L"RectMaterial", material);
+		ResourceManager::Insert<Material>(L"RectMaterial", material);
 	}
 
 	void Initialize()

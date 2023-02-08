@@ -6,7 +6,7 @@
 
 #include "Renderer.h"
 
-#include "Resources.h"
+#include "ResourceManager.h"
 #include "Texture.h"
 
 namespace arias
@@ -35,19 +35,19 @@ namespace arias
 		MeshRenderer* mr = new MeshRenderer();
 		obj->AddComponent(mr);
 
-		Mesh* mesh = Resources::Find<Mesh>(L"RectMesh");
-		Material* material = Resources::Find<Material>(L"RectMaterial");
+		std::shared_ptr<Mesh> mesh = ResourceManager::Find<Mesh>(L"RectMesh");
+		std::shared_ptr<Material> material = ResourceManager::Find<Material>(L"RectMaterial");
 
 		Vector2 vec2(1.0f, 1.0f);
 		material->SetData(eGPUParam::Vector2, &vec2);
 
-		mr->SetMesh(mesh);
-		mr->SetMaterial(material);
+		mr->SetMesh(mesh.get());
+		mr->SetMaterial(material.get());
 
 		PlayerScript* script = new PlayerScript();
 		obj->AddComponent(script);
 
-		Texture* texture = Resources::Load<Texture>(L"SmileTexture", L"Smile.png");
+		std::shared_ptr<Texture> texture = ResourceManager::Load<Texture>(L"SmileTexture", L"Smile.png");
 		texture->BindShader(eShaderStage::PS, 0);
 
 		mPlayScene->AddGameObject(obj, eLayerType::Player);

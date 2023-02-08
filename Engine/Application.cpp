@@ -4,7 +4,7 @@
 
 #include "Renderer.h"
 
-#include "Resources.h"
+#include "ResourceManager.h"
 
 #include "SceneManager.h"
 
@@ -73,7 +73,6 @@ namespace arias
 
     void Application::Release()
     {
-        Resources::Release();
     }
 
     void Application::SetWindow(HWND hwnd, UINT width, UINT height)
