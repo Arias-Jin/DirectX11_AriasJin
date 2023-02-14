@@ -5,6 +5,7 @@ namespace arias::enums
 	enum class eLayerType
 	{
 		None = 0,
+		Camera,
 		Monster,
 		Player,
 		End = 16,

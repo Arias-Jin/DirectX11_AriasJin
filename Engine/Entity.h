@@ -13,12 +13,12 @@ namespace arias
 
 	private:
 		std::wstring mName;
-		const UINT32 mID;
+		const UINT64 mID;
 
 	public:
 		void SetName(const std::wstring& name) { mName = name; }
 		const std::wstring& GetName() const { return mName; }
 
-		UINT32 GetID() const { return mID; }
+		UINT64 GetID() const { return mID; }
 	};
 }

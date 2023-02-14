@@ -12,6 +12,7 @@ namespace arias
 		static LARGE_INTEGER mCurFrequency;
 
 		static float mDeltaTime;
+		static float mBulletTime;
 		static float mOneSecond;
 
 	public:

@@ -1,5 +1,6 @@
 #include "SceneManager.h"
 
+#include "Camera.h"
 #include "MeshRenderer.h"
 #include "Transform.h"
 #include "PlayerScript.h"
@@ -26,10 +27,20 @@ namespace arias
 		mPlayScene = new Scene();
 		mPlayScene->Initialize();
 
+		// Camera Game Object
+		GameObject* cameraObj = new GameObject();
+		Transform* cameraTr = new Transform();
+		cameraTr->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
+		cameraObj->AddComponent(cameraTr);
+		Camera* cameraComp = new Camera();
+		cameraObj->AddComponent(cameraComp);
+
+		mPlayScene->AddGameObject(cameraObj, eLayerType::Camera);
+
 		GameObject* obj = new GameObject();
 		Transform* tr = new Transform();
 
-		tr->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
+		tr->SetPosition(Vector3(0.0f, 0.0f, 20.0f));
 		obj->AddComponent(tr);
 
 		MeshRenderer* mr = new MeshRenderer();
@@ -47,7 +58,8 @@ namespace arias
 		PlayerScript* script = new PlayerScript();
 		obj->AddComponent(script);
 
-		std::shared_ptr<Texture> texture = ResourceManager::Load<Texture>(L"SmileTexture", L"Smile.png");
+		// std::shared_ptr<Texture> texture = ResourceManager::Load<Texture>(L"SmileTexture", L"Smile.png");
+		std::shared_ptr<Texture> texture = ResourceManager::Load<Texture>(L"idle_flashlight_0", L"Top_Down_Survivor\\flashlight\\idle\\survivor-idle_flashlight_0.png");
 		texture->BindShader(eShaderStage::PS, 0);
 
 		mPlayScene->AddGameObject(obj, eLayerType::Player);

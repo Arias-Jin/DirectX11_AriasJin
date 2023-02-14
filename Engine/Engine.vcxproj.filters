@@ -80,6 +80,9 @@
     <ClInclude Include="SceneManager.h">
       <Filter>Scene\Manager</Filter>
     </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Component\Camera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Math.cpp">
@@ -149,6 +152,9 @@
     <ClCompile Include="SceneManager.cpp">
       <Filter>Scene\Manager</Filter>
     </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Component\Camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Common">
@@ -213,6 +219,9 @@
     </Filter>
     <Filter Include="Scene\Manager">
       <UniqueIdentifier>{f656929d-e194-427c-a7d1-39062b022fdc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\Camera">
+      <UniqueIdentifier>{d319da0f-9d0d-4885-8cb9-7f1e7c8eef61}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -42,6 +42,8 @@ namespace arias
 		void SetHwnd(HWND hwnd) { mHwnd = hwnd; }
 		HWND GetHwnd() const { return mHwnd; }
 
+		HDC GetHdc() const { return mHdc; }
+
 		UINT GetWidth() const { return mWidth; }
 		UINT GetHeight() const { return mHeight; }
 	};

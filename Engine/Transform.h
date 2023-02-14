@@ -12,9 +12,15 @@ namespace arias
 		virtual ~Transform();
 
 	private:
+		Vector3 mForward;
+		Vector3 mRight;
+		Vector3 mUp;
+
 		Vector3 mPosition;
 		Vector3 mRotation;
 		Vector3 mScale;
+
+		Matrix mWorld;
 
 	public:
 		virtual void Initialize() override;
@@ -33,5 +39,9 @@ namespace arias
 
 		void SetScale(Vector3 scale) { mScale = scale; }
 		Vector3 GetScale() const { return mScale; }
+
+		Vector3 Forward() const { return mForward; }
+		Vector3 Right() const { return mRight; }
+		Vector3 Up() const { return mUp; }
 	};
 }

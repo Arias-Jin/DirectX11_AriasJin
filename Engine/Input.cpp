@@ -1,5 +1,7 @@
 #include "Input.h"
 
+#include "GraphicDevice_DX11.h"
+
 #include "Application.h"
 
 extern arias::Application application;
@@ -107,5 +109,15 @@ namespace arias
 				mKeys[i].bPressed = false;
 			}
 		}
+	}
+
+	void Input::Render(HDC hdc)
+	{
+		HWND hWnd = application.GetHwnd();
+
+		wchar_t szFloat[50] = {};
+		swprintf_s(szFloat, 50, L"X : %f | Y : %f", mMousePosition.x, mMousePosition.y);
+
+		SetWindowText(hWnd, szFloat);
 	}
 }

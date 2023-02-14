@@ -58,13 +58,14 @@ namespace arias
 	public:
 		static void Initialize();
 		static void Update();
+		static void Render(HDC hdc);
 
 		static __forceinline eKeyState GetKeyState(eKeyCode keyCode) 
 		{ 
 			return mKeys[static_cast<UINT>(keyCode)].eState; 
 		}
 
-		static __forceinline math::Vector2 GetMousPosition()
+		static __forceinline math::Vector2 GetMousePosition()
 		{
 			return mMousePosition;
 		}
