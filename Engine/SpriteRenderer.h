@@ -1,18 +1,18 @@
 #pragma once
 #include "Component.h"
 
-#include "Mesh.h"
 #include "Material.h"
+#include "Mesh.h"
 
 using namespace arias::graphics;
 
 namespace arias
 {
-	class MeshRenderer : public Component
+	class SpriteRenderer : public Component
 	{
 	public:
-		MeshRenderer();
-		virtual ~MeshRenderer();
+		SpriteRenderer();
+		virtual ~SpriteRenderer();
 
 	private:
 		std::shared_ptr<Mesh> mMesh;
@@ -26,7 +26,6 @@ namespace arias
 
 	public:
 		void SetMesh(std::shared_ptr<Mesh> mesh) { mMesh = mesh; }
-
 		void SetMaterial(std::shared_ptr<Material> material) { mMaterial = material; }
 	};
 }

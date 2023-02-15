@@ -83,6 +83,12 @@
     <ClInclude Include="Camera.h">
       <Filter>Component\Camera</Filter>
     </ClInclude>
+    <ClInclude Include="CameraScript.h">
+      <Filter>Component\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteRenderer.h">
+      <Filter>Component\Renderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Math.cpp">
@@ -154,6 +160,12 @@
     </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Component\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraScript.cpp">
+      <Filter>Component\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteRenderer.cpp">
+      <Filter>Component\Renderer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

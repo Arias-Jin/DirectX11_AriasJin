@@ -4,6 +4,7 @@
 #include "Renderer.h"
 
 #include "Shader.h"
+#include "Texture.h"
 
 using namespace arias::renderer;
 
@@ -13,10 +14,11 @@ namespace arias::graphics
 	{
 	public:
 		Material();
-		~Material();
+		virtual ~Material();
 
 	private:
-		Shader* mShader;
+		std::shared_ptr<Shader> mShader;
+		std::shared_ptr<Texture> mTexture;
 		MaterialCB mCB;
 
 	public:
@@ -24,9 +26,13 @@ namespace arias::graphics
 
 		void SetData(eGPUParam param, void* data);
 		void Bind();
+		void Clear();
 
 	public:
-		void SetShader(Shader* shader) { mShader = shader; }
-		Shader* GetShader() const { return mShader; }
+		void SetShader(std::shared_ptr<Shader> shader) { mShader = shader; }
+		std::shared_ptr<Shader> GetShader() const { return mShader; }
+
+		void SetTexture(std::shared_ptr<Texture> texture) { mTexture = texture; }
+		std::shared_ptr<Texture> GetTexture() const { return mTexture; }
 	};
 }

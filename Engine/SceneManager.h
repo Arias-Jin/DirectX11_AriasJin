@@ -18,5 +18,6 @@ namespace arias
 		static void Update();
 		static void FixedUpdate();
 		static void Render();
+		static void Release();
 	};
 }

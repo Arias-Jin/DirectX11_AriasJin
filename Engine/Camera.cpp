@@ -10,11 +10,13 @@ extern arias::Application application;
 
 namespace arias
 {
-	Matrix Camera::mView = Matrix::Identity;
-	Matrix Camera::mProjection = Matrix::Identity;
+	Matrix Camera::View = Matrix::Identity;
+	Matrix Camera::Projection = Matrix::Identity;
 
 	Camera::Camera() :
 		Component(eComponentType::Camera),
+		mView{},
+		mProjection{},
 		mType(eProjectionType::Perspective),
 		mAspectRatio(1.0f),
 		mNear(1.0f),
@@ -51,8 +53,8 @@ namespace arias
 		Vector3 pos = tr->GetPosition();
 
 		// Create Translate View Matrix
-		mView = Matrix::Identity;
-		mView *= Matrix::CreateTranslation(-pos);
+		View = Matrix::Identity;
+		View *= Matrix::CreateTranslation(-pos);
 
 		// 회전 정보
 		Vector3 up = tr->Up();
@@ -64,7 +66,7 @@ namespace arias
 		viewRotate._21 = right.y; viewRotate._22 = up.y; viewRotate._23 = forward.y;
 		viewRotate._31 = right.z; viewRotate._32 = up.z; viewRotate._33 = forward.z;
 
-		mView *= viewRotate;
+		View *= viewRotate;
 	}
 
 	void Camera::CreateProjectionMatrix()
@@ -72,13 +74,13 @@ namespace arias
 		RECT winRect;
 		GetClientRect(application.GetHwnd(), &winRect);
 
-		float width = winRect.right - winRect.left;
-		float height = winRect.bottom - winRect.top;
+		float width = (float)winRect.right - (float)winRect.left;
+		float height = (float)winRect.bottom - (float)winRect.top;
 		mAspectRatio = width / height;
 
 		if (mType == eProjectionType::Perspective)
 		{
-			mProjection = Matrix::CreatePerspectiveFieldOfViewLH(
+			Projection = Matrix::CreatePerspectiveFieldOfViewLH(
 				XM_2PI / 6.0f,
 				mAspectRatio,
 				mNear, mFar
@@ -86,8 +88,8 @@ namespace arias
 		}
 		else
 		{
-			mProjection = Matrix::CreateOrthographicLH(
-				width, height,
+			Projection = Matrix::CreateOrthographicLH(
+				width / 100.0f, height / 100.0f,
 				mNear, mFar
 			);
 		}

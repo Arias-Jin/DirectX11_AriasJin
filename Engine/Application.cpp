@@ -18,6 +18,7 @@ namespace arias
         mInitialized(false),
         mGraphicDevice(nullptr),
         mHwnd(nullptr),
+        mHdc(nullptr),
         mWidth(0),
         mHeight(0)
     {
@@ -25,6 +26,7 @@ namespace arias
 
     Application::~Application()
     {
+        SceneManager::Release();
     }
 
     void Application::Initialize()

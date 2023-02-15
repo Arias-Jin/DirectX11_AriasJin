@@ -2,8 +2,10 @@
 
 #include "Camera.h"
 #include "MeshRenderer.h"
-#include "Transform.h"
+#include "SpriteRenderer.h"
+#include "CameraScript.h"
 #include "PlayerScript.h"
+#include "Transform.h"
 
 #include "Renderer.h"
 
@@ -34,35 +36,50 @@ namespace arias
 		cameraObj->AddComponent(cameraTr);
 		Camera* cameraComp = new Camera();
 		cameraObj->AddComponent(cameraComp);
+		CameraScript* cameraScript = new CameraScript();
+		cameraObj->AddComponent(cameraScript);
 
 		mPlayScene->AddGameObject(cameraObj, eLayerType::Camera);
 
+		// SMILE RECT
 		GameObject* obj = new GameObject();
 		Transform* tr = new Transform();
-
-		tr->SetPosition(Vector3(0.0f, 0.0f, 20.0f));
+		tr->SetPosition(Vector3(0.0f, 0.0f, 10.0f));
+		tr->SetScale(Vector3(5.0f, 5.0f, 1.0f));
 		obj->AddComponent(tr);
 
 		MeshRenderer* mr = new MeshRenderer();
 		obj->AddComponent(mr);
 
 		std::shared_ptr<Mesh> mesh = ResourceManager::Find<Mesh>(L"RectMesh");
-		std::shared_ptr<Material> material = ResourceManager::Find<Material>(L"RectMaterial");
+		std::shared_ptr<Material> mateiral = ResourceManager::Find<Material>(L"RectMaterial");
 
 		Vector2 vec2(1.0f, 1.0f);
-		material->SetData(eGPUParam::Vector2, &vec2);
+		mateiral->SetData(eGPUParam::Vector2, &vec2);
 
-		mr->SetMesh(mesh.get());
-		mr->SetMaterial(material.get());
-
-		PlayerScript* script = new PlayerScript();
-		obj->AddComponent(script);
-
-		// std::shared_ptr<Texture> texture = ResourceManager::Load<Texture>(L"SmileTexture", L"Smile.png");
-		std::shared_ptr<Texture> texture = ResourceManager::Load<Texture>(L"idle_flashlight_0", L"Top_Down_Survivor\\flashlight\\idle\\survivor-idle_flashlight_0.png");
-		texture->BindShader(eShaderStage::PS, 0);
+		mr->SetMaterial(mateiral);
+		mr->SetMesh(mesh);
 
 		mPlayScene->AddGameObject(obj, eLayerType::Player);
+
+		// SMILE RECT
+		GameObject* spriteObj = new GameObject();
+		Transform* spriteTr = new Transform();
+		spriteTr->SetPosition(Vector3(5.0f, 0.0f, 10.0f));
+		spriteObj->AddComponent(spriteTr);
+
+		SpriteRenderer* sr = new SpriteRenderer();
+		spriteObj->AddComponent(sr);
+
+		std::shared_ptr<Material> spriteMaterial = ResourceManager::Find<Material>(L"SpriteMaterial");
+
+		//Vector2 vec2(1.0f, 1.0f);
+		//spriteMaterial->SetData(eGPUParam::Vector2, &vec2);
+
+		sr->SetMaterial(spriteMaterial);
+		sr->SetMesh(mesh);
+
+		mPlayScene->AddGameObject(spriteObj, eLayerType::Player);
 	}
 
 	void SceneManager::Update()
@@ -78,5 +95,11 @@ namespace arias
 	void SceneManager::Render()
 	{
 		mPlayScene->Render();
+	}
+
+	void SceneManager::Release()
+	{
+		delete mPlayScene;
+		mPlayScene = nullptr;
 	}
 }

@@ -19,8 +19,11 @@ namespace arias
 		virtual ~Camera();
 
 	private:
-		static Matrix mView;
-		static Matrix mProjection;
+		static Matrix View;
+		static Matrix Projection;
+
+		Matrix mView;
+		Matrix mProjection;
 
 		eProjectionType mType;
 		float mAspectRatio;
@@ -39,7 +42,7 @@ namespace arias
 		void CreateProjectionMatrix();
 
 	public:
-		__forceinline static Matrix& GetViewMatrix() { return mView; }
-		__forceinline static Matrix& GetProjectionMatrix() { return mProjection; }
+		__forceinline static Matrix& GetViewMatrix() { return View; }
+		__forceinline static Matrix& GetProjectionMatrix() { return Projection; }
 	};
 }

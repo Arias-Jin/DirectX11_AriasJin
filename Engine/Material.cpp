@@ -47,12 +47,18 @@ namespace arias::graphics
 
     void Material::Bind()
     {
-        ConstantBuffer* pCB = renderer::constantBuffers[(UINT)eCBType::Material];
+        mTexture->BindShader(eShaderStage::PS, 0);
 
+        ConstantBuffer* pCB = renderer::constantBuffers[(UINT)eCBType::Material];
         pCB->Bind(&mCB);
         pCB->SetPipeline(eShaderStage::VS);
         pCB->SetPipeline(eShaderStage::PS);
 
         mShader->Binds();
+    }
+
+    void Material::Clear()
+    {
+        mTexture->Clear();
     }
 }
