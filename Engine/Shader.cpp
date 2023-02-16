@@ -2,6 +2,8 @@
 
 #include "GraphicDevice_DX11.h"
 
+#include "Renderer.h"
+
 using namespace arias::graphics;
 
 namespace arias
@@ -21,6 +23,9 @@ namespace arias
 		mDS(nullptr),
 		mGS(nullptr),
 		mPS(nullptr),
+		mRSType(eRSType::SolidBack),
+		mDSType(eDSType::Less),
+		mBSType(eBSType::AlphaBlend),
 		mErrorBlob(nullptr)
 	{
 	}
@@ -34,7 +39,7 @@ namespace arias
 		return E_NOTIMPL;
 	}
 
-	void Shader::Create(graphics::eShaderStage stage, const std::wstring& file, const std::string& funcName)
+	void Shader::Create(eShaderStage stage, const std::wstring& file, const std::string& funcName)
 	{
 		mErrorBlob = nullptr;
 
@@ -94,5 +99,13 @@ namespace arias
 
 		GetDevice()->BindVertexShader(mVS.Get(), nullptr, 0);
 		GetDevice()->BindPixelShader(mPS.Get(), nullptr, 0);
+
+		Microsoft::WRL::ComPtr<ID3D11RasterizerState> rs = renderer::rasterizerStates[(UINT)mRSType];
+		Microsoft::WRL::ComPtr<ID3D11DepthStencilState> ds = renderer::depthstencilStates[(UINT)mDSType];
+		Microsoft::WRL::ComPtr<ID3D11BlendState> bs = renderer::blendStates[(UINT)mBSType];
+
+		GetDevice()->BindRasterizerState(rs.Get());
+		GetDevice()->BindDepthStencilState(ds.Get());
+		GetDevice()->BindBlendState(bs.Get());
 	}
 }

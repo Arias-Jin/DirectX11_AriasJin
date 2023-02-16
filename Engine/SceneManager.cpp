@@ -44,7 +44,7 @@ namespace arias
 		// SMILE RECT
 		GameObject* obj = new GameObject();
 		Transform* tr = new Transform();
-		tr->SetPosition(Vector3(0.0f, 0.0f, 10.0f));
+		tr->SetPosition(Vector3(0.0f, 0.0f, 11.0f));
 		tr->SetScale(Vector3(5.0f, 5.0f, 1.0f));
 		obj->AddComponent(tr);
 
@@ -65,7 +65,8 @@ namespace arias
 		// SMILE RECT
 		GameObject* spriteObj = new GameObject();
 		Transform* spriteTr = new Transform();
-		spriteTr->SetPosition(Vector3(5.0f, 0.0f, 10.0f));
+		spriteTr->SetPosition(Vector3(0.0f, 0.0f, 10.0f));
+		spriteTr->SetScale(Vector3(5.0f, 5.0f, 1.0f));
 		spriteObj->AddComponent(spriteTr);
 
 		SpriteRenderer* sr = new SpriteRenderer();

@@ -5,6 +5,8 @@
 
 namespace arias
 {
+	using namespace graphics;
+
 	class Shader : public Resource
 	{
 	public:
@@ -28,13 +30,21 @@ namespace arias
 		Microsoft::WRL::ComPtr<ID3D11GeometryShader> mGS;
 		Microsoft::WRL::ComPtr<ID3D11PixelShader> mPS;
 
+		eRSType mRSType;
+		eDSType mDSType;
+		eBSType mBSType;
+
 		Microsoft::WRL::ComPtr<ID3DBlob> mErrorBlob;
 
 	public:
 		virtual HRESULT Load(const std::wstring& path) override;
 
-		void Create(graphics::eShaderStage stage, const std::wstring& file, const std::string& funcName);
+		void Create(eShaderStage stage, const std::wstring& file, const std::string& funcName);
 		void Binds();
+
+		void SetRSState(eRSType state) { mRSType = state; }
+		void SetDSState(eDSType state) { mDSType = state; }
+		void SetBSState(eBSType state) { mBSType = state; }
 
 	public:
 		ID3D11InputLayout* GetInputLayout() const { return mInputLayout.Get(); }
