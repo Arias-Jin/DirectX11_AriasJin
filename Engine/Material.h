@@ -20,6 +20,7 @@ namespace arias::graphics
 		std::shared_ptr<Shader> mShader;
 		std::shared_ptr<Texture> mTexture;
 		MaterialCB mCB;
+		eRenderingMode mMode;
 
 	public:
 		virtual HRESULT Load(const std::wstring& path) override;
@@ -34,5 +35,8 @@ namespace arias::graphics
 
 		void SetTexture(std::shared_ptr<Texture> texture) { mTexture = texture; }
 		std::shared_ptr<Texture> GetTexture() const { return mTexture; }
+
+		void SetRenderingMode(eRenderingMode mode) { mMode = mode; }
+		eRenderingMode GetRenderingMode() { return mMode; }
 	};
 }

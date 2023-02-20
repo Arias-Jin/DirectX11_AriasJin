@@ -12,6 +12,8 @@ namespace arias::renderer
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> depthstencilStates[(UINT)eDSType::End] = {};
 	Microsoft::WRL::ComPtr<ID3D11BlendState> blendStates[(UINT)eBSType::End] = {};
 
+	std::vector<Camera*> cameras;
+
 	void SetUpState()
 	{
 #pragma region Input Layout
@@ -110,7 +112,7 @@ namespace arias::renderer
 		D3D11_DEPTH_STENCIL_DESC dsDesc = {};
 		
 		dsDesc.DepthEnable = true;
-		dsDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS;
+		dsDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS_EQUAL;
 		dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ALL;
 		dsDesc.StencilEnable = false;
 		GetDevice()->CreateDepthStencilState(&dsDesc, depthstencilStates[(UINT)eDSType::Less].GetAddressOf());
@@ -213,11 +215,14 @@ namespace arias::renderer
 		material->SetTexture(texture);
 		ResourceManager::Insert<Material>(L"RectMaterial", material);
 
+		// std::shared_ptr<Texture> spriteTexture = ResourceManager::Load<Texture>(L"PlayerTexture", L"Player\\Handgun\\Idle\\Player_Handgun_Idle_00.png");
+
 		std::shared_ptr<Texture> spriteTexture = ResourceManager::Load<Texture>(L"DefaultSprite", L"Light.png");
 		
 		// Sprite
 		std::shared_ptr<Shader> spriteShader = ResourceManager::Find<Shader>(L"SpriteShader");
 		std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+		spriteMaterial->SetRenderingMode(eRenderingMode::Transparent);
 		spriteMaterial->SetShader(spriteShader);
 		spriteMaterial->SetTexture(spriteTexture);
 		ResourceManager::Insert<Material>(L"SpriteMaterial", spriteMaterial);
@@ -246,6 +251,21 @@ namespace arias::renderer
 		SetUpState();
 		LoadBuffer();
 		LoadMaterial();
+	}
+
+	void Render()
+	{
+		for (Camera* cam : cameras)
+		{
+			if (cam == nullptr)
+			{
+				continue;
+			}
+
+			cam->Render();
+		}
+
+		cameras.clear();
 	}
 
 	void Release()

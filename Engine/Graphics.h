@@ -70,6 +70,14 @@ namespace arias::graphics
 		End,
 	};
 
+	enum class eRenderingMode
+	{
+		Opaque,
+		Cutout,
+		Transparent,
+		End,
+	};
+
 	struct GpuBuffer
 	{
 		enum class eType

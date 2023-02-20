@@ -11,7 +11,7 @@ namespace arias
 		~SceneManager();
 
 	private:
-		static Scene* mPlayScene;
+		static Scene* mActiveScene;
 
 	public:
 		static void Initialize();
@@ -19,5 +19,8 @@ namespace arias
 		static void FixedUpdate();
 		static void Render();
 		static void Release();
+
+	public:
+		static Scene* GetActiveScene() { return mActiveScene; }
 	};
 }

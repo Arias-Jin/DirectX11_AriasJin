@@ -6,8 +6,9 @@ namespace arias::enums
 	{
 		None = 0,
 		Camera,
-		Monster,
+		MousePointer,
 		Player,
+		Enemy,
 		End = 16,
 	};
 

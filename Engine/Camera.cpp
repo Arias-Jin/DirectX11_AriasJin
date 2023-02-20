@@ -1,10 +1,18 @@
 #include "Camera.h"
 
+#include "BaseRenderer.h"
 #include "Transform.h"
 
 #include "GameObject.h"
 
 #include "Application.h"
+
+#include "Renderer.h"
+
+#include "Material.h"
+
+#include "Scene.h"
+#include "SceneManager.h"
 
 extern arias::Application application;
 
@@ -17,7 +25,7 @@ namespace arias
 		Component(eComponentType::Camera),
 		mView{},
 		mProjection{},
-		mType(eProjectionType::Perspective),
+		mType(eProjectionType::Orthographic),
 		mAspectRatio(1.0f),
 		mNear(1.0f),
 		mFar(1000.0f),
@@ -31,6 +39,7 @@ namespace arias
 
 	void Camera::Initialize()
 	{
+		EnableLayerMasks();
 	}
 
 	void Camera::Update()
@@ -41,10 +50,20 @@ namespace arias
 	{
 		CreateViewMatrix();
 		CreateProjectionMatrix();
+
+		RegisterCameraInRenderer();
 	}
 
 	void Camera::Render()
 	{
+		View = mView;
+		Projection = mProjection;
+
+		SortGameObjects();
+
+		RenderOpaque();
+		RenderCutout();
+		RenderTransparent();
 	}
 
 	void Camera::CreateViewMatrix()
@@ -53,8 +72,8 @@ namespace arias
 		Vector3 pos = tr->GetPosition();
 
 		// Create Translate View Matrix
-		View = Matrix::Identity;
-		View *= Matrix::CreateTranslation(-pos);
+		mView = Matrix::Identity;
+		mView *= Matrix::CreateTranslation(-pos);
 
 		// 회전 정보
 		Vector3 up = tr->Up();
@@ -66,7 +85,7 @@ namespace arias
 		viewRotate._21 = right.y; viewRotate._22 = up.y; viewRotate._23 = forward.y;
 		viewRotate._31 = right.z; viewRotate._32 = up.z; viewRotate._33 = forward.z;
 
-		View *= viewRotate;
+		mView *= viewRotate;
 	}
 
 	void Camera::CreateProjectionMatrix()
@@ -80,7 +99,7 @@ namespace arias
 
 		if (mType == eProjectionType::Perspective)
 		{
-			Projection = Matrix::CreatePerspectiveFieldOfViewLH(
+			mProjection = Matrix::CreatePerspectiveFieldOfViewLH(
 				XM_2PI / 6.0f,
 				mAspectRatio,
 				mNear, mFar
@@ -88,10 +107,115 @@ namespace arias
 		}
 		else
 		{
-			Projection = Matrix::CreateOrthographicLH(
+			mProjection = Matrix::CreateOrthographicLH(
 				width / 100.0f, height / 100.0f,
 				mNear, mFar
 			);
+		}
+	}
+	
+	void Camera::RegisterCameraInRenderer()
+	{
+		renderer::cameras.push_back(this);
+	}
+
+	void Camera::TurnLayerMask(eLayerType layer, bool enable)
+	{
+		mLayerMasks.set((UINT)layer, enable);
+	}
+
+	void Camera::SortGameObjects()
+	{
+		mOpaqueGameObjects.clear();
+		mCutoutGameObjects.clear();
+		mTransparentGameObjects.clear();
+
+		Scene* scene = SceneManager::GetActiveScene();
+
+		for (size_t i = 0; i < (UINT)eLayerType::End; ++i)
+		{
+			if (mLayerMasks[i] == true)
+			{
+				Layer& layer = scene->GetLayer((eLayerType)i);
+				GameObjects gameObjects = layer.GetGameObjects();
+
+				if (gameObjects.size() == 0)
+				{
+					continue;
+				}
+
+				for (GameObject* obj : gameObjects)
+				{
+					PushGameObjectToRenderingModes(obj);
+				}
+			}
+		}
+	}
+
+	void Camera::RenderOpaque()
+	{
+		for (GameObject* obj : mOpaqueGameObjects)
+		{
+			if (obj == nullptr)
+			{
+				continue;
+			}
+
+			obj->Render();
+		}
+	}
+	
+	void Camera::RenderCutout()
+	{
+		for (GameObject* obj : mCutoutGameObjects)
+		{
+			if (obj == nullptr)
+			{
+				continue;
+			}
+
+			obj->Render();
+		}
+	}
+	
+	void Camera::RenderTransparent()
+	{
+		for (GameObject* obj : mTransparentGameObjects)
+		{
+			if (obj == nullptr)
+			{
+				continue;
+			}
+
+			obj->Render();
+		}
+	}
+	
+	void Camera::PushGameObjectToRenderingModes(GameObject* gameObj)
+	{
+		BaseRenderer* renderer = gameObj->GetComponent<BaseRenderer>();
+
+		if (renderer == nullptr)
+		{
+			return;
+		}
+
+		std::shared_ptr<Material> material = renderer->GetMaterial();
+		eRenderingMode mode = material->GetRenderingMode();
+
+		switch (mode)
+		{
+		case arias::graphics::eRenderingMode::Opaque:
+			mOpaqueGameObjects.push_back(gameObj);
+			break;
+		case arias::graphics::eRenderingMode::Cutout:
+			mCutoutGameObjects.push_back(gameObj);
+			break;
+		case arias::graphics::eRenderingMode::Transparent:
+			mTransparentGameObjects.push_back(gameObj);
+			break;
+		default:
+			break;
 		}
 	}
 }

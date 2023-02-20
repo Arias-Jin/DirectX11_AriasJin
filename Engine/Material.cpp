@@ -5,7 +5,8 @@ namespace arias::graphics
     Material::Material() :
         Resource(eResourceType::Material),
         mShader(nullptr),
-        mCB{}
+        mCB{},
+        mMode(eRenderingMode::Opaque)
     {
     }
 

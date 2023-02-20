@@ -23,15 +23,15 @@ namespace arias
             comp = nullptr;
         }
 
-        for (Component* scrComp : mScripts)
+        for (Component* script : mScripts)
         {
-            if (scrComp == nullptr)
+            if (script == nullptr)
             {
                 continue;
             }
 
-            delete scrComp;
-            scrComp = nullptr;
+            delete script;
+            script = nullptr;
         }
     }
 

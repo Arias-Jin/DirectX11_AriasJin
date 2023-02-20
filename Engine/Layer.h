@@ -20,6 +20,12 @@ namespace arias
 		virtual void FixedUpdate();
 		virtual void Render();
 
+	public:
 		void AddGameObject(GameObject* gameObject);
+
+	public:
+		const std::vector<GameObject*>& GetGameObjects() const { return mGameObjects; }
 	};
+
+	typedef const std::vector<GameObject*>& GameObjects;
 }

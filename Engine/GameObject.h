@@ -1,4 +1,5 @@
 #pragma once
+#include "Entity.h"
 
 #include "Component.h"
 
@@ -6,7 +7,7 @@
 
 namespace arias
 {
-	class GameObject
+	class GameObject : public Entity
 	{
 	public:
 		enum eState

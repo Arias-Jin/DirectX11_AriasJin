@@ -3,6 +3,8 @@
 #include "CommonInclude.h"
 #include "Math.h"
 
+#include "Camera.h"
+
 #include "GraphicDevice_DX11.h"
 
 #include "Mesh.h"
@@ -46,6 +48,9 @@ namespace arias::renderer
 	extern Microsoft::WRL::ComPtr<ID3D11DepthStencilState> depthstencilStates[];
 	extern Microsoft::WRL::ComPtr<ID3D11BlendState> blendStates[];
 
+	extern std::vector<Camera*> cameras;
+
 	void Initialize();
+	void Render();
 	void Release();
 }

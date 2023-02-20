@@ -12,6 +12,7 @@
 #include <limits>
 #include <memory>
 #include <filesystem>
+#include <bitset>
 
 #include "CommonInclude.h"
 #include "Enums.h"

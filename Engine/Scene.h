@@ -24,6 +24,10 @@ namespace arias
 		virtual void FixedUpdate();
 		virtual void Render();
 
+	public:
 		void AddGameObject(GameObject* gameObj, const eLayerType type);
+
+	public:
+		Layer& GetLayer(eLayerType type) { return mLayers[(UINT)type]; }
 	};
 }
