@@ -12,6 +12,7 @@ namespace arias
 		virtual ~Transform();
 
 	private:
+		Transform* mParent;
 		Vector3 mForward;
 		Vector3 mRight;
 		Vector3 mUp;
@@ -31,6 +32,9 @@ namespace arias
 		void SetConstantBuffer();
 
 	public:
+		void SetParent(Transform* parent) { mParent = parent; }
+		Transform* GetParent() const { return mParent; }
+
 		void SetPosition(Vector3 position) { mPosition = position; }
 		Vector3 GetPosition() const { return mPosition; }
 

@@ -35,6 +35,7 @@ namespace arias
 		cameraTr->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
 		cameraObj->AddComponent(cameraTr);
 		Camera* cameraComp = new Camera();
+		cameraComp->SetProjectionType(Camera::eProjectionType::Orthographic);
 		cameraObj->AddComponent(cameraComp);
 		cameraComp->TurnLayerMask(eLayerType::UI, false);
 		CameraScript* cameraScript = new CameraScript();
@@ -79,8 +80,9 @@ namespace arias
 		GameObject* obj = new GameObject();
 		obj->SetName(L"SMILE");
 		Transform* tr = new Transform();
-		tr->SetPosition(Vector3(0.0f, 0.0f, 11.0f));
-		tr->SetScale(Vector3(5.0f, 5.0f, 1.0f));
+		tr->SetPosition(Vector3(-3.0f, 0.0f, 11.0f));
+		tr->SetRotation(Vector3(0.0f, 0.0f, XM_PIDIV2));
+		tr->SetScale(Vector3(1.0f, 1.0f, 1.0f));
 		obj->AddComponent(tr);
 
 		MeshRenderer* mr = new MeshRenderer();
@@ -94,13 +96,34 @@ namespace arias
 		mr->SetMaterial(mateiral);
 		mr->SetMesh(mesh);
 
+		PlayerScript* playerScript = new PlayerScript();
+		obj->AddComponent(playerScript);
 		mActiveScene->AddGameObject(obj, eLayerType::Player);
+
+		//SMILE RECT CHild
+		GameObject* child = new GameObject();
+		child->SetName(L"SMILE");
+		Transform* childTr = new Transform();
+		childTr->SetPosition(Vector3(2.0f, 0.0f, 0.0f));
+		childTr->SetScale(Vector3(1.0f, 1.0f, 1.0f));
+		child->AddComponent(childTr);
+		childTr->SetParent(tr);
+
+		MeshRenderer* childMr = new MeshRenderer();
+		child->AddComponent(childMr);
+
+		std::shared_ptr<Material> childmateiral = ResourceManager::Find<Material>(L"RectMaterial");
+
+		childMr->SetMaterial(childmateiral);
+		childMr->SetMesh(mesh);
+
+		mActiveScene->AddGameObject(child, eLayerType::Player);
 
 		// HPBAR
 		GameObject* hpBar = new GameObject();
 		hpBar->SetName(L"HPBAR");
 		Transform* hpBarTR = new Transform();
-		hpBarTR->SetPosition(Vector3(-5.0f, 3.0f, 12.0f));
+		hpBarTR->SetPosition(Vector3(-5.0f, 3.0f, 11.0f));
 		hpBarTR->SetScale(Vector3(1.0f, 1.0f, 1.0f));
 		hpBar->AddComponent(hpBarTR);
 
