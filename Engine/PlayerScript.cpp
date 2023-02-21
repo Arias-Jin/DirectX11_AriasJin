@@ -11,7 +11,10 @@
 namespace arias
 {
 	PlayerScript::PlayerScript() :
-		Script()
+		Script(),
+		mTrans(nullptr),
+		mPos{},
+		mRot{}
 	{
 	}
 
@@ -25,28 +28,28 @@ namespace arias
 
 	void PlayerScript::Update()
 	{
-		Transform* tr = GetOwner()->GetComponent<Transform>();
+		mTrans = GetOwner()->GetComponent<Transform>();
 
-		Vector3 pos = tr->GetPosition();
+		mPos = mTrans->GetPosition();
 		
 		if (Input::GetKeyState(eKeyCode::D) == eKeyState::PRESSED)
 		{
-			pos.x += 3.0f * Time::DeltaTime();
+			mPos.x += 3.0f * Time::DeltaTime();
 		}
 		else if (Input::GetKeyState(eKeyCode::A) == eKeyState::PRESSED)
 		{
-			pos.x -= 3.0f * Time::DeltaTime();
+			mPos.x -= 3.0f * Time::DeltaTime();
 		}
 		else if (Input::GetKeyState(eKeyCode::W) == eKeyState::PRESSED)
 		{
-			pos.y += 3.0f * Time::DeltaTime();
+			mPos.y += 3.0f * Time::DeltaTime();
 		}
 		else if (Input::GetKeyState(eKeyCode::S) == eKeyState::PRESSED)
 		{
-			pos.y -= 3.0f * Time::DeltaTime();
+			mPos.y -= 3.0f * Time::DeltaTime();
 		}
 		
-		tr->SetPosition(pos);
+		mTrans->SetPosition(mPos);
 	}
 
 	void PlayerScript::Render()

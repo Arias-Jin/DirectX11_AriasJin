@@ -3,6 +3,10 @@
 
 namespace arias
 {
+	class Transform;
+
+	using namespace arias::math;
+
 	class PlayerScript : public Script
 	{
 	public:
@@ -10,6 +14,9 @@ namespace arias
 		~PlayerScript();
 
 	private:
+		Transform* mTrans;
+		Vector3 mPos;
+		Vector3 mRot;
 
 	public:
 		virtual void Initialize() override;

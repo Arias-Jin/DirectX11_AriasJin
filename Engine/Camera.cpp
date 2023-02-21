@@ -31,6 +31,7 @@ namespace arias
 		mFar(1000.0f),
 		mScale(1.0f)
 	{
+		EnableLayerMasks();
 	}
 
 	Camera::~Camera()

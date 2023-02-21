@@ -36,11 +36,23 @@ namespace arias
 		cameraObj->AddComponent(cameraTr);
 		Camera* cameraComp = new Camera();
 		cameraObj->AddComponent(cameraComp);
+		cameraComp->TurnLayerMask(eLayerType::UI, false);
 		CameraScript* cameraScript = new CameraScript();
 		cameraObj->AddComponent(cameraScript);
 
 		mActiveScene->AddGameObject(cameraObj, eLayerType::Camera);
 
+		GameObject* cameraUIObj = new GameObject();
+		Transform* cameraUITr = new Transform();
+		cameraUITr->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
+		cameraUIObj->AddComponent(cameraUITr);
+		Camera* cameraUIComp = new Camera();
+		cameraUIComp->SetProjectionType(Camera::eProjectionType::Orthographic);
+		cameraUIObj->AddComponent(cameraUIComp);
+		cameraUIComp->DisableLayerMasks();
+		cameraUIComp->TurnLayerMask(eLayerType::UI, true);
+
+		mActiveScene->AddGameObject(cameraUIObj, eLayerType::Camera);
 		// Light Object
 		GameObject* spriteObj = new GameObject();
 		spriteObj->SetName(L"LIGHT");
@@ -84,6 +96,25 @@ namespace arias
 
 		mActiveScene->AddGameObject(obj, eLayerType::Player);
 
+		// HPBAR
+		GameObject* hpBar = new GameObject();
+		hpBar->SetName(L"HPBAR");
+		Transform* hpBarTR = new Transform();
+		hpBarTR->SetPosition(Vector3(-5.0f, 3.0f, 12.0f));
+		hpBarTR->SetScale(Vector3(1.0f, 1.0f, 1.0f));
+		hpBar->AddComponent(hpBarTR);
+
+		SpriteRenderer* hpsr = new SpriteRenderer();
+		hpBar->AddComponent(hpsr);
+
+		std::shared_ptr<Mesh> hpmesh = ResourceManager::Find<Mesh>(L"RectMesh");
+		std::shared_ptr<Material> hpspriteMaterial = ResourceManager::Find<Material>(L"UIMaterial");
+
+		hpsr->SetMesh(hpmesh);
+		hpsr->SetMaterial(hpspriteMaterial);
+
+		mActiveScene->AddGameObject(hpBar, eLayerType::UI);
+		
 		/*
 		// Crosshair Object
 		GameObject* crosshairObject = new GameObject();
@@ -105,12 +136,12 @@ namespace arias
 		crosshairSprite->SetMaterial(crosshairMaterial);
 
 		crosshairTransform->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
-		crosshairTransform->SetScale(Vector3(1.0f, 1.0f, 1.0f));
+		crosshairTransform->SetScale(Vector3(0.25f, 0.25f, 1.0f));
 
 		mActiveScene->AddGameObject(crosshairObject, eLayerType::MousePointer);
-		*/
 
 		mActiveScene->Initialize();
+		*/
 	}
 
 	void SceneManager::Update()

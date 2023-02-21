@@ -13,6 +13,12 @@
     <FxCompile Include="$(MSBuildThisFileDirectory)SpritePS.hlsl">
       <Filter>PS</Filter>
     </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)UserInterfaceVS.hlsl">
+      <Filter>VS</Filter>
+    </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)UserInterfacePS.hlsl">
+      <Filter>PS</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="VS">

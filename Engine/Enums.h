@@ -9,6 +9,7 @@ namespace arias::enums
 		MousePointer,
 		Player,
 		Enemy,
+		UI,
 		End = 16,
 	};
 

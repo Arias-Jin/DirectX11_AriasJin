@@ -57,6 +57,15 @@ namespace arias::renderer
 			spriteShader->GetVSBlobBufferSize(),
 			spriteShader->GetInputLayoutAddressOf()
 		);
+
+		std::shared_ptr<Shader> uiShader = ResourceManager::Find<Shader>(L"UIShader");
+		GetDevice()->CreateInputLayout(
+			arrLayoutDesc,
+			3,
+			uiShader->GetVSBlobBufferPointer(),
+			uiShader->GetVSBlobBufferSize(),
+			uiShader->GetInputLayoutAddressOf()
+		);
 #pragma endregion
 #pragma region Sampler State
 		D3D11_SAMPLER_DESC samplerDesc = {};
@@ -202,30 +211,49 @@ namespace arias::renderer
 		spriteShader->Create(eShaderStage::VS, L"SpriteVS.hlsl", "main");
 		spriteShader->Create(eShaderStage::PS, L"SpritePS.hlsl", "main");
 		ResourceManager::Insert<Shader>(L"SpriteShader", spriteShader);
+
+		// UI
+		std::shared_ptr<Shader> uiShader = std::make_shared<Shader>();
+		uiShader->Create(eShaderStage::VS, L"UserInterfaceVS.hlsl", "main");
+		uiShader->Create(eShaderStage::PS, L"UserInterfacePS.hlsl", "main");
+		ResourceManager::Insert<Shader>(L"UIShader", uiShader);
+	}
+
+	void LoadTexture()
+	{
+		// std::shared_ptr<Texture> spriteTexture = ResourceManager::Load<Texture>(L"PlayerTexture", L"Player\\Handgun\\Idle\\Player_Handgun_Idle_00.png");
+		ResourceManager::Load<Texture>(L"SmileTexture", L"Smile.png");
+		ResourceManager::Load<Texture>(L"DefaultSprite", L"Light.png");
+		ResourceManager::Load<Texture>(L"HPBarTexture", L"HPBar.png");
 	}
 
 	void LoadMaterial()
 	{
-		std::shared_ptr<Texture> texture = ResourceManager::Load<Texture>(L"SmileTexture", L"Smile.png");
-
 		// Default
+		std::shared_ptr<Texture> texture = ResourceManager::Find<Texture>(L"SmileTexture");
 		std::shared_ptr<Shader> shader = ResourceManager::Find<Shader>(L"RectShader");
 		std::shared_ptr<Material> material = std::make_shared<Material>();
 		material->SetShader(shader);
 		material->SetTexture(texture);
 		ResourceManager::Insert<Material>(L"RectMaterial", material);
 
-		// std::shared_ptr<Texture> spriteTexture = ResourceManager::Load<Texture>(L"PlayerTexture", L"Player\\Handgun\\Idle\\Player_Handgun_Idle_00.png");
-
-		std::shared_ptr<Texture> spriteTexture = ResourceManager::Load<Texture>(L"DefaultSprite", L"Light.png");
-		
 		// Sprite
+		std::shared_ptr<Texture> spriteTexture = ResourceManager::Find<Texture>(L"DefaultSprite");
 		std::shared_ptr<Shader> spriteShader = ResourceManager::Find<Shader>(L"SpriteShader");
 		std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 		spriteMaterial->SetRenderingMode(eRenderingMode::Transparent);
 		spriteMaterial->SetShader(spriteShader);
 		spriteMaterial->SetTexture(spriteTexture);
 		ResourceManager::Insert<Material>(L"SpriteMaterial", spriteMaterial);
+
+		// UI
+		std::shared_ptr<Texture> uiTexture = ResourceManager::Find<Texture>(L"HPBarTexture");
+		std::shared_ptr<Shader> uiShader = ResourceManager::Find<Shader>(L"UIShader");
+		std::shared_ptr<Material> uiMaterial = std::make_shared<Material>();
+		uiMaterial->SetRenderingMode(eRenderingMode::Transparent);
+		uiMaterial->SetShader(uiShader);
+		uiMaterial->SetTexture(uiTexture);
+		ResourceManager::Insert<Material>(L"UIMaterial", uiMaterial);
 	}
 
 	void Initialize()
@@ -250,6 +278,7 @@ namespace arias::renderer
 		LoadShader();
 		SetUpState();
 		LoadBuffer();
+		LoadTexture();
 		LoadMaterial();
 	}
 

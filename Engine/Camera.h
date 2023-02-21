@@ -63,5 +63,7 @@ namespace arias
 
 		void EnableLayerMasks() { mLayerMasks.set(); }
 		void DisableLayerMasks() { mLayerMasks.reset(); }
+
+		void SetProjectionType(eProjectionType type) { mType = type; }
 	};
 }

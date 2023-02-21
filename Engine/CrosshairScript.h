@@ -3,6 +3,10 @@
 
 namespace arias
 {
+	class Transform;
+
+	using namespace arias::math;
+
 	class CrosshairScript : public Script
 	{
 	public:
@@ -12,6 +16,11 @@ namespace arias
 	private:
 		float mWinWidthCenter;
 		float mWinHeightCenter;
+
+		POINT mMousePos;
+		Transform* mTrans;
+		Vector3 mPos;
+		Vector3 mRot;
 
 	public:
 		virtual void Initialize() override;
