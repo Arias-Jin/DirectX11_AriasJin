@@ -9,7 +9,9 @@ extern arias::Application application;
 namespace arias
 {
 	std::vector<Input::Key> Input::mKeys;
-	math::Vector2 Input::mMousePosition;
+	math::Vector3 Input::mMousePosition;
+	float Input::mWinWidthCenter;
+	float Input::mWinHeightCenter;
 
 	int ASCII[(UINT)eKeyCode::END] =
 	{
@@ -46,6 +48,11 @@ namespace arias
 
 			mKeys.push_back(key);
 		}
+
+		RECT winRect = {};
+		GetClientRect(application.GetHwnd(), &winRect);
+		mWinWidthCenter = ((float)winRect.right - (float)winRect.left) / 2.0f;
+		mWinHeightCenter = ((float)winRect.bottom - (float)winRect.top) / 2.0f;
 	}
 
 	void Input::Update()
@@ -89,8 +96,8 @@ namespace arias
 			POINT mousePos = {};
 			GetCursorPos(&mousePos);
 			ScreenToClient(application.GetHwnd(), &mousePos);
-			mMousePosition.x = (float)mousePos.x;
-			mMousePosition.y = (float)mousePos.y;
+			mMousePosition.x = ((float)mousePos.x - mWinWidthCenter) / 100.0f;
+			mMousePosition.y = -((float)mousePos.y - mWinHeightCenter) / 100.0f;
 		}
 		else
 		{
@@ -113,10 +120,10 @@ namespace arias
 	void Input::Render(HDC hdc)
 	{
 		HWND hWnd = application.GetHwnd();
-
+		
 		wchar_t szFloat[50] = {};
 		swprintf_s(szFloat, 50, L"X : %f | Y : %f", mMousePosition.x, mMousePosition.y);
-
+		
 		SetWindowText(hWnd, szFloat);
 	}
 }

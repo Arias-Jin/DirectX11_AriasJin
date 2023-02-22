@@ -1,5 +1,6 @@
 #include "CameraScript.h"
 
+#include "Camera.h"
 #include "Transform.h"
 
 #include "GameObject.h"
@@ -11,7 +12,12 @@
 namespace arias
 {
 	CameraScript::CameraScript() :
-		Script()
+		Script(),
+		mCamera(nullptr),
+		mTrans(nullptr),
+		mPos{},
+		mMoveSpeed(100.0f),
+		mScale(1.0f)
 	{
 	}
 
@@ -21,39 +27,50 @@ namespace arias
 
 	void CameraScript::Initialize()
 	{
+		mTrans = GetOwner()->GetComponent<Transform>();
+		mCamera = GetOwner()->GetComponent<Camera>();
 	}
 	
 	void CameraScript::Update()
 	{
-		Transform* tr = GetOwner()->GetComponent<Transform>();
-		Vector3 pos = tr->GetPosition();
+		mPos = mTrans->GetPosition();
 
 		if (Input::GetKeyState(eKeyCode::RIGHT) == eKeyState::PRESSED)
 		{
-			pos.x += 3.0f * Time::DeltaTime();
+			mPos += mMoveSpeed * mTrans->Right() * Time::DeltaTime();
 		}
 		else if (Input::GetKeyState(eKeyCode::LEFT) == eKeyState::PRESSED)
 		{
-			pos.x -= 3.0f * Time::DeltaTime();
+			mPos += mMoveSpeed * -mTrans->Right() * Time::DeltaTime();
 		}
 		else if (Input::GetKeyState(eKeyCode::UP) == eKeyState::PRESSED)
 		{
-			pos.y += 3.0f * Time::DeltaTime();
+			mPos += mMoveSpeed * mTrans->Up() * Time::DeltaTime();
 		}
 		else if (Input::GetKeyState(eKeyCode::DOWN) == eKeyState::PRESSED)
 		{
-			pos.y -= 3.0f * Time::DeltaTime();
+			mPos += mMoveSpeed * -mTrans->Up() * Time::DeltaTime();
 		}
 		else if (Input::GetKeyState(eKeyCode::NUM_8) == eKeyState::PRESSED)
 		{
-			pos.z += 3.0f * Time::DeltaTime();
+			if (mScale > 0)
+			{
+				mScale -= 1.0f * Time::DeltaTime();
+			}
+
+			mCamera->SetScale(mScale);
 		}
 		else if (Input::GetKeyState(eKeyCode::NUM_2) == eKeyState::PRESSED)
 		{
-			pos.z -= 3.0f * Time::DeltaTime();
+			if (mScale < 1)
+			{
+				mScale += 1.0f * Time::DeltaTime();
+			}
+
+			mCamera->SetScale(mScale);
 		}
 
-		tr->SetPosition(pos);
+		mTrans->SetPosition(mPos);
 	}
 	
 	void CameraScript::Render()

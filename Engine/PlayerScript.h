@@ -15,8 +15,12 @@ namespace arias
 
 	private:
 		Transform* mTrans;
+
+		Vector3 mMousePos;
 		Vector3 mPos;
 		Vector3 mRot;
+
+		float mMoveSpeed;
 
 	public:
 		virtual void Initialize() override;

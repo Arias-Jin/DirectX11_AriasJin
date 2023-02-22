@@ -94,8 +94,9 @@ namespace arias
 		RECT winRect;
 		GetClientRect(application.GetHwnd(), &winRect);
 
-		float width = (float)winRect.right - (float)winRect.left;
-		float height = (float)winRect.bottom - (float)winRect.top;
+		float width = ((float)winRect.right - (float)winRect.left) * mScale;
+		float height = ((float)winRect.bottom - (float)winRect.top) * mScale;
+
 		mAspectRatio = width / height;
 
 		if (mType == eProjectionType::Perspective)

@@ -4,6 +4,7 @@
 #include "MeshRenderer.h"
 #include "SpriteRenderer.h"
 #include "CameraScript.h"
+#include "GridScript.h"
 #include "CrosshairScript.h"
 #include "PlayerScript.h"
 #include "Transform.h"
@@ -29,142 +30,104 @@ namespace arias
 	{
 		mActiveScene = new Scene();
 
-		// Camera Game Object
-		GameObject* cameraObj = new GameObject();
-		Transform* cameraTr = new Transform();
-		cameraTr->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
-		cameraObj->AddComponent(cameraTr);
-		Camera* cameraComp = new Camera();
-		cameraComp->SetProjectionType(Camera::eProjectionType::Orthographic);
-		cameraObj->AddComponent(cameraComp);
-		cameraComp->TurnLayerMask(eLayerType::UI, false);
-		CameraScript* cameraScript = new CameraScript();
-		cameraObj->AddComponent(cameraScript);
+#pragma region UI Camera
+		GameObject* uiCameraObject = new GameObject();
+		Camera* uiCameraComponent = new Camera();
+		CameraScript* uiCameraScript = new CameraScript();
+		Transform* uiCameraTransform = new Transform();
 
-		mActiveScene->AddGameObject(cameraObj, eLayerType::Camera);
+		uiCameraComponent->SetProjectionType(Camera::eProjectionType::Orthographic);
+		uiCameraComponent->TurnLayerMask(eLayerType::UI, true);
+		uiCameraComponent->DisableLayerMasks();
 
-		GameObject* cameraUIObj = new GameObject();
-		Transform* cameraUITr = new Transform();
-		cameraUITr->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
-		cameraUIObj->AddComponent(cameraUITr);
-		Camera* cameraUIComp = new Camera();
-		cameraUIComp->SetProjectionType(Camera::eProjectionType::Orthographic);
-		cameraUIObj->AddComponent(cameraUIComp);
-		cameraUIComp->DisableLayerMasks();
-		cameraUIComp->TurnLayerMask(eLayerType::UI, true);
+		uiCameraTransform->SetPosition(Vector3(0.0f, 0.0f, 100.0f));
 
-		mActiveScene->AddGameObject(cameraUIObj, eLayerType::Camera);
-		// Light Object
-		GameObject* spriteObj = new GameObject();
-		spriteObj->SetName(L"LIGHT");
-		Transform* spriteTr = new Transform();
-		spriteTr->SetPosition(Vector3(0.0f, 0.0f, 11.0f));
-		spriteTr->SetScale(Vector3(5.0f, 5.0f, 1.0f));
-		spriteObj->AddComponent(spriteTr);
+		uiCameraObject->AddComponent(uiCameraComponent);
+		uiCameraObject->AddComponent(uiCameraScript);
+		uiCameraObject->AddComponent(uiCameraTransform);
 
-		SpriteRenderer* sr = new SpriteRenderer();
-		spriteObj->AddComponent(sr);
-
-		std::shared_ptr<Mesh> mesh = ResourceManager::Find<Mesh>(L"RectMesh");
-		std::shared_ptr<Material> spriteMaterial = ResourceManager::Find<Material>(L"SpriteMaterial");
-
-		//Vector2 vec2(1.0f, 1.0f);
-		//spriteMaterial->SetData(eGPUParam::Vector2, &vec2);
-
-		sr->SetMaterial(spriteMaterial);
-		sr->SetMesh(mesh);
-
-		mActiveScene->AddGameObject(spriteObj, eLayerType::Player);
-
-		//SMILE RECT
-		GameObject* obj = new GameObject();
-		obj->SetName(L"SMILE");
-		Transform* tr = new Transform();
-		tr->SetPosition(Vector3(-3.0f, 0.0f, 11.0f));
-		tr->SetRotation(Vector3(0.0f, 0.0f, XM_PIDIV2));
-		tr->SetScale(Vector3(1.0f, 1.0f, 1.0f));
-		obj->AddComponent(tr);
-
-		MeshRenderer* mr = new MeshRenderer();
-		obj->AddComponent(mr);
-
-		std::shared_ptr<Material> mateiral = ResourceManager::Find<Material>(L"RectMaterial");
-
-		Vector2 vec2(1.0f, 1.0f);
-		mateiral->SetData(eGPUParam::Vector2, &vec2);
-
-		mr->SetMaterial(mateiral);
-		mr->SetMesh(mesh);
-
-		PlayerScript* playerScript = new PlayerScript();
-		obj->AddComponent(playerScript);
-		mActiveScene->AddGameObject(obj, eLayerType::Player);
-
-		//SMILE RECT CHild
-		GameObject* child = new GameObject();
-		child->SetName(L"SMILE");
-		Transform* childTr = new Transform();
-		childTr->SetPosition(Vector3(2.0f, 0.0f, 0.0f));
-		childTr->SetScale(Vector3(1.0f, 1.0f, 1.0f));
-		child->AddComponent(childTr);
-		childTr->SetParent(tr);
-
-		MeshRenderer* childMr = new MeshRenderer();
-		child->AddComponent(childMr);
-
-		std::shared_ptr<Material> childmateiral = ResourceManager::Find<Material>(L"RectMaterial");
-
-		childMr->SetMaterial(childmateiral);
-		childMr->SetMesh(mesh);
-
-		mActiveScene->AddGameObject(child, eLayerType::Player);
-
-		// HPBAR
-		GameObject* hpBar = new GameObject();
-		hpBar->SetName(L"HPBAR");
-		Transform* hpBarTR = new Transform();
-		hpBarTR->SetPosition(Vector3(-5.0f, 3.0f, 11.0f));
-		hpBarTR->SetScale(Vector3(1.0f, 1.0f, 1.0f));
-		hpBar->AddComponent(hpBarTR);
-
-		SpriteRenderer* hpsr = new SpriteRenderer();
-		hpBar->AddComponent(hpsr);
-
-		std::shared_ptr<Mesh> hpmesh = ResourceManager::Find<Mesh>(L"RectMesh");
-		std::shared_ptr<Material> hpspriteMaterial = ResourceManager::Find<Material>(L"UIMaterial");
-
-		hpsr->SetMesh(hpmesh);
-		hpsr->SetMaterial(hpspriteMaterial);
-
-		mActiveScene->AddGameObject(hpBar, eLayerType::UI);
-		
-		/*
-		// Crosshair Object
+		mActiveScene->AddGameObject(uiCameraObject, eLayerType::Camera);
+#pragma endregion
+#pragma region Crosshair UI
 		GameObject* crosshairObject = new GameObject();
+		SpriteRenderer* crosshairRenderer = new SpriteRenderer();
 		CrosshairScript* crosshairScript = new CrosshairScript();
-		SpriteRenderer* crosshairSprite = new SpriteRenderer();
 		Transform* crosshairTransform = new Transform();
 
 		std::shared_ptr<Mesh> crosshairMesh = ResourceManager::Find<Mesh>(L"RectMesh");
-		std::shared_ptr<Material> crosshairMaterial = ResourceManager::Find<Material>(L"SpriteMaterial");
-		std::shared_ptr<Texture> crosshairTexture = ResourceManager::Load<Texture>(L"CrosshairTexture", L"Crosshair.png");
+		std::shared_ptr<Material> crosshairMaterial = ResourceManager::Find<Material>(L"CrosshairMaterial");
 
-		crosshairObject->AddComponent(crosshairScript);
-		crosshairObject->AddComponent(crosshairSprite);
-		crosshairObject->AddComponent(crosshairTransform);
-
-		crosshairMaterial->SetTexture(crosshairTexture);
-
-		crosshairSprite->SetMesh(crosshairMesh);
-		crosshairSprite->SetMaterial(crosshairMaterial);
+		crosshairRenderer->SetMesh(crosshairMesh);
+		crosshairRenderer->SetMaterial(crosshairMaterial);
 
 		crosshairTransform->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
 		crosshairTransform->SetScale(Vector3(0.25f, 0.25f, 1.0f));
 
-		mActiveScene->AddGameObject(crosshairObject, eLayerType::MousePointer);
+		crosshairObject->AddComponent(crosshairRenderer);
+		crosshairObject->AddComponent(crosshairScript);
+		crosshairObject->AddComponent(crosshairTransform);
+
+		mActiveScene->AddGameObject(crosshairObject, eLayerType::UI);
+#pragma endregion
+#pragma region Grid Object
+		GameObject* gridObject = new GameObject();
+		MeshRenderer* gridRenderer = new MeshRenderer();
+		GridScript* gridScript = new GridScript();
+		Transform* gridTransform = new Transform();
+
+		std::shared_ptr<Mesh> gridMesh = ResourceManager::Find<Mesh>(L"RectMesh");
+		std::shared_ptr<Material> gridMaterial = ResourceManager::Find<Material>(L"GridMaterial");
+
+		gridRenderer->SetMesh(gridMesh);
+		gridRenderer->SetMaterial(gridMaterial);
+
+		gridObject->AddComponent(gridRenderer);
+		gridObject->AddComponent(gridScript);
+		gridObject->AddComponent(gridTransform);
+
+		mActiveScene->AddGameObject(gridObject, eLayerType::Grid);
+#pragma endregion
+#pragma region Main Camera
+		GameObject* cameraObject = new GameObject();
+		Camera* cameraComponent = new Camera();
+		CameraScript* cameraScript = new CameraScript();
+		Transform* cameraTransform = new Transform();
+		
+		cameraComponent->SetProjectionType(Camera::eProjectionType::Orthographic);
+		cameraComponent->TurnLayerMask(eLayerType::UI, false);
+		cameraComponent->RegisterCameraInRenderer();
+		
+		cameraTransform->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
+
+		cameraObject->AddComponent(cameraComponent);
+		cameraObject->AddComponent(cameraScript);
+		cameraObject->AddComponent(cameraTransform);
+		
+		mActiveScene->AddGameObject(cameraObject, eLayerType::Camera);
+#pragma endregion
+#pragma region Player
+		GameObject* playerObject = new GameObject();
+		SpriteRenderer* playerSprite = new SpriteRenderer();
+		PlayerScript* playerScript = new PlayerScript();
+		Transform* playerTransform = new Transform();
+
+		std::shared_ptr<Mesh> playerMesh = ResourceManager::Find<Mesh>(L"RectMesh");
+		std::shared_ptr<Material> playerMaterial = ResourceManager::Find<Material>(L"PlayerMaterial");
+
+		playerSprite->SetMesh(playerMesh);
+		playerSprite->SetMaterial(playerMaterial);
+
+		playerTransform->SetPosition(Vector3(0.0f, 0.0f, 10.0f));
+		playerTransform->SetScale(Vector3(1.0f, 1.0f, 1.0f));
+
+		playerObject->AddComponent(playerSprite);
+		playerObject->AddComponent(playerScript);
+		playerObject->AddComponent(playerTransform);
+
+		mActiveScene->AddGameObject(playerObject, eLayerType::Player);
+#pragma endregion
 
 		mActiveScene->Initialize();
-		*/
 	}
 
 	void SceneManager::Update()

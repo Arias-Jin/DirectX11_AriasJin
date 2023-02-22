@@ -41,6 +41,13 @@ namespace arias::renderer
 		Matrix matrix;
 	};
 
+	CBUFFER(GridCB, CBSLOT_GRID)
+	{
+		Vector4 cameraPosition;
+		Vector2 cameraScale;
+		Vector2 resolution;
+	};
+
 	extern Vertex vertexes[4];
 	extern ConstantBuffer* constantBuffers[];
 	extern Microsoft::WRL::ComPtr<ID3D11SamplerState> samplerStates[];

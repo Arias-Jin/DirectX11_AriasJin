@@ -66,6 +66,15 @@ namespace arias::renderer
 			uiShader->GetVSBlobBufferSize(),
 			uiShader->GetInputLayoutAddressOf()
 		);
+
+		std::shared_ptr<Shader> gridShader = ResourceManager::Find<Shader>(L"GridShader");
+		GetDevice()->CreateInputLayout(
+			arrLayoutDesc,
+			3,
+			gridShader->GetVSBlobBufferPointer(),
+			gridShader->GetVSBlobBufferSize(),
+			gridShader->GetInputLayoutAddressOf()
+		);
 #pragma endregion
 #pragma region Sampler State
 		D3D11_SAMPLER_DESC samplerDesc = {};
@@ -196,6 +205,9 @@ namespace arias::renderer
 
 		constantBuffers[(UINT)eCBType::Material] = new ConstantBuffer(eCBType::Material);
 		constantBuffers[(UINT)eCBType::Material]->Create(sizeof(MaterialCB));
+
+		constantBuffers[(UINT)eCBType::Grid] = new ConstantBuffer(eCBType::Grid);
+		constantBuffers[(UINT)eCBType::Grid]->Create(sizeof(GridCB));
 	}
 
 	void LoadShader()
@@ -217,11 +229,18 @@ namespace arias::renderer
 		uiShader->Create(eShaderStage::VS, L"UserInterfaceVS.hlsl", "main");
 		uiShader->Create(eShaderStage::PS, L"UserInterfacePS.hlsl", "main");
 		ResourceManager::Insert<Shader>(L"UIShader", uiShader);
+
+		// Grid Shader
+		std::shared_ptr<Shader> gridShader = std::make_shared<Shader>();
+		gridShader->Create(eShaderStage::VS, L"GridVS.hlsl", "main");
+		gridShader->Create(eShaderStage::PS, L"GridPS.hlsl", "main");
+		ResourceManager::Insert<Shader>(L"GridShader", gridShader);
 	}
 
 	void LoadTexture()
 	{
-		// std::shared_ptr<Texture> spriteTexture = ResourceManager::Load<Texture>(L"PlayerTexture", L"Player\\Handgun\\Idle\\Player_Handgun_Idle_00.png");
+		ResourceManager::Load<Texture>(L"PlayerTexture", L"Player\\Handgun\\Move\\Player_Handgun_Move_00.png");
+		ResourceManager::Load<Texture>(L"CrosshairTexture", L"Crosshair.png");
 		ResourceManager::Load<Texture>(L"SmileTexture", L"Smile.png");
 		ResourceManager::Load<Texture>(L"DefaultSprite", L"Light.png");
 		ResourceManager::Load<Texture>(L"HPBarTexture", L"HPBar.png");
@@ -229,6 +248,22 @@ namespace arias::renderer
 
 	void LoadMaterial()
 	{
+		// Player
+		std::shared_ptr<Texture> playerTexture = ResourceManager::Find<Texture>(L"PlayerTexture");
+		std::shared_ptr<Shader> playerShader = ResourceManager::Find<Shader>(L"SpriteShader");
+		std::shared_ptr<Material> playerMaterial = std::make_shared<Material>();
+		playerMaterial->SetShader(playerShader);
+		playerMaterial->SetTexture(playerTexture);
+		ResourceManager::Insert<Material>(L"PlayerMaterial", playerMaterial);
+
+		// Crosshair
+		std::shared_ptr<Texture> crosshairTexture = ResourceManager::Find<Texture>(L"CrosshairTexture");
+		std::shared_ptr<Shader> crosshairShader = ResourceManager::Find<Shader>(L"SpriteShader");
+		std::shared_ptr<Material> crosshairMaterial = std::make_shared<Material>();
+		crosshairMaterial->SetShader(crosshairShader);
+		crosshairMaterial->SetTexture(crosshairTexture);
+		ResourceManager::Insert<Material>(L"CrosshairMaterial", crosshairMaterial);
+
 		// Default
 		std::shared_ptr<Texture> texture = ResourceManager::Find<Texture>(L"SmileTexture");
 		std::shared_ptr<Shader> shader = ResourceManager::Find<Shader>(L"RectShader");
@@ -254,6 +289,12 @@ namespace arias::renderer
 		uiMaterial->SetShader(uiShader);
 		uiMaterial->SetTexture(uiTexture);
 		ResourceManager::Insert<Material>(L"UIMaterial", uiMaterial);
+
+		// Grid
+		std::shared_ptr<Shader> gridShader = ResourceManager::Find<Shader>(L"GridShader");
+		std::shared_ptr<Material> gridMaterial = std::make_shared<Material>();
+		gridMaterial->SetShader(gridShader);
+		ResourceManager::Insert<Material>(L"GridMaterial", gridMaterial);
 	}
 
 	void Initialize()

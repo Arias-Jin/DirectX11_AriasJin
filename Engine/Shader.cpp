@@ -63,6 +63,12 @@ namespace arias
 				mErrorBlob.GetAddressOf()
 			);
 
+			if (mErrorBlob)
+			{
+				OutputDebugStringA((char*)mErrorBlob->GetBufferPointer());
+				// mErrorBlob->Release();
+			}
+
 			GetDevice()->CreateVertexShader(
 				mVSBlob->GetBufferPointer(),
 				mVSBlob->GetBufferSize(),
@@ -82,6 +88,12 @@ namespace arias
 				mPSBlob.GetAddressOf(),
 				mErrorBlob.GetAddressOf()
 			);
+
+			if (mErrorBlob)
+			{
+				OutputDebugStringA((char*)mErrorBlob->GetBufferPointer());
+				// mErrorBlob->Release();
+			}
 
 			GetDevice()->CreatePixelShader(
 				mPSBlob->GetBufferPointer(),

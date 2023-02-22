@@ -3,6 +3,11 @@
 
 namespace arias
 {
+	class Camera;
+	class Transform;
+
+	using namespace arias::math;
+
 	class CameraScript : public Script
 	{
 	public:
@@ -10,6 +15,13 @@ namespace arias
 		~CameraScript();
 
 	private:
+		Camera* mCamera;
+		Transform* mTrans;
+		
+		Vector3 mPos;
+
+		float mMoveSpeed;
+		float mScale;
 
 	public:
 		virtual void Initialize() override;

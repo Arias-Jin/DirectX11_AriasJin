@@ -13,8 +13,10 @@ namespace arias
 	PlayerScript::PlayerScript() :
 		Script(),
 		mTrans(nullptr),
+		mMousePos{},
 		mPos{},
-		mRot{}
+		mRot{},
+		mMoveSpeed(3.0f)
 	{
 	}
 
@@ -24,32 +26,41 @@ namespace arias
 
 	void PlayerScript::Initialize()
 	{
+		mTrans = GetOwner()->GetComponent<Transform>();
 	}
 
 	void PlayerScript::Update()
 	{
-		mTrans = GetOwner()->GetComponent<Transform>();
-
+#pragma region Player Position
 		mPos = mTrans->GetPosition();
-		
+
 		if (Input::GetKeyState(eKeyCode::D) == eKeyState::PRESSED)
 		{
-			mPos.x += 3.0f * Time::DeltaTime();
+			mPos.x += mMoveSpeed * Time::DeltaTime();
 		}
 		else if (Input::GetKeyState(eKeyCode::A) == eKeyState::PRESSED)
 		{
-			mPos.x -= 3.0f * Time::DeltaTime();
+			mPos.x -= mMoveSpeed * Time::DeltaTime();
 		}
 		else if (Input::GetKeyState(eKeyCode::W) == eKeyState::PRESSED)
 		{
-			mPos.y += 3.0f * Time::DeltaTime();
+			mPos.y += mMoveSpeed * Time::DeltaTime();
 		}
 		else if (Input::GetKeyState(eKeyCode::S) == eKeyState::PRESSED)
 		{
-			mPos.y -= 3.0f * Time::DeltaTime();
+			mPos.y -= mMoveSpeed * Time::DeltaTime();
 		}
-		
+
 		mTrans->SetPosition(mPos);
+#pragma endregion
+#pragma region Player Rotation
+		mMousePos = Input::GetMousePosition();
+		mRot = mTrans->GetRotation();
+
+		mRot.z = atan2(mMousePos.y - mPos.y, mMousePos.x - mPos.x);
+
+		mTrans->SetRotation(mRot);
+#pragma endregion
 	}
 
 	void PlayerScript::Render()

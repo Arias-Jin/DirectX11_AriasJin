@@ -14,11 +14,8 @@ namespace arias
 		~CrosshairScript();
 
 	private:
-		float mWinWidthCenter;
-		float mWinHeightCenter;
-
-		POINT mMousePos;
 		Transform* mTrans;
+
 		Vector3 mPos;
 		Vector3 mRot;
 
@@ -28,4 +25,3 @@ namespace arias
 		virtual void Render() override;
 	};
 }
-

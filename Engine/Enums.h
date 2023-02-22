@@ -6,6 +6,7 @@ namespace arias::enums
 	{
 		None = 0,
 		Camera,
+		Grid,
 		MousePointer,
 		Player,
 		Enemy,

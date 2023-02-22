@@ -53,7 +53,9 @@ namespace arias
 
 	private:
 		static std::vector<Key> mKeys;
-		static math::Vector2 mMousePosition;
+		static math::Vector3 mMousePosition;
+		static float mWinWidthCenter;
+		static float mWinHeightCenter;
 
 	public:
 		static void Initialize();
@@ -65,7 +67,7 @@ namespace arias
 			return mKeys[static_cast<UINT>(keyCode)].eState; 
 		}
 
-		static __forceinline math::Vector2 GetMousePosition()
+		static __forceinline math::Vector3 GetMousePosition()
 		{
 			return mMousePosition;
 		}
