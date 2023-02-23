@@ -16,7 +16,7 @@ namespace arias
 		mCamera(nullptr),
 		mTrans(nullptr),
 		mPos{},
-		mMoveSpeed(100.0f),
+		mMoveSpeed(200.0f),
 		mScale(1.0f)
 	{
 	}

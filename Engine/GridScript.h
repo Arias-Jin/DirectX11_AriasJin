@@ -1,7 +1,6 @@
 #pragma once
 #include "Script.h"
 
-
 namespace arias
 {
 	class GameObject;
@@ -16,6 +15,7 @@ namespace arias
 		GridScript();
 		virtual ~GridScript();
 
+	public:
 		virtual void Initialize();
 		virtual void Update();
 		virtual void FixedUpdate();
@@ -27,12 +27,12 @@ namespace arias
 		Transform* mTrans;
 		Camera* mCamera;
 
-
 		Vector2 mWinResolution;
 		Vector3 mCameraPos;
 		Vector4 mPos;
 
 		float mScale;
+
 	public:
 		void SetCamera(Camera* camera) { mCamera = camera; }
 	};

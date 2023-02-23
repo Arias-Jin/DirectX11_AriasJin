@@ -22,5 +22,6 @@ namespace arias
 
 	public:
 		static __forceinline float DeltaTime() { return mDeltaTime; }
+		static __forceinline float SecondTime() { return mOneSecond; }
 	};
 }

@@ -42,6 +42,10 @@ namespace arias
 			{
 				continue;
 			}
+			if (obj->GetState() != GameObject::eState::Active)
+			{
+				continue;
+			}
 
 			obj->Update();
 		}
@@ -55,6 +59,10 @@ namespace arias
 			{
 				continue;
 			}
+			if (obj->GetState() != GameObject::eState::Active)
+			{
+				continue;
+			}
 
 			obj->FixedUpdate();
 		}
@@ -65,6 +73,10 @@ namespace arias
 		for (GameObject* obj : mGameObjects)
 		{
 			if (obj == nullptr)
+			{
+				continue;
+			}
+			if (obj->GetState() != GameObject::eState::Active)
 			{
 				continue;
 			}

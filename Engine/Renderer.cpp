@@ -75,6 +75,15 @@ namespace arias::renderer
 			gridShader->GetVSBlobBufferSize(),
 			gridShader->GetInputLayoutAddressOf()
 		);
+
+		std::shared_ptr<Shader> fadeShader = ResourceManager::Find<Shader>(L"FadeShader");
+		GetDevice()->CreateInputLayout(
+			arrLayoutDesc,
+			3,
+			fadeShader->GetVSBlobBufferPointer(),
+			fadeShader->GetVSBlobBufferSize(),
+			fadeShader->GetInputLayoutAddressOf()
+		);
 #pragma endregion
 #pragma region Sampler State
 		D3D11_SAMPLER_DESC samplerDesc = {};
@@ -208,6 +217,9 @@ namespace arias::renderer
 
 		constantBuffers[(UINT)eCBType::Grid] = new ConstantBuffer(eCBType::Grid);
 		constantBuffers[(UINT)eCBType::Grid]->Create(sizeof(GridCB));
+
+		constantBuffers[(UINT)eCBType::Fade] = new ConstantBuffer(eCBType::Fade);
+		constantBuffers[(UINT)eCBType::Fade]->Create(sizeof(FadeCB));
 	}
 
 	void LoadShader()
@@ -235,6 +247,12 @@ namespace arias::renderer
 		gridShader->Create(eShaderStage::VS, L"GridVS.hlsl", "main");
 		gridShader->Create(eShaderStage::PS, L"GridPS.hlsl", "main");
 		ResourceManager::Insert<Shader>(L"GridShader", gridShader);
+
+		// Fade Shader
+		std::shared_ptr<Shader> fadeShader = std::make_shared<Shader>();
+		fadeShader->Create(eShaderStage::VS, L"FadeVS.hlsl", "main");
+		fadeShader->Create(eShaderStage::PS, L"FadePS.hlsl", "main");
+		ResourceManager::Insert<Shader>(L"FadeShader", fadeShader);
 	}
 
 	void LoadTexture()
@@ -264,23 +282,6 @@ namespace arias::renderer
 		crosshairMaterial->SetTexture(crosshairTexture);
 		ResourceManager::Insert<Material>(L"CrosshairMaterial", crosshairMaterial);
 
-		// Default
-		std::shared_ptr<Texture> texture = ResourceManager::Find<Texture>(L"SmileTexture");
-		std::shared_ptr<Shader> shader = ResourceManager::Find<Shader>(L"RectShader");
-		std::shared_ptr<Material> material = std::make_shared<Material>();
-		material->SetShader(shader);
-		material->SetTexture(texture);
-		ResourceManager::Insert<Material>(L"RectMaterial", material);
-
-		// Sprite
-		std::shared_ptr<Texture> spriteTexture = ResourceManager::Find<Texture>(L"DefaultSprite");
-		std::shared_ptr<Shader> spriteShader = ResourceManager::Find<Shader>(L"SpriteShader");
-		std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
-		spriteMaterial->SetRenderingMode(eRenderingMode::Transparent);
-		spriteMaterial->SetShader(spriteShader);
-		spriteMaterial->SetTexture(spriteTexture);
-		ResourceManager::Insert<Material>(L"SpriteMaterial", spriteMaterial);
-
 		// UI
 		std::shared_ptr<Texture> uiTexture = ResourceManager::Find<Texture>(L"HPBarTexture");
 		std::shared_ptr<Shader> uiShader = ResourceManager::Find<Shader>(L"UIShader");
@@ -295,6 +296,32 @@ namespace arias::renderer
 		std::shared_ptr<Material> gridMaterial = std::make_shared<Material>();
 		gridMaterial->SetShader(gridShader);
 		ResourceManager::Insert<Material>(L"GridMaterial", gridMaterial);
+
+		// Fade
+		std::shared_ptr<Texture> fadeTexture = ResourceManager::Find<Texture>(L"SmileTexture");
+		std::shared_ptr<Shader> fadeShader = ResourceManager::Find<Shader>(L"FadeShader");
+		std::shared_ptr<Material> fadeMaterial = std::make_shared<Material>();
+		fadeMaterial->SetRenderingMode(eRenderingMode::Transparent);
+		fadeMaterial->SetShader(fadeShader);
+		fadeMaterial->SetTexture(fadeTexture);
+		ResourceManager::Insert<Material>(L"FadeMaterial", fadeMaterial);
+
+		// // Default
+		// std::shared_ptr<Texture> texture = ResourceManager::Find<Texture>(L"SmileTexture");
+		// std::shared_ptr<Shader> shader = ResourceManager::Find<Shader>(L"RectShader");
+		// std::shared_ptr<Material> material = std::make_shared<Material>();
+		// material->SetShader(shader);
+		// material->SetTexture(texture);
+		// ResourceManager::Insert<Material>(L"RectMaterial", material);
+		// 
+		// // Sprite
+		// std::shared_ptr<Texture> spriteTexture = ResourceManager::Find<Texture>(L"DefaultSprite");
+		// std::shared_ptr<Shader> spriteShader = ResourceManager::Find<Shader>(L"SpriteShader");
+		// std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+		// spriteMaterial->SetRenderingMode(eRenderingMode::Transparent);
+		// spriteMaterial->SetShader(spriteShader);
+		// spriteMaterial->SetTexture(spriteTexture);
+		// ResourceManager::Insert<Material>(L"SpriteMaterial", spriteMaterial);
 	}
 
 	void Initialize()

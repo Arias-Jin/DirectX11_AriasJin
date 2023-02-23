@@ -110,7 +110,7 @@ namespace arias
 		else
 		{
 			mProjection = Matrix::CreateOrthographicLH(
-				width / 100.0f, height / 100.0f,
+				width, height,
 				mNear, mFar
 			);
 		}

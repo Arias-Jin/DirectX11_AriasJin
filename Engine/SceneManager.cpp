@@ -4,10 +4,13 @@
 #include "MeshRenderer.h"
 #include "SpriteRenderer.h"
 #include "CameraScript.h"
+#include "FadeScript.h"
 #include "GridScript.h"
 #include "CrosshairScript.h"
 #include "PlayerScript.h"
 #include "Transform.h"
+
+#include "Object.h"
 
 #include "Renderer.h"
 
@@ -31,28 +34,22 @@ namespace arias
 		mActiveScene = new Scene();
 
 #pragma region UI Camera
-		GameObject* uiCameraObject = new GameObject();
-		Camera* uiCameraComponent = new Camera();
-		CameraScript* uiCameraScript = new CameraScript();
-		Transform* uiCameraTransform = new Transform();
+		GameObject* uiCameraObject = object::Instantiate<GameObject>(eLayerType::Camera);
+		Camera* uiCameraComponent = uiCameraObject->AddComponent<Camera>();
+		Transform* uiCameraTransform = uiCameraObject->AddComponent<Transform>();
+		uiCameraObject->AddComponent<CameraScript>();
 
 		uiCameraComponent->SetProjectionType(Camera::eProjectionType::Orthographic);
 		uiCameraComponent->TurnLayerMask(eLayerType::UI, true);
 		uiCameraComponent->DisableLayerMasks();
 
-		uiCameraTransform->SetPosition(Vector3(0.0f, 0.0f, 100.0f));
-
-		uiCameraObject->AddComponent(uiCameraComponent);
-		uiCameraObject->AddComponent(uiCameraScript);
-		uiCameraObject->AddComponent(uiCameraTransform);
-
-		mActiveScene->AddGameObject(uiCameraObject, eLayerType::Camera);
+		uiCameraTransform->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
 #pragma endregion
 #pragma region Crosshair UI
-		GameObject* crosshairObject = new GameObject();
-		SpriteRenderer* crosshairRenderer = new SpriteRenderer();
-		CrosshairScript* crosshairScript = new CrosshairScript();
-		Transform* crosshairTransform = new Transform();
+		GameObject* crosshairObject = object::Instantiate<GameObject>(eLayerType::UI);
+		SpriteRenderer* crosshairRenderer = crosshairObject->AddComponent<SpriteRenderer>();
+		Transform* crosshairTransform = crosshairObject->AddComponent<Transform>();
+		crosshairObject->AddComponent<CrosshairScript>();
 
 		std::shared_ptr<Mesh> crosshairMesh = ResourceManager::Find<Mesh>(L"RectMesh");
 		std::shared_ptr<Material> crosshairMaterial = ResourceManager::Find<Material>(L"CrosshairMaterial");
@@ -61,70 +58,63 @@ namespace arias
 		crosshairRenderer->SetMaterial(crosshairMaterial);
 
 		crosshairTransform->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
-		crosshairTransform->SetScale(Vector3(0.25f, 0.25f, 1.0f));
-
-		crosshairObject->AddComponent(crosshairRenderer);
-		crosshairObject->AddComponent(crosshairScript);
-		crosshairObject->AddComponent(crosshairTransform);
-
-		mActiveScene->AddGameObject(crosshairObject, eLayerType::UI);
+		crosshairTransform->SetScale(Vector3(25.0f, 25.0f, 1.0f));
 #pragma endregion
 #pragma region Grid Object
-		GameObject* gridObject = new GameObject();
-		MeshRenderer* gridRenderer = new MeshRenderer();
-		GridScript* gridScript = new GridScript();
-		Transform* gridTransform = new Transform();
-
+		GameObject* gridObject = object::Instantiate<GameObject>(eLayerType::Grid);
+		MeshRenderer* gridRenderer = gridObject->AddComponent<MeshRenderer>();
+		Transform* gridTransform = gridObject->AddComponent<Transform>();
+		gridObject->AddComponent<GridScript>();
+		
 		std::shared_ptr<Mesh> gridMesh = ResourceManager::Find<Mesh>(L"RectMesh");
 		std::shared_ptr<Material> gridMaterial = ResourceManager::Find<Material>(L"GridMaterial");
-
+		
 		gridRenderer->SetMesh(gridMesh);
 		gridRenderer->SetMaterial(gridMaterial);
-
-		gridObject->AddComponent(gridRenderer);
-		gridObject->AddComponent(gridScript);
-		gridObject->AddComponent(gridTransform);
-
-		mActiveScene->AddGameObject(gridObject, eLayerType::Grid);
+		
+		gridTransform->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
 #pragma endregion
 #pragma region Main Camera
-		GameObject* cameraObject = new GameObject();
-		Camera* cameraComponent = new Camera();
-		CameraScript* cameraScript = new CameraScript();
-		Transform* cameraTransform = new Transform();
+		GameObject* cameraObject = object::Instantiate<GameObject>(eLayerType::Camera);
+		Camera* cameraComponent = cameraObject->AddComponent<Camera>();
+		Transform* cameraTransform = cameraObject->AddComponent<Transform>();
+		cameraObject->AddComponent<CameraScript>();
 		
 		cameraComponent->SetProjectionType(Camera::eProjectionType::Orthographic);
 		cameraComponent->TurnLayerMask(eLayerType::UI, false);
 		cameraComponent->RegisterCameraInRenderer();
-		
-		cameraTransform->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
 
-		cameraObject->AddComponent(cameraComponent);
-		cameraObject->AddComponent(cameraScript);
-		cameraObject->AddComponent(cameraTransform);
-		
-		mActiveScene->AddGameObject(cameraObject, eLayerType::Camera);
+		cameraTransform->SetPosition(Vector3(0.0f, 0.0f, 10.0f));
 #pragma endregion
 #pragma region Player
-		GameObject* playerObject = new GameObject();
-		SpriteRenderer* playerSprite = new SpriteRenderer();
-		PlayerScript* playerScript = new PlayerScript();
-		Transform* playerTransform = new Transform();
-
+		GameObject* playerObject = object::Instantiate<GameObject>(eLayerType::Player);
+		SpriteRenderer* playerSprite = playerObject->AddComponent<SpriteRenderer>();
+		Transform* playerTransform = playerObject->AddComponent<Transform>();
+		playerObject->AddComponent<PlayerScript>();
+		
 		std::shared_ptr<Mesh> playerMesh = ResourceManager::Find<Mesh>(L"RectMesh");
 		std::shared_ptr<Material> playerMaterial = ResourceManager::Find<Material>(L"PlayerMaterial");
-
+		
 		playerSprite->SetMesh(playerMesh);
 		playerSprite->SetMaterial(playerMaterial);
-
+		
 		playerTransform->SetPosition(Vector3(0.0f, 0.0f, 10.0f));
-		playerTransform->SetScale(Vector3(1.0f, 1.0f, 1.0f));
+		playerTransform->SetScale(Vector3(100.0f, 100.0f, 1.0f));
+#pragma endregion
+#pragma region Fade
+		GameObject* fadeObject = object::Instantiate<GameObject>(eLayerType::None);
+		SpriteRenderer* fadeSprite = fadeObject->AddComponent<SpriteRenderer>();
+		Transform* fadeTransform = fadeObject->AddComponent<Transform>();
+		fadeObject->AddComponent<FadeScript>();
 
-		playerObject->AddComponent(playerSprite);
-		playerObject->AddComponent(playerScript);
-		playerObject->AddComponent(playerTransform);
+		std::shared_ptr<Mesh> fadeMesh = ResourceManager::Find<Mesh>(L"RectMesh");
+		std::shared_ptr<Material> fadeMaterial = ResourceManager::Find<Material>(L"FadeMaterial");
 
-		mActiveScene->AddGameObject(playerObject, eLayerType::Player);
+		fadeSprite->SetMesh(fadeMesh);
+		fadeSprite->SetMaterial(fadeMaterial);
+
+		fadeTransform->SetPosition(Vector3(300.0f, 0.0f, 10.0f));
+		fadeTransform->SetScale(Vector3(100.0f, 100.0f, 1.0f));
 #pragma endregion
 
 		mActiveScene->Initialize();

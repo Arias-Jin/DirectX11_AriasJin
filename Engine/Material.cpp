@@ -63,9 +63,6 @@ namespace arias::graphics
 
     void Material::Clear()
     {
-        if (mTexture)
-        {
-            mTexture->Clear();
-        }
+        mTexture->Clear();
     }
 }

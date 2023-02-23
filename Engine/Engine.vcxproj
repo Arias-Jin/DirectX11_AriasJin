@@ -170,6 +170,7 @@
     <ClInclude Include="Engine.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Enums.h" />
+    <ClInclude Include="FadeScript.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GraphicDevice_DX11.h" />
     <ClInclude Include="Graphics.h" />
@@ -180,6 +181,7 @@
     <ClInclude Include="Math.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="MeshRenderer.h" />
+    <ClInclude Include="Object.h" />
     <ClInclude Include="PlayerScript.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Resource.h" />
@@ -202,6 +204,7 @@
     <ClCompile Include="ConstantBuffer.cpp" />
     <ClCompile Include="CrosshairScript.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="FadeScript.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GraphicDevice_DX11.cpp" />
     <ClCompile Include="GridScript.cpp" />

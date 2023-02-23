@@ -1,15 +1,15 @@
 #pragma once
-#include "Component.h"
-
 #include "BaseRenderer.h"
+
+#include "Component.h"
 
 #include "Material.h"
 #include "Mesh.h"
 
-using namespace arias::graphics;
-
 namespace arias
 {
+	using namespace arias::graphics;
+
 	class SpriteRenderer : public BaseRenderer
 	{
 	public:

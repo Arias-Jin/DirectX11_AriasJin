@@ -7,7 +7,6 @@ namespace arias::enums
 		None = 0,
 		Camera,
 		Grid,
-		MousePointer,
 		Player,
 		Enemy,
 		UI,
@@ -24,7 +23,9 @@ namespace arias::enums
 		// Collider2,
 		MeshRenderer,
 		SpriteRenderer,
+		FadeRenderer,
 		UI,
+		Fade,
 		Script,
 		End,
 	};

@@ -379,7 +379,7 @@ namespace arias::graphics
 	void GraphicDevice_DX11::Clear()
 	{
 		// Clear
-		FLOAT backgroundColor[4] = { 0.2f, 0.2f, 0.2f, 1.0f };
+		FLOAT backgroundColor[4] = { 0.25f, 0.25f, 0.25f, 1.0f };
 		mContext->ClearRenderTargetView(mRenderTargetView.Get(), backgroundColor);
 		mContext->ClearDepthStencilView(mDepthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.f, 0);
 	}

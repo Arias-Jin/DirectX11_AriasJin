@@ -48,6 +48,11 @@ namespace arias::renderer
 		Vector2 resolution;
 	};
 
+	CBUFFER(FadeCB, CBSLOT_FADE)
+	{
+		float time;
+	};
+
 	extern Vertex vertexes[4];
 	extern ConstantBuffer* constantBuffers[];
 	extern Microsoft::WRL::ComPtr<ID3D11SamplerState> samplerStates[];

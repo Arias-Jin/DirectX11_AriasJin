@@ -35,6 +35,22 @@ namespace arias
 		void AddComponent(Component* comp);
 
 	public:
+		bool IsDead()
+		{
+			if (mState == eState::Dead)
+			{
+				return true;
+			}
+
+			return false;
+		}
+
+		void Pause() { mState = eState::Paused; }
+		void Death() { mState = eState::Dead; }
+
+		eState GetState() const { return mState; }
+
+	public:
 		template <typename T>
 		T* GetComponent() const
 		{
@@ -69,6 +85,26 @@ namespace arias
 			}
 
 			return nullptr;
+		}
+
+		template <typename T>
+		T* AddComponent()
+		{
+			T* comp = new T();
+			eComponentType order = comp->GetOrder();
+
+			if (order != eComponentType::Script)
+			{
+				mComponents[(UINT)order] = comp;
+				mComponents[(UINT)order]->SetOwner(this);
+			}
+			else
+			{
+				mScripts.push_back(comp);
+				comp->SetOwner(this);
+			}
+
+			return comp;
 		}
 	};
 };

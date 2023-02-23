@@ -6,10 +6,10 @@
 #include "Material.h"
 #include "Mesh.h"
 
-using namespace arias::graphics;
-
 namespace arias
 {
+	using namespace arias::graphics;
+
 	class MeshRenderer : public BaseRenderer
 	{
 	public:

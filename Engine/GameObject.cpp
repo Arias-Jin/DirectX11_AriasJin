@@ -1,5 +1,7 @@
 #include "GameObject.h"
 
+#include "Transform.h"
+
 namespace arias
 {
     GameObject::GameObject() :

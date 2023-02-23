@@ -96,8 +96,8 @@ namespace arias
 			POINT mousePos = {};
 			GetCursorPos(&mousePos);
 			ScreenToClient(application.GetHwnd(), &mousePos);
-			mMousePosition.x = ((float)mousePos.x - mWinWidthCenter) / 100.0f;
-			mMousePosition.y = -((float)mousePos.y - mWinHeightCenter) / 100.0f;
+			mMousePosition.x = ((float)mousePos.x - mWinWidthCenter);
+			mMousePosition.y = -((float)mousePos.y - mWinHeightCenter);
 		}
 		else
 		{
