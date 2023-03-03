@@ -67,6 +67,21 @@ namespace arias
 			return mKeys[static_cast<UINT>(keyCode)].eState; 
 		}
 
+		static __forceinline bool GetKeyPress(eKeyCode keyCode)
+		{
+			return mKeys[static_cast<UINT>(keyCode)].eState == eKeyState::PRESSED;
+		}
+
+		static __forceinline bool GetKeyDown(eKeyCode keyCode)
+		{
+			return mKeys[static_cast<UINT>(keyCode)].eState == eKeyState::DOWN;
+		}
+
+		static __forceinline bool GetKeyUp(eKeyCode keyCode)
+		{
+			return mKeys[static_cast<UINT>(keyCode)].eState == eKeyState::UP;
+		}
+
 		static __forceinline math::Vector3 GetMousePosition()
 		{
 			return mMousePosition;

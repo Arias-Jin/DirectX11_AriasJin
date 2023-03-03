@@ -31,9 +31,11 @@ namespace arias
 		// GPU UPDATE
 		virtual void FixedUpdate();
 		virtual void Render();
+		virtual void Destroy();
 
 		// Running Main Engine Loop
 		void Run();
+		void Present();
 		void Release();
 
 		void SetWindow(HWND hwnd, UINT width, UINT height);

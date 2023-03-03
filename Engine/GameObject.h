@@ -22,8 +22,10 @@ namespace arias
 
 	private:
 		eState mState;
+		eLayerType mType;
 		std::vector<Component*> mComponents;
 		std::vector<Component*> mScripts;
+		bool mbDontDestroy;
 
 	public:
 		virtual void Initialize();
@@ -49,6 +51,12 @@ namespace arias
 		void Death() { mState = eState::Dead; }
 
 		eState GetState() const { return mState; }
+
+		void SetDontDestroy(bool enable) { mbDontDestroy = enable; }
+		bool GetDontDestroy() const { return mbDontDestroy; }
+
+		void SetLayerType(eLayerType type) { mType = type; }
+		eLayerType GetLayerType() const { return mType; }
 
 	public:
 		template <typename T>

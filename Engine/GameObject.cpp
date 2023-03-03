@@ -6,8 +6,10 @@ namespace arias
 {
     GameObject::GameObject() :
         mState(eState::Active),
+        mType(eLayerType::None),
         mComponents{},
-        mScripts{}
+        mScripts{},
+        mbDontDestroy(false)
     {
         mComponents.resize((UINT)eComponentType::End);
     }

@@ -4,6 +4,8 @@
 #include "framework.h"
 #include "Client.h"
 #include "Engine/Application.h"
+#include "Engine/SceneManager.h"
+#include "Editor.h"
 
 #ifdef _DEBUG
 #pragma comment (lib, "..\\x64\\Debug\\Lib\\Engine.lib")
@@ -18,6 +20,7 @@ WCHAR szTitle[MAX_LOADSTRING];
 WCHAR szWindowClass[MAX_LOADSTRING];
 
 arias::Application application;
+arias::Editor editor;
 
 ATOM MyRegisterClass(HINSTANCE hInstance);
 BOOL InitInstance(HINSTANCE, int);
@@ -62,9 +65,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
         else
         {
             application.Run();
+            editor.Run();
+            application.Present();
         }
     }
 
+    arias::SceneManager::Release();
     application.Release();
 
     return (int) msg.wParam;
@@ -111,6 +117,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
    application.SetWindow(hWnd, 1600, 900);
    application.Initialize();
+   editor.Initialize();
 
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);

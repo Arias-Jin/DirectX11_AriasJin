@@ -9,6 +9,8 @@
 
 #include "Renderer.h"
 
+#include "SceneManager.h"
+
 #include "ConstantBuffer.h"
 
 extern arias::Application application;
@@ -33,7 +35,8 @@ namespace arias
 
 	void GridScript::Initialize()
 	{
-		mCamera = renderer::cameras[0];
+		eSceneType type = SceneManager::GetActiveScene()->GetSceneType();
+		mCamera = renderer::cameras[(UINT)type][0];
 
 		RECT winRect;;
 		GetClientRect(application.GetHwnd(), &winRect);

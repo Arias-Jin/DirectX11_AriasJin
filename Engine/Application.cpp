@@ -26,7 +26,6 @@ namespace arias
 
     Application::~Application()
     {
-        SceneManager::Release();
     }
 
     void Application::Initialize()
@@ -66,12 +65,21 @@ namespace arias
         mGraphicDevice->Present();
     }
 
+    void Application::Destroy()
+    {
+    }
+
     // Running Main Engine Loop
     void Application::Run()
     {
         Update();
         FixedUpdate();
         Render();
+    }
+
+    void Application::Present()
+    {
+        mGraphicDevice->Present();
     }
 
     void Application::Release()

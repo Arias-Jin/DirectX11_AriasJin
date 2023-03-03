@@ -20,6 +20,16 @@ namespace arias::object
 	}
 
 	template <typename T>
+	static T* Instantiate(enums::eLayerType type, Scene* scene)
+	{
+		T* gameObj = new T();
+		Layer& layer = scene->GetLayer(type);
+		layer.AddGameObject(gameObj);
+
+		return gameObj;
+	}
+
+	template <typename T>
 	static T* Instantiate(enums::eLayerType type, Transform* parent)
 	{
 		T* gameObj = new T();
@@ -49,8 +59,18 @@ namespace arias::object
 		return gameObj;
 	}
 
-	void Destroy(GameObject* gameObject)
+	static void Destroy(GameObject* gameObject)
 	{
 		gameObject->Death();
+	}
+
+	static void DontDestroyOnLoad(GameObject* gameObject) // 씬 이동 시 이 오브젝트는 파괴하지 않음
+	{
+		if (gameObject == nullptr)
+		{
+			return;
+		}
+
+		gameObject->SetDontDestroy(true);
 	}
 }
