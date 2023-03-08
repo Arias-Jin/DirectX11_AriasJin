@@ -14,7 +14,90 @@ namespace arias::renderer
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> depthstencilStates[(UINT)eDSType::End] = {};
 	Microsoft::WRL::ComPtr<ID3D11BlendState> blendStates[(UINT)eBSType::End] = {};
 
+	Camera* mainCamera = nullptr;
 	std::vector<Camera*> cameras[(UINT)eSceneType::End];
+	std::vector<DebugMesh> debugMeshes;
+
+	void LoadMesh()
+	{
+		// Rect
+		vertexes[0].pos = Vector4(-0.5f, 0.5f, 0.5f, 1.0f);
+		vertexes[0].color = Vector4(0.f, 1.f, 0.f, 1.f);
+		vertexes[0].uv = Vector2(0.0f, 0.0f);
+
+		vertexes[1].pos = Vector4(0.5f, 0.5f, 0.5f, 1.0f);
+		vertexes[1].color = Vector4(1.f, 1.f, 1.f, 1.f);
+		vertexes[1].uv = Vector2(1.0f, 0.0f);
+
+		vertexes[2].pos = Vector4(0.5f, -0.5f, 0.5f, 1.0f);
+		vertexes[2].color = Vector4(1.f, 0.f, 0.f, 1.f);
+		vertexes[2].uv = Vector2(1.0f, 1.0f);
+
+		vertexes[3].pos = Vector4(-0.5f, -0.5f, 0.5f, 1.0f);
+		vertexes[3].color = Vector4(0.f, 0.f, 1.f, 1.f);
+		vertexes[3].uv = Vector2(0.0f, 1.0f);
+
+		// Create RectMesh
+		std::shared_ptr<Mesh> rectMesh = std::make_shared<Mesh>();
+		ResourceManager::Insert<Mesh>(L"RectMesh", rectMesh);
+		rectMesh->CreateVertexBuffer(vertexes, 4);
+
+		std::vector<UINT> indexes;
+
+		indexes.push_back(0);
+		indexes.push_back(1);
+		indexes.push_back(2);
+		indexes.push_back(0);
+		indexes.push_back(2);
+		indexes.push_back(3);
+		indexes.push_back(0);
+
+		rectMesh->CreateIndexBuffer(indexes.data(), (UINT)indexes.size());
+
+		// Circle
+		std::vector<Vertex> circleVtxes;
+		Vertex center = {};
+		center.pos = Vector4(0.0f, 0.0f, 0.0f, 1.0f);
+		center.color = Vector4(0.0f, 1.0f, 0.0f, 1.0f);
+		center.uv = Vector2::Zero;
+
+		circleVtxes.push_back(center);
+
+		size_t iSlice = 80;
+		float fRadius = 50.0f;
+		float fTheta = XM_2PI / (float)iSlice;
+
+		for (size_t i = 0; i < iSlice; ++i)
+		{
+			Vertex vtx = {};
+
+			vtx.pos = Vector4(
+				fRadius * cosf(fTheta * (float)i),
+				fRadius * sinf(fTheta * (float)i),
+				0.5f,
+				1.0f
+			);
+			vtx.color = center.color;
+
+			circleVtxes.push_back(vtx);
+		}
+
+		// Create CircleMesh
+		std::shared_ptr<Mesh> circleMesh = std::make_shared<Mesh>();
+		ResourceManager::Insert<Mesh>(L"CircleMesh", circleMesh);
+		circleMesh->CreateVertexBuffer(circleVtxes.data(), (UINT)circleVtxes.size());
+
+		indexes.clear();
+
+		for (UINT i = 0; i < iSlice; ++i)
+		{
+			indexes.push_back(i + 1);
+		}
+
+		indexes.push_back(1);
+
+		circleMesh->CreateIndexBuffer(indexes.data(), (UINT)indexes.size());
+	}
 
 	void SetUpState()
 	{
@@ -85,6 +168,15 @@ namespace arias::renderer
 			fadeShader->GetVSBlobBufferPointer(),
 			fadeShader->GetVSBlobBufferSize(),
 			fadeShader->GetInputLayoutAddressOf()
+		);
+
+		std::shared_ptr<Shader> debugShader = ResourceManager::Find<Shader>(L"DebugShader");
+		GetDevice()->CreateInputLayout(
+			arrLayoutDesc,
+			3,
+			debugShader->GetVSBlobBufferPointer(),
+			debugShader->GetVSBlobBufferSize(),
+			debugShader->GetInputLayoutAddressOf()
 		);
 #pragma endregion
 #pragma region Sampler State
@@ -193,24 +285,6 @@ namespace arias::renderer
 
 	void LoadBuffer()
 	{
-		// Create Mesh
-		std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
-		ResourceManager::Insert<Mesh>(L"RectMesh", mesh);
-
-		mesh->CreateVertexBuffer(vertexes, 4);
-
-		std::vector<UINT> indexes;
-
-		indexes.push_back(0);
-		indexes.push_back(1);
-		indexes.push_back(2);
-
-		indexes.push_back(0);
-		indexes.push_back(2);
-		indexes.push_back(3);
-
-		mesh->CreateIndexBuffer(indexes.data(), (UINT)indexes.size());
-
 		constantBuffers[(UINT)eCBType::Transform] = new ConstantBuffer(eCBType::Transform);
 		constantBuffers[(UINT)eCBType::Transform]->Create(sizeof(TransformCB));
 
@@ -255,6 +329,13 @@ namespace arias::renderer
 		fadeShader->Create(eShaderStage::VS, L"FadeVS.hlsl", "main");
 		fadeShader->Create(eShaderStage::PS, L"FadePS.hlsl", "main");
 		ResourceManager::Insert<Shader>(L"FadeShader", fadeShader);
+
+		// Debug Shader
+		std::shared_ptr<Shader> debugShader = std::make_shared<Shader>();
+		debugShader->Create(eShaderStage::VS, L"DebugVS.hlsl", "main");
+		debugShader->Create(eShaderStage::PS, L"DebugPS.hlsl", "main");
+		debugShader->SetTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP);
+		ResourceManager::Insert<Shader>(L"DebugShader", debugShader);
 	}
 
 	void LoadTexture()
@@ -308,6 +389,13 @@ namespace arias::renderer
 		fadeMaterial->SetTexture(fadeTexture);
 		ResourceManager::Insert<Material>(L"FadeMaterial", fadeMaterial);
 
+		// Debug
+		std::shared_ptr<Shader> debugShader = ResourceManager::Find<Shader>(L"DebugShader");
+		std::shared_ptr<Material> debugMaterial = std::make_shared<Material>();
+		debugMaterial->SetRenderingMode(eRenderingMode::Transparent);
+		debugMaterial->SetShader(debugShader);
+		ResourceManager::Insert<Material>(L"DebugMaterial", debugMaterial);
+
 		// // Default
 		// std::shared_ptr<Texture> texture = ResourceManager::Find<Texture>(L"SmileTexture");
 		// std::shared_ptr<Shader> shader = ResourceManager::Find<Shader>(L"RectShader");
@@ -328,23 +416,7 @@ namespace arias::renderer
 
 	void Initialize()
 	{
-		// RECT
-		vertexes[0].pos = Vector4(-0.5f, 0.5f, 0.5f, 1.0f);
-		vertexes[0].color = Vector4(0.f, 1.f, 0.f, 1.f);
-		vertexes[0].uv = Vector2(0.0f, 0.0f);
-
-		vertexes[1].pos = Vector4(0.5f, 0.5f, 0.5f, 1.0f);
-		vertexes[1].color = Vector4(1.f, 1.f, 1.f, 1.f);
-		vertexes[1].uv = Vector2(1.0f, 0.0f);
-
-		vertexes[2].pos = Vector4(0.5f, -0.5f, 0.5f, 1.0f);
-		vertexes[2].color = Vector4(1.f, 0.f, 0.f, 1.f);
-		vertexes[2].uv = Vector2(1.0f, 1.0f);
-
-		vertexes[3].pos = Vector4(-0.5f, -0.5f, 0.5f, 1.0f);
-		vertexes[3].color = Vector4(0.f, 0.f, 1.f, 1.f);
-		vertexes[3].uv = Vector2(0.0f, 1.0f);
-
+		LoadMesh();
 		LoadShader();
 		SetUpState();
 		LoadBuffer();

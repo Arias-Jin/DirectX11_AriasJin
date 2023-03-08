@@ -42,6 +42,8 @@ namespace arias
 		void Create(eShaderStage stage, const std::wstring& file, const std::string& funcName);
 		void Binds();
 
+		void SetTopology(D3D11_PRIMITIVE_TOPOLOGY topology) { mTopology = topology; }
+
 		void SetRSState(eRSType state) { mRSType = state; }
 		void SetDSState(eDSType state) { mDSType = state; }
 		void SetBSState(eBSType state) { mBSType = state; }

@@ -74,8 +74,8 @@ namespace arias
     {
         renderer::TransformCB trCb = {};
         trCb.world = mWorld;
-        trCb.view = Camera::GetViewMatrix();
-        trCb.projection = Camera::GetProjectionMatrix();
+        trCb.view = Camera::GetGpuViewMatrix();
+        trCb.projection = Camera::GetGpuProjectionMatrix();
 
         ConstantBuffer* cb = renderer::constantBuffers[(UINT)eCBType::Transform];
         cb->Bind(&trCb);

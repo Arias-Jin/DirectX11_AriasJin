@@ -1,16 +1,19 @@
 #pragma once
-#include "..\EDITOR_SOURCE\DebugObject.h"
-#include "..\EDITOR_SOURCE\EditorObject.h"
-#include "..\EDITOR_SOURCE\Widget.h"
+
+#include "DebugObject.h"
+#include "EditorObject.h"
+#include "Widget.h"
+
+#include "../Engine/Graphics.h"
 
 namespace arias
 {
 	class Editor
 	{
 	private:
-		std::vector<Widget> mWidgets;
-		std::vector<EditorObject> mEditorObjects;
-		std::vector<DebugObject> mDebugObjects;
+		std::vector<Widget*> mWidgets;
+		std::vector<EditorObject*> mEditorObjects;
+		std::vector<DebugObject*> mDebugObjects;
 
 	public:
 		void Initialize();
@@ -19,6 +22,6 @@ namespace arias
 		void FixedUpdate();
 		void Render();
 		void Release();
-		void DebugRender();
+		void DebugRender(graphics::DebugMesh& mesh);
 	};
 }

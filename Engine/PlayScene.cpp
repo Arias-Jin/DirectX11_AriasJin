@@ -32,7 +32,6 @@ namespace arias
 
 	void PlayScene::Initialize()
 	{
-		/*
 #pragma region Main Camera
 		GameObject* cameraObject = object::Instantiate<GameObject>(eLayerType::Camera, this);
 		Camera* cameraComponent = cameraObject->AddComponent<Camera>();
@@ -41,11 +40,9 @@ namespace arias
 		
 		cameraComponent->SetProjectionType(Camera::eProjectionType::Orthographic);
 		cameraComponent->TurnLayerMask(eLayerType::UI, false);
-		// cameraComponent->RegisterCameraInRenderer();
-		
+
 		cameraTransform->SetPosition(Vector3(0.0f, 0.0f, 10.0f));
 #pragma endregion
-*/
 
 		Scene::Initialize();
 	}

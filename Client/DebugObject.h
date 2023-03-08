@@ -6,8 +6,12 @@ namespace arias
 	class DebugObject : public GameObject
 	{
 	public:
+		DebugObject();
+		virtual ~DebugObject();
 
 	private:
-		GameObject* test;
+
+	public:
+		virtual void FixedUpdate() override;
 	};
 }

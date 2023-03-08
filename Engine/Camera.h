@@ -58,8 +58,11 @@ namespace arias
 		void PushGameObjectToRenderingModes(GameObject* gameObj);
 
 	public:
-		__forceinline static Matrix& GetViewMatrix() { return View; }
-		__forceinline static Matrix& GetProjectionMatrix() { return Projection; }
+		__forceinline static void SetGpuViewMatrix(Matrix view) { View = view; }
+		__forceinline static Matrix& GetGpuViewMatrix() { return View; }
+
+		__forceinline static void SetGpuProjectionMatrix(Matrix projection) { Projection = projection; }
+		__forceinline static Matrix& GetGpuProjectionMatrix() { return Projection; }
 
 		void EnableLayerMasks() { mLayerMasks.set(); }
 		void DisableLayerMasks() { mLayerMasks.reset(); }
@@ -68,5 +71,8 @@ namespace arias
 
 		void SetScale(float scale) { mScale = scale; }
 		float GetScale() const { return mScale; }
+
+		Matrix& GetViewMatrix() { return mView; }
+		Matrix& GetProjectionMatrix() { return mProjection; }
 	};
 }

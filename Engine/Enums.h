@@ -51,4 +51,14 @@ namespace arias::enums
 		Script,
 		End,
 	};
+
+	enum class eColliderType
+	{
+		None,
+		Rect,
+		Circle,
+		Box,
+		Sphere,
+		End,
+	};
 }

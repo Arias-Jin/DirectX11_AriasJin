@@ -31,7 +31,6 @@ namespace arias
 		mFar(1000.0f),
 		mScale(1.0f)
 	{
-		EnableLayerMasks();
 	}
 
 	Camera::~Camera()
@@ -41,6 +40,7 @@ namespace arias
 	void Camera::Initialize()
 	{
 		EnableLayerMasks();
+		RegisterCameraInRenderer();
 	}
 
 	void Camera::Update()

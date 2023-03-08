@@ -72,6 +72,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
 
     arias::SceneManager::Release();
     application.Release();
+    editor.Release();
 
     return (int) msg.wParam;
 }

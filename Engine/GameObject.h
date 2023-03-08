@@ -23,9 +23,11 @@ namespace arias
 	private:
 		eState mState;
 		eLayerType mType;
-		std::vector<Component*> mComponents;
 		std::vector<Component*> mScripts;
 		bool mbDontDestroy;
+
+	protected:
+		std::vector<Component*> mComponents;
 
 	public:
 		virtual void Initialize();

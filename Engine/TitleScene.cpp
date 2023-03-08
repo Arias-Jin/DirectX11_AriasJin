@@ -1,6 +1,7 @@
 #include "TitleScene.h"
 
 #include "Camera.h"
+#include "Collider2D.h"
 #include "MeshRenderer.h"
 #include "SpriteRenderer.h"
 #include "CameraScript.h"
@@ -38,9 +39,10 @@ namespace arias
 		Transform* cameraTransform = cameraObject->AddComponent<Transform>();
 		cameraObject->AddComponent<CameraScript>();
 
+		mainCamera = cameraComponent;
+
 		cameraComponent->SetProjectionType(Camera::eProjectionType::Orthographic);
 		cameraComponent->TurnLayerMask(eLayerType::UI, false);
-		cameraComponent->RegisterCameraInRenderer();
 
 		cameraTransform->SetPosition(Vector3(0.0f, 0.0f, 10.0f));
 #pragma endregion
@@ -74,24 +76,10 @@ namespace arias
 		crosshairTransform->SetScale(Vector3(25.0f, 25.0f, 1.0f));
 #pragma endregion
 
-#pragma region Grid Object
-		GameObject* gridObject = object::Instantiate<GameObject>(eLayerType::Grid);
-		MeshRenderer* gridRenderer = gridObject->AddComponent<MeshRenderer>();
-		Transform* gridTransform = gridObject->AddComponent<Transform>();
-		gridObject->AddComponent<GridScript>();
-		
-		std::shared_ptr<Mesh> gridMesh = ResourceManager::Find<Mesh>(L"RectMesh");
-		std::shared_ptr<Material> gridMaterial = ResourceManager::Find<Material>(L"GridMaterial");
-		
-		gridRenderer->SetMesh(gridMesh);
-		gridRenderer->SetMaterial(gridMaterial);
-		
-		gridTransform->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
-#pragma endregion
-
 #pragma region Player
 		GameObject* playerObject = object::Instantiate<GameObject>(eLayerType::Player);
 		SpriteRenderer* playerSprite = playerObject->AddComponent<SpriteRenderer>();
+		Collider2D* collider = playerObject->AddComponent<Collider2D>();
 		Transform* playerTransform = playerObject->AddComponent<Transform>();
 		playerObject->AddComponent<PlayerScript>();
 
@@ -101,10 +89,10 @@ namespace arias
 		playerSprite->SetMesh(playerMesh);
 		playerSprite->SetMaterial(playerMaterial);
 
+		collider->SetType(eColliderType::Rect);
+
 		playerTransform->SetPosition(Vector3(0.0f, 0.0f, 10.0f));
 		playerTransform->SetScale(Vector3(100.0f, 100.0f, 1.0f));
-
-		object::DontDestroyOnLoad(playerObject);
 #pragma endregion
 
 #pragma region Fade
