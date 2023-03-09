@@ -1,6 +1,7 @@
 #include "TitleScene.h"
 
 #include "Camera.h"
+#include "CollisionManager.h"
 #include "Collider2D.h"
 #include "MeshRenderer.h"
 #include "SpriteRenderer.h"
@@ -81,7 +82,7 @@ namespace arias
 #pragma region Player
 		Player* playerObject = object::Instantiate<Player>(eLayerType::Player);
 		SpriteRenderer* playerSprite = playerObject->AddComponent<SpriteRenderer>();
-		Collider2D* collider = playerObject->AddComponent<Collider2D>();
+		Collider2D* playerCollider = playerObject->AddComponent<Collider2D>();
 		Transform* playerTransform = playerObject->AddComponent<Transform>();
 		playerObject->AddComponent<PlayerScript>();
 
@@ -91,12 +92,30 @@ namespace arias
 		playerSprite->SetMesh(playerMesh);
 		playerSprite->SetMaterial(playerMaterial);
 
-		collider->SetType(eColliderType::Circle);
-		collider->SetSize(Vector2(100.0f, 100.f));
-		// collider->SetCenter(Vector2(0.2f, 0.2f));
+		playerCollider->SetType(eColliderType::Circle);
+		playerCollider->SetSize(Vector2(100.0f, 100.f));
 
 		playerTransform->SetPosition(Vector3(0.0f, 0.0f, 10.0f));
 		playerTransform->SetScale(Vector3(100.0f, 100.0f, 1.0f));
+#pragma endregion
+
+#pragma region Enemy
+		Enemy* enemyObject = object::Instantiate<Enemy>(eLayerType::Enemy);
+		SpriteRenderer* enemySprite = enemyObject->AddComponent<SpriteRenderer>();
+		Collider2D* enemyCollider = enemyObject->AddComponent<Collider2D>();
+		Transform* enemyTransform = enemyObject->AddComponent<Transform>();
+
+		std::shared_ptr<Mesh> enemyMesh = ResourceManager::Find<Mesh>(L"RectMesh");
+		std::shared_ptr<Material> enemyMaterial = ResourceManager::Find<Material>(L"PlayerMaterial");
+
+		enemySprite->SetMesh(enemyMesh);
+		enemySprite->SetMaterial(enemyMaterial);
+
+		enemyCollider->SetType(eColliderType::Circle);
+		enemyCollider->SetSize(Vector2(100.0f, 100.f));
+
+		enemyTransform->SetPosition(Vector3(250.0f, 0.0f, 10.0f));
+		enemyTransform->SetScale(Vector3(100.0f, 100.0f, 1.0f));
 #pragma endregion
 
 #pragma region Fade
@@ -114,6 +133,8 @@ namespace arias
 		fadeTransform->SetPosition(Vector3(300.0f, 0.0f, 10.0f));
 		fadeTransform->SetScale(Vector3(100.0f, 100.0f, 1.0f));
 #pragma endregion
+
+		CollisionManager::CollisionLayerCheck(eLayerType::Player, eLayerType::Enemy, true);
 
 		Scene::Initialize();
 	}

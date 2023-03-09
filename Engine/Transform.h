@@ -44,6 +44,8 @@ namespace arias
 		void SetScale(Vector3 scale) { mScale = scale; }
 		Vector3 GetScale() const { return mScale; }
 
+		Matrix& GetWorldMatrix() { return mWorld; }
+
 		Vector3 Forward() const { return mForward; }
 		Vector3 Right() const { return mRight; }
 		Vector3 Up() const { return mUp; }

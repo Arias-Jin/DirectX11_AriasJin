@@ -1,5 +1,7 @@
 #include "Application.h"
 
+#include "CollisionManager.h"
+
 #include "Input.h"
 
 #include "Renderer.h"
@@ -32,7 +34,7 @@ namespace arias
     {
         Time::Initialize();
         Input::Initialize();
-
+        CollisionManager::Initialize();
         renderer::Initialize();
         SceneManager::Initialize();
     }
@@ -42,13 +44,14 @@ namespace arias
     {
         Time::Update();
         Input::Update();
-
+        CollisionManager::Update();
         SceneManager::Update();
     }
 
     // GPU UPDATE
     void Application::FixedUpdate()
     {
+        CollisionManager::FixedUpdate();
         SceneManager::FixedUpdate();
     }
 
@@ -61,6 +64,7 @@ namespace arias
         mGraphicDevice->AdjustViewPorts();
 
         renderer::Render();
+        CollisionManager::Render();
 
         mGraphicDevice->Present();
     }

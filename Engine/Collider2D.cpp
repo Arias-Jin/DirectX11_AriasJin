@@ -7,14 +7,19 @@
 
 namespace arias
 {
+	UINT Collider2D::ColliderNumber = 0;
+
 	Collider2D::Collider2D() :
 		Component(eComponentType::Collider),
+		mID(0),
 		mType(eColliderType::None),
 		mTransform(nullptr),
 		mSize(Vector2::One),
 		mCenter(Vector2::Zero),
+		mPosition{},
 		mbTrigger(false)
 	{
+		mID = ColliderNumber++;
 	}
 	
 	Collider2D::~Collider2D()
@@ -38,6 +43,8 @@ namespace arias
 		Vector3 rotation = mTransform->GetRotation();
 		Vector3 position = mTransform->GetPosition();
 		Vector3 colliderPos = position + Vector3(mCenter.x, mCenter.y, 0.0f);
+
+		mPosition = colliderPos;
 
 		Matrix scaleMatrix = Matrix::CreateScale(scale);
 		Matrix rotationMatrix;

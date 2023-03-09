@@ -12,11 +12,15 @@ namespace arias
 		~Collider2D();
 
 	private:
+		static UINT ColliderNumber;
+		UINT mID;
+
 		eColliderType mType;
 		Transform* mTransform;
 
 		Vector2 mSize;
 		Vector2 mCenter;
+		Vector3 mPosition;
 
 		bool mbTrigger;
 
@@ -41,5 +45,8 @@ namespace arias
 		void SetCenter(Vector2 center) { mCenter = center; }
 
 		bool IsTrigger() const { return mbTrigger; }
+
+		UINT GetID() { return mID; }
+		Vector3 GetPosition() { return mPosition; }
 	};
 }
