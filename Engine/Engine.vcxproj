@@ -171,6 +171,7 @@
     <ClInclude Include="Component.h" />
     <ClInclude Include="ConstantBuffer.h" />
     <ClInclude Include="CrosshairScript.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Enums.h" />
@@ -186,6 +187,7 @@
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="MeshRenderer.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerScript.h" />
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="Prefab.h" />
@@ -214,6 +216,7 @@
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ConstantBuffer.cpp" />
     <ClCompile Include="CrosshairScript.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="FadeScript.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -225,6 +228,7 @@
     <ClCompile Include="Math.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="MeshRenderer.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerScript.cpp" />
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="Prefab.cpp" />

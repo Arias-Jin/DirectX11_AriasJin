@@ -23,7 +23,7 @@ namespace arias
 		mDebugObjects[(UINT)eColliderType::Rect]->AddComponent<Transform>();
 		MeshRenderer* rectRenderer = mDebugObjects[(UINT)eColliderType::Rect]->AddComponent<MeshRenderer>();
 
-		std::shared_ptr<Mesh> rectMesh = ResourceManager::Find<Mesh>(L"RectMesh");
+		std::shared_ptr<Mesh> rectMesh = ResourceManager::Find<Mesh>(L"DebugRectMesh");
 		std::shared_ptr<Material> rectMaterial = ResourceManager::Find<Material>(L"DebugMaterial");
 
 		rectRenderer->SetMaterial(rectMaterial);

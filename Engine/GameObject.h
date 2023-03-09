@@ -23,7 +23,7 @@ namespace arias
 	private:
 		eState mState;
 		eLayerType mType;
-		std::vector<Component*> mScripts;
+		std::vector<Script*> mScripts;
 		bool mbDontDestroy;
 
 	protected:
@@ -59,6 +59,8 @@ namespace arias
 
 		void SetLayerType(eLayerType type) { mType = type; }
 		eLayerType GetLayerType() const { return mType; }
+
+		const std::vector<Script*>& GetScripts() { return mScripts; }
 
 	public:
 		template <typename T>
@@ -110,7 +112,7 @@ namespace arias
 			}
 			else
 			{
-				mScripts.push_back(comp);
+				mScripts.push_back(dynamic_cast<Script*>(comp));
 				comp->SetOwner(this);
 			}
 

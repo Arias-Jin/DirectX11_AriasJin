@@ -21,19 +21,19 @@ namespace arias::renderer
 	void LoadMesh()
 	{
 		// Rect
-		vertexes[0].pos = Vector4(-0.5f, 0.5f, 0.5f, 1.0f);
+		vertexes[0].pos = Vector4(-0.5f, 0.5f, 0.0f, 1.0f);
 		vertexes[0].color = Vector4(0.f, 1.f, 0.f, 1.f);
 		vertexes[0].uv = Vector2(0.0f, 0.0f);
 
-		vertexes[1].pos = Vector4(0.5f, 0.5f, 0.5f, 1.0f);
+		vertexes[1].pos = Vector4(0.5f, 0.5f, 0.0f, 1.0f);
 		vertexes[1].color = Vector4(1.f, 1.f, 1.f, 1.f);
 		vertexes[1].uv = Vector2(1.0f, 0.0f);
 
-		vertexes[2].pos = Vector4(0.5f, -0.5f, 0.5f, 1.0f);
+		vertexes[2].pos = Vector4(0.5f, -0.5f, 0.0f, 1.0f);
 		vertexes[2].color = Vector4(1.f, 0.f, 0.f, 1.f);
 		vertexes[2].uv = Vector2(1.0f, 1.0f);
 
-		vertexes[3].pos = Vector4(-0.5f, -0.5f, 0.5f, 1.0f);
+		vertexes[3].pos = Vector4(-0.5f, -0.5f, 0.0f, 1.0f);
 		vertexes[3].color = Vector4(0.f, 0.f, 1.f, 1.f);
 		vertexes[3].uv = Vector2(0.0f, 1.0f);
 
@@ -54,17 +54,40 @@ namespace arias::renderer
 
 		rectMesh->CreateIndexBuffer(indexes.data(), (UINT)indexes.size());
 
+		// DebugRect
+		vertexes[0].pos = Vector4(-0.5f, 0.5f, -0.00001f, 1.0f);
+		vertexes[0].color = Vector4(0.0f, 1.0f, 0.0f, 1.0f);
+		vertexes[0].uv = Vector2(0.0f, 0.0f);
+
+		vertexes[1].pos = Vector4(0.5f, 0.5f, -0.00001f, 1.0f);
+		vertexes[1].color = Vector4(0.0f, 1.0f, 0.0f, 1.0f);
+		vertexes[1].uv = Vector2(0.0f, 0.0f);
+
+		vertexes[2].pos = Vector4(0.5f, -0.5f, -0.00001f, 1.0f);
+		vertexes[2].color = Vector4(0.0f, 1.0f, 0.0f, 1.0f);
+		vertexes[2].uv = Vector2(0.0f, 0.0f);
+
+		vertexes[3].pos = Vector4(-0.5f, -0.5f, -0.00001f, 1.0f);
+		vertexes[3].color = Vector4(0.0f, 1.0f, 0.0f, 1.0f);
+		vertexes[3].uv = Vector2(0.0f, 0.0f);
+
+		// Create DebugRectMesh
+		std::shared_ptr<Mesh> debugMesh = std::make_shared<Mesh>();
+		ResourceManager::Insert<Mesh>(L"DebugRectMesh", debugMesh);
+		debugMesh->CreateVertexBuffer(vertexes, 4);
+		debugMesh->CreateIndexBuffer(indexes.data(), (UINT)indexes.size());
+
 		// Circle
 		std::vector<Vertex> circleVtxes;
 		Vertex center = {};
-		center.pos = Vector4(0.0f, 0.0f, 0.0f, 1.0f);
+		center.pos = Vector4(0.0f, 0.0f, -0.00001f, 1.0f);
 		center.color = Vector4(0.0f, 1.0f, 0.0f, 1.0f);
 		center.uv = Vector2::Zero;
 
 		circleVtxes.push_back(center);
 
 		size_t iSlice = 80;
-		float fRadius = 50.0f;
+		float fRadius = 0.5f;
 		float fTheta = XM_2PI / (float)iSlice;
 
 		for (size_t i = 0; i < iSlice; ++i)
@@ -74,7 +97,7 @@ namespace arias::renderer
 			vtx.pos = Vector4(
 				fRadius * cosf(fTheta * (float)i),
 				fRadius * sinf(fTheta * (float)i),
-				0.5f,
+				-0.00001f,
 				1.0f
 			);
 			vtx.color = center.color;

@@ -26,5 +26,10 @@ namespace arias
 		virtual void Initialize() override;
 		virtual void Update() override;
 		virtual void Render() override;
+
+	public:
+		virtual void OnCollisionEnter(Collider2D* collider) override;
+		virtual void OnCollisionStay(Collider2D* collider) override;
+		virtual void OnCollisionExit(Collider2D* collider) override;
 	};
 }

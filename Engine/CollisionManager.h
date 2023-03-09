@@ -1,5 +1,42 @@
 #pragma once
-class CollisionManager
-{
-};
 
+#include "CommonInclude.h"
+
+#include "Collider2D.h"
+
+namespace arias
+{
+	union ColliderID
+	{
+		struct
+		{
+			UINT64 left;
+			UINT64 right;
+		};
+
+		UINT64 id;
+	};
+
+	class CollisionManager
+	{
+	public:
+		CollisionManager();
+		~CollisionManager();
+
+	private:
+		static std::bitset<(UINT)eLayerType::End> mLayerCollisionMatrix[(UINT)eLayerType::End];
+		static std::map<UINT64, bool> mCollisionMap;
+
+	public:
+		static void Initialize();
+		static void Update();
+		static void FixedUpdate();
+		static void Render();
+
+	public:
+		static void CollisionLayerCheck(eLayerType left, eLayerType right, bool enable = true);
+		static void LayerCollision(class Scene* scene, eLayerType left, eLayerType right);
+		static void ColliderCollision(Collider2D* left, Collider2D* right);
+		static bool Intersect(Collider2D* left, Collider2D* right);
+	};
+}

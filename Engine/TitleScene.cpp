@@ -12,6 +12,8 @@
 #include "Transform.h"
 
 #include "Object.h"
+#include "Player.h"
+#include "Enemy.h"
 
 #include "Input.h"
 
@@ -39,7 +41,7 @@ namespace arias
 		Transform* cameraTransform = cameraObject->AddComponent<Transform>();
 		cameraObject->AddComponent<CameraScript>();
 
-		mainCamera = cameraComponent;
+		mainCamera = cameraComponent;	
 
 		cameraComponent->SetProjectionType(Camera::eProjectionType::Orthographic);
 		cameraComponent->TurnLayerMask(eLayerType::UI, false);
@@ -77,7 +79,7 @@ namespace arias
 #pragma endregion
 
 #pragma region Player
-		GameObject* playerObject = object::Instantiate<GameObject>(eLayerType::Player);
+		Player* playerObject = object::Instantiate<Player>(eLayerType::Player);
 		SpriteRenderer* playerSprite = playerObject->AddComponent<SpriteRenderer>();
 		Collider2D* collider = playerObject->AddComponent<Collider2D>();
 		Transform* playerTransform = playerObject->AddComponent<Transform>();
@@ -89,7 +91,9 @@ namespace arias
 		playerSprite->SetMesh(playerMesh);
 		playerSprite->SetMaterial(playerMaterial);
 
-		collider->SetType(eColliderType::Rect);
+		collider->SetType(eColliderType::Circle);
+		collider->SetSize(Vector2(100.0f, 100.f));
+		// collider->SetCenter(Vector2(0.2f, 0.2f));
 
 		playerTransform->SetPosition(Vector3(0.0f, 0.0f, 10.0f));
 		playerTransform->SetScale(Vector3(100.0f, 100.0f, 1.0f));

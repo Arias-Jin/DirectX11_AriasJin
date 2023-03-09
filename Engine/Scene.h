@@ -32,6 +32,7 @@ namespace arias
 		void AddGameObject(GameObject* gameObj, const eLayerType type);
 		
 		std::vector<GameObject*> GetDontDestroyGameObjects();
+		const std::vector<GameObject*>& GetGameObjects(const eLayerType type);
 
 	public:
 		eSceneType GetSceneType() const { return mType; }

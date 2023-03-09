@@ -125,6 +125,12 @@
     <ClInclude Include="Prefab.h">
       <Filter>Resource\Prefab</Filter>
     </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>GameObject\Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>GameObject\Contents</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Math.cpp">
@@ -236,6 +242,12 @@
     <ClCompile Include="Prefab.cpp">
       <Filter>Resource\Prefab</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>GameObject\Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>GameObject\Contents</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Common">
@@ -324,6 +336,9 @@
     </Filter>
     <Filter Include="Resource\Prefab">
       <UniqueIdentifier>{30b9ec9f-5dff-40ff-9d37-417a3cbb0497}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Contents">
+      <UniqueIdentifier>{01dfb63f-d35a-4795-a0db-657acfbf41cf}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -142,7 +142,7 @@ namespace arias
         }
         else
         {
-            mScripts.push_back(comp);
+            mScripts.push_back(dynamic_cast<Script*>(comp));
             comp->SetOwner(this);
         }
     }

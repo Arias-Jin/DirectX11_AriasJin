@@ -27,8 +27,19 @@ namespace arias
 		virtual void Render() override;
 
 	public:
+		virtual void OnCollisionEnter(Collider2D* collider);
+		virtual void OnCollisionStay(Collider2D* collider);
+		virtual void OnCollisionExit(Collider2D* collider);
+
+		virtual void OnTriggerEnter(Collider2D* collider);
+		virtual void OnTriggerStay(Collider2D* collider);
+		virtual void OnTriggerExit(Collider2D* collider);
+
+	public:
 		void SetType(eColliderType type) { mType = type; }
 		void SetSize(Vector2 size) { mSize = size; }
 		void SetCenter(Vector2 center) { mCenter = center; }
+
+		bool IsTrigger() const { return mbTrigger; }
 	};
 }
