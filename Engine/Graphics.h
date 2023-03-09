@@ -16,7 +16,8 @@
 #define CBSLOT_TRANSFORM 0
 #define CBSLOT_MATERIAL 1
 #define CBSLOT_GRID 2
-#define CBSLOT_FADE 3
+#define CBSLOT_ANIMATION 3
+#define CBSLOT_FADE 4
 
 namespace arias::graphics
 {
@@ -101,6 +102,7 @@ namespace arias::graphics
 		Transform,
 		Material,
 		Grid,
+		Animation,
 		Fade,
 		End,
 	};

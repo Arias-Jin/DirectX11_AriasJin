@@ -17,6 +17,7 @@ namespace arias
 		mSize(Vector2::One),
 		mCenter(Vector2::Zero),
 		mPosition{},
+		mRadius(0.0f),
 		mbTrigger(false)
 	{
 		mID = ColliderNumber++;
@@ -61,7 +62,7 @@ namespace arias
 		DebugMesh meshAttribute = {};
 
 		meshAttribute.position = Vector3(colliderPos.x, colliderPos.y, colliderPos.z);
-		meshAttribute.radius = mSize.x;
+		meshAttribute.radius = mRadius;
 		meshAttribute.rotation = rotation;
 		meshAttribute.scale = scale;
 		meshAttribute.type = mType;

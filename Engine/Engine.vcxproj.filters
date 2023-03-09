@@ -131,6 +131,8 @@
     <ClInclude Include="Player.h">
       <Filter>GameObject\Contents</Filter>
     </ClInclude>
+    <ClInclude Include="Animation.h" />
+    <ClInclude Include="Animator.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Math.cpp">
@@ -248,6 +250,8 @@
     <ClCompile Include="Player.cpp">
       <Filter>GameObject\Contents</Filter>
     </ClCompile>
+    <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="Animator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Common">

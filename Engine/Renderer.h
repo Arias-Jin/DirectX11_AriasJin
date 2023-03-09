@@ -48,6 +48,16 @@ namespace arias::renderer
 		Vector2 resolution;
 	};
 
+	CBUFFER(AnimationCB, CBSLOT_ANIMATION)
+	{
+		Vector2 leftTop;
+		Vector2 size;
+		Vector2 offset;
+		Vector2 atlasSize;
+
+		UINT used;
+	};
+
 	CBUFFER(FadeCB, CBSLOT_FADE)
 	{
 		float time;

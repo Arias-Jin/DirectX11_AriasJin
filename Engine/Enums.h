@@ -30,7 +30,7 @@ namespace arias::enums
 		// Collider2,
 		MeshRenderer,
 		SpriteRenderer,
-		FadeRenderer,
+		Animator,
 		UI,
 		Fade,
 		Script,

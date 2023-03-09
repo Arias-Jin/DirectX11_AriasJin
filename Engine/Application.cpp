@@ -66,7 +66,7 @@ namespace arias
         renderer::Render();
         CollisionManager::Render();
 
-        mGraphicDevice->Present();
+        // mGraphicDevice->Present();
     }
 
     void Application::Destroy()

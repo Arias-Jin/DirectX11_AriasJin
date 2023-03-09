@@ -93,7 +93,7 @@ namespace arias
 		playerSprite->SetMaterial(playerMaterial);
 
 		playerCollider->SetType(eColliderType::Circle);
-		playerCollider->SetSize(Vector2(100.0f, 100.f));
+		playerCollider->SetRadius(100.f);
 
 		playerTransform->SetPosition(Vector3(0.0f, 0.0f, 10.0f));
 		playerTransform->SetScale(Vector3(100.0f, 100.0f, 1.0f));
