@@ -185,6 +185,23 @@ namespace arias
 	
 	bool CollisionManager::Intersect(Collider2D* left, Collider2D* right)
 	{
+		eColliderType leftType = left->GetType();
+		eColliderType rightType = right->GetType();
+
+		if (leftType == eColliderType::Rect && rightType == eColliderType::Rect)
+		{
+			return IntersectRect(left, right);
+		}
+		else if (leftType == eColliderType::Circle && rightType == eColliderType::Circle)
+		{
+			return IntersectCircle(left, right);
+		}
+
+		return false;
+	}
+	
+	bool CollisionManager::IntersectRect(Collider2D* left, Collider2D* right)
+	{
 		static const Vector3 arrLocalPos[4] = {
 			Vector3{-0.5f, 0.5f, 0.0f},
 			Vector3{0.5f, 0.5f, 0.0f},
@@ -235,6 +252,20 @@ namespace arias
 			{
 				return false;
 			}
+		}
+
+		return true;
+	}
+	
+	bool CollisionManager::IntersectCircle(Collider2D* left, Collider2D* right)
+	{
+		Vector3 vectorDistance = left->GetPosition() - right->GetPosition();
+		float centerDistance = fabsf(vectorDistance.LengthSquared());
+		float radiusDistance = fabsf((left->GetRadius() * 0.5f) + (right->GetRadius() * 0.5f));
+
+		if (radiusDistance <= centerDistance)
+		{
+			return false;
 		}
 
 		return true;

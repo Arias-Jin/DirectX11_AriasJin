@@ -133,6 +133,9 @@
     </ClInclude>
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Animator.h" />
+    <ClInclude Include="BackgroundScript.h">
+      <Filter>Component\Script\Contents</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Math.cpp">
@@ -252,6 +255,9 @@
     </ClCompile>
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Animator.cpp" />
+    <ClCompile Include="BackgroundScript.cpp">
+      <Filter>Component\Script\Contents</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Common">

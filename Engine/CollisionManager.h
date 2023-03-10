@@ -38,5 +38,7 @@ namespace arias
 		static void LayerCollision(class Scene* scene, eLayerType left, eLayerType right);
 		static void ColliderCollision(Collider2D* left, Collider2D* right);
 		static bool Intersect(Collider2D* left, Collider2D* right);
+		static bool IntersectRect(Collider2D* left, Collider2D* right);
+		static bool IntersectCircle(Collider2D* left, Collider2D* right);
 	};
 }

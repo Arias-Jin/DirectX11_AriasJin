@@ -16,7 +16,7 @@ namespace arias
 		mMousePos{},
 		mPos{},
 		mRot{},
-		mMoveSpeed(100.0f)
+		mMoveSpeed(150.0f)
 	{
 	}
 

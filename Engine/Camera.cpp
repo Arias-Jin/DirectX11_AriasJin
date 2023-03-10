@@ -96,6 +96,12 @@ namespace arias
 
 		float width = ((float)winRect.right - (float)winRect.left) * mScale;
 		float height = ((float)winRect.bottom - (float)winRect.top) * mScale;
+		
+		if (width <= 0.0f || height <= 0.0f)
+		{
+			width = 0.1f;
+			height = 0.1f;
+		}
 
 		mAspectRatio = width / height;
 

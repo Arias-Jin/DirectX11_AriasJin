@@ -42,9 +42,13 @@ namespace arias
 
 	public:
 		void SetType(eColliderType type) { mType = type; }
+		eColliderType GetType() const { return mType; }
+
 		void SetSize(Vector2 size) { mSize = size; }
 		void SetCenter(Vector2 center) { mCenter = center; }
+
 		void SetRadius(float radius) { mRadius = radius; }
+		float GetRadius() const { return mRadius; }
 
 		bool IsTrigger() const { return mbTrigger; }
 

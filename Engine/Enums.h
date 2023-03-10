@@ -17,6 +17,7 @@ namespace arias::enums
 		Player,
 		Enemy,
 		UI,
+		Background,
 		End = 16,
 	};
 
