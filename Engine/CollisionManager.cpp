@@ -202,7 +202,7 @@ namespace arias
 	
 	bool CollisionManager::IntersectRect(Collider2D* left, Collider2D* right)
 	{
-		static const Vector3 arrLocalPos[4] = {
+		Vector3 arrLocalPos[4] = {
 			Vector3{-0.5f, 0.5f, 0.0f},
 			Vector3{0.5f, 0.5f, 0.0f},
 			Vector3{0.5f, -0.5f, 0.0f},
@@ -226,12 +226,20 @@ namespace arias
 		Axis[2] -= Vector3::Transform(arrLocalPos[0], rightMat);
 		Axis[3] -= Vector3::Transform(arrLocalPos[0], rightMat);
 
+		Vector3 leftScale = Vector3(left->GetSize().x, left->GetSize().y, 1.0f);
+		Axis[0] = arrLocalPos[0] * leftScale;
+		Axis[1] = arrLocalPos[1] * leftScale;
+
+		Vector3 rightScale = Vector3(right->GetSize().x, right->GetSize().y, 1.0f);
+		Axis[2] = arrLocalPos[2] * rightScale;
+		Axis[3] = arrLocalPos[3] * rightScale;
+
 		for (size_t i = 0; i < 4; ++i)
 		{
 			Axis[i].z = 0.0f;
 		}
 
-		Vector3 vc = left->GetPosition() - right->GetPosition();
+		Vector3 vc = leftTrans->GetPosition() - rightTrans->GetPosition();
 		vc.z = 0.0f;
 
 		Vector3 centerDir = vc;
@@ -239,7 +247,7 @@ namespace arias
 		for (size_t i = 0; i < 4; ++i)
 		{
 			Vector3 vA = Axis[i];
-			vA.Normalize();
+			// vA.Normalize();
 
 			float projDist = 0.0f;
 

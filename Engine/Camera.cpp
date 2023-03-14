@@ -29,7 +29,8 @@ namespace arias
 		mAspectRatio(1.0f),
 		mNear(1.0f),
 		mFar(1000.0f),
-		mScale(1.0f)
+		mScale(1.0f),
+		mPosition{}
 	{
 	}
 
@@ -70,11 +71,11 @@ namespace arias
 	void Camera::CreateViewMatrix()
 	{
 		Transform* tr = GetOwner()->GetComponent<Transform>();
-		Vector3 pos = tr->GetPosition();
+		mPosition = tr->GetPosition();
 
 		// Create Translate View Matrix
 		mView = Matrix::Identity;
-		mView *= Matrix::CreateTranslation(-pos);
+		mView *= Matrix::CreateTranslation(-mPosition);
 
 		// 회전 정보
 		Vector3 up = tr->Up();

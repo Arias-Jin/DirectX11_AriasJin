@@ -48,6 +48,8 @@ namespace arias
 		cameraComponent->TurnLayerMask(eLayerType::UI, false);
 
 		cameraTransform->SetPosition(Vector3(0.0f, 0.0f, 10.0f));
+		
+		object::DontDestroyOnLoad(cameraObject);
 #pragma endregion
 
 #pragma region UI Camera
@@ -61,6 +63,7 @@ namespace arias
 		uiCameraComponent->DisableLayerMasks();
 		
 		uiCameraTransform->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
+		object::DontDestroyOnLoad(uiCameraObject);
 #pragma endregion
 
 #pragma region Crosshair UI
@@ -181,9 +184,12 @@ namespace arias
 
 	void TitleScene::OnEnter()
 	{
+		Scene::OnEnter();
+		Initialize();
 	}
 
 	void TitleScene::OnExit()
 	{
+		Scene::OnExit();
 	}
 }

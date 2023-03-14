@@ -52,7 +52,8 @@ namespace arias
 
 		bool IsTrigger() const { return mbTrigger; }
 
-		UINT GetID() { return mID; }
-		Vector3 GetPosition() { return mPosition; }
+		UINT GetID() const { return mID; }
+		Vector3 GetPosition() const { return mPosition; }
+		Vector2 GetSize() const { return mSize; }
 	};
 }

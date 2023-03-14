@@ -32,6 +32,8 @@ namespace arias
 		float mFar;
 		float mScale;
 
+		Vector3 mPosition;
+
 		std::bitset<(UINT)eLayerType::End> mLayerMasks;
 		std::vector<GameObject*> mOpaqueGameObjects;
 		std::vector<GameObject*> mCutoutGameObjects;

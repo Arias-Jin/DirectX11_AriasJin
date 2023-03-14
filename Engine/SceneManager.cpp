@@ -40,10 +40,7 @@ namespace arias
 
 		mActiveScene = mScenes[(UINT)eSceneType::Title];
 
-		for (Scene* scene : mScenes)
-		{
-			scene->Initialize();
-		}
+		LoadScene(eSceneType::Title);
 	}
 
 	void SceneManager::Update()
@@ -82,7 +79,14 @@ namespace arias
 			mActiveScene->OnExit();
 		}
 
-		std::vector<GameObject*> gameObjs = mActiveScene->GetDontDestroyGameObjects();
+		std::vector<GameObject*> gameObjs;
+
+		if (mActiveScene)
+		{
+			gameObjs = mActiveScene->GetDontDestroyGameObjects();
+			mActiveScene->Destroy();
+		}
+
 		mActiveScene = mScenes[(UINT)type];
 
 		for (GameObject* obj : gameObjs)

@@ -47,7 +47,7 @@ namespace arias::graphics
 		swapChainDesc.OutputWindow = hwnd;
 		swapChainDesc.Windowed = true;
 		swapChainDesc.BufferCount = 2;
-		swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
+		swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
 		swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
 		swapChainDesc.BufferDesc.Width = application.GetWidth();
 		swapChainDesc.BufferDesc.Height = application.GetHeight();

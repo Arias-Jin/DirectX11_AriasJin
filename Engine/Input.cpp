@@ -1,5 +1,7 @@
 #include "Input.h"
 
+#include "Camera.h"
+
 #include "GraphicDevice_DX11.h"
 
 #include "Application.h"
@@ -92,7 +94,7 @@ namespace arias
 					mKeys[i].bPressed = false;
 				}
 			}
-			
+
 			POINT mousePos = {};
 			GetCursorPos(&mousePos);
 			ScreenToClient(application.GetHwnd(), &mousePos);

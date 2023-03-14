@@ -55,6 +55,7 @@ namespace arias
 
 	void Scene::OnEnter()
 	{
+
 	}
 
 	void Scene::OnExit()

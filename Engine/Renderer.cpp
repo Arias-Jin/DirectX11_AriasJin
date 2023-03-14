@@ -415,8 +415,9 @@ namespace arias::renderer
 		std::shared_ptr<Texture> crosshairTexture = ResourceManager::Find<Texture>(L"CrosshairTexture");
 		std::shared_ptr<Shader> crosshairShader = ResourceManager::Find<Shader>(L"SpriteShader");
 		std::shared_ptr<Material> crosshairMaterial = std::make_shared<Material>();
+		crosshairMaterial->SetRenderingMode(eRenderingMode::Transparent);
 		crosshairMaterial->SetShader(crosshairShader);
-		crosshairMaterial->SetTexture(crosshairTexture);
+		crosshairMaterial->SetTexture(crosshairTexture); 
 		ResourceManager::Insert<Material>(L"CrosshairMaterial", crosshairMaterial);
 #pragma endregion
 
