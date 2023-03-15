@@ -21,6 +21,7 @@
 #include "Renderer.h"
 
 #include "ResourceManager.h"
+#include "Animator.h"
 #include "Texture.h"
 
 namespace arias
@@ -39,41 +40,46 @@ namespace arias
 #pragma region Player
 		Player* playerObject = object::Instantiate<Player>(eLayerType::Player, this);
 		SpriteRenderer* playerSprite = playerObject->AddComponent<SpriteRenderer>();
+		Animator* playerAnimator = playerObject->AddComponent<Animator>();
 		Collider2D* playerCollider = playerObject->AddComponent<Collider2D>();
 		Transform* playerTransform = playerObject->AddComponent<Transform>();
 		playerObject->AddComponent<PlayerScript>();
-
+		
 		std::shared_ptr<Mesh> playerMesh = ResourceManager::Find<Mesh>(L"RectMesh");
 		std::shared_ptr<Material> playerMaterial = ResourceManager::Find<Material>(L"PlayerMaterial");
-
+		std::shared_ptr<Texture> playerTexture = ResourceManager::Load<Texture>(L"Player", L"Play\\Charater.png");
+		
 		playerSprite->SetMesh(playerMesh);
 		playerSprite->SetMaterial(playerMaterial);
 
+		playerAnimator->Create(L"Idle", playerTexture, Vector2(0.0f, 0.0f), Vector2(201.0f, 130.0f), Vector2::Zero, 20 , 0.05f);
+		playerAnimator->Play(L"Idle", true);
+		
 		playerCollider->SetType(eColliderType::Circle);
 		playerCollider->SetRadius(100.0f);
-
+		
 		playerTransform->SetPosition(Vector3(0.0f, 0.0f, 1.0f));
 		playerTransform->SetScale(Vector3(100.0f, 100.0f, 1.0f));
 #pragma endregion
 
 #pragma region Enemy
-		Enemy* enemyObject = object::Instantiate<Enemy>(eLayerType::Enemy, this);
-		SpriteRenderer* enemySprite = enemyObject->AddComponent<SpriteRenderer>();
-		Collider2D* enemyCollider = enemyObject->AddComponent<Collider2D>();
-		Transform* enemyTransform = enemyObject->AddComponent<Transform>();
-
-		std::shared_ptr<Mesh> enemyMesh = ResourceManager::Find<Mesh>(L"RectMesh");
-		std::shared_ptr<Material> enemyMaterial = ResourceManager::Find<Material>(L"PlayerMaterial");
-
-		enemySprite->SetMesh(enemyMesh);
-		enemySprite->SetMaterial(enemyMaterial);
-
-		enemyCollider->SetType(eColliderType::Circle);
-		enemyCollider->SetRadius(100.0f);
-
-		enemyTransform->SetParent(playerTransform);
-		enemyTransform->SetPosition(Vector3(250.0f, 0.0f, 10.0f));
-		enemyTransform->SetScale(Vector3(1.0f, 1.0f, 1.0f));
+		// Enemy* enemyObject = object::Instantiate<Enemy>(eLayerType::Enemy, this);
+		// SpriteRenderer* enemySprite = enemyObject->AddComponent<SpriteRenderer>();
+		// Collider2D* enemyCollider = enemyObject->AddComponent<Collider2D>();
+		// Transform* enemyTransform = enemyObject->AddComponent<Transform>();
+		// 
+		// std::shared_ptr<Mesh> enemyMesh = ResourceManager::Find<Mesh>(L"RectMesh");
+		// std::shared_ptr<Material> enemyMaterial = ResourceManager::Find<Material>(L"PlayerMaterial");
+		// 
+		// enemySprite->SetMesh(enemyMesh);
+		// enemySprite->SetMaterial(enemyMaterial);
+		// 
+		// enemyCollider->SetType(eColliderType::Circle);
+		// enemyCollider->SetRadius(100.0f);
+		// 
+		// // enemyTransform->SetParent(playerTransform);
+		// enemyTransform->SetPosition(Vector3(250.0f, 0.0f, 10.0f));
+		// enemyTransform->SetScale(Vector3(1.0f, 1.0f, 1.0f));
 #pragma endregion
 
 #pragma region Crosshair UI

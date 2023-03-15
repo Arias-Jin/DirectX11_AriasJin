@@ -4,6 +4,8 @@
 
 #include "GameObject.h"
 
+#include "Animator.h"
+
 namespace arias
 {
 	SpriteRenderer::SpriteRenderer() :
@@ -34,8 +36,20 @@ namespace arias
 		GetMaterial()->Bind();
 		GetMesh()->BindBuffer();
 
+		Animator* animator = GetOwner()->GetComponent<Animator>();
+
+		if (animator)
+		{
+			animator->Binds();
+		}
+
 		GetMesh()->Render();
 
 		GetMaterial()->Clear();
+
+		if (animator)
+		{
+			animator->Clear();
+		}
 	}
 }

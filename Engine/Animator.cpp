@@ -60,7 +60,7 @@ namespace arias
 	{
 	}
 	
-	bool Animator::Create(const std::wstring& name, std::shared_ptr<Texture> atlas, Vector2 leftTop, Vector2 size, Vector2 offset, UINT colLength, UINT spriteLength, float duration)
+	bool Animator::Create(const std::wstring& name, std::shared_ptr<Texture> atlas, Vector2 leftTop, Vector2 size, Vector2 offset, UINT spriteLength, float duration)
 	{
 		if (atlas == nullptr)
 		{
@@ -75,7 +75,7 @@ namespace arias
 		}
 
 		animation = new Animation();
-		animation->Create(name, atlas, leftTop, size, offset, colLength, spriteLength, duration);
+		animation->Create(name, atlas, leftTop, size, offset, spriteLength, duration);
 
 		mAnimations.insert(std::make_pair(name, animation));
 
@@ -106,7 +106,7 @@ namespace arias
 		return iter->second;
 	}
 	
-	void Animator::Play(std::wstring& name, bool loop)
+	void Animator::Play(const std::wstring& name, bool loop)
 	{
 		Animation* prevAnimation = mActiveAnimation;
 		Events* events = FindEvents(prevAnimation->AnimationName());

@@ -131,10 +131,14 @@
     <ClInclude Include="Player.h">
       <Filter>GameObject\Contents</Filter>
     </ClInclude>
-    <ClInclude Include="Animation.h" />
-    <ClInclude Include="Animator.h" />
     <ClInclude Include="BackgroundScript.h">
       <Filter>Component\Script\Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Resource\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Animator.h">
+      <Filter>Component\Animator</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -253,10 +257,14 @@
     <ClCompile Include="Player.cpp">
       <Filter>GameObject\Contents</Filter>
     </ClCompile>
-    <ClCompile Include="Animation.cpp" />
-    <ClCompile Include="Animator.cpp" />
     <ClCompile Include="BackgroundScript.cpp">
       <Filter>Component\Script\Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>Resource\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Animator.cpp">
+      <Filter>Component\Animator</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -349,6 +357,12 @@
     </Filter>
     <Filter Include="GameObject\Contents">
       <UniqueIdentifier>{01dfb63f-d35a-4795-a0db-657acfbf41cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Animation">
+      <UniqueIdentifier>{e18e3f1b-3684-49e8-90b0-ce1901351947}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\Animator">
+      <UniqueIdentifier>{bc9a3640-e690-4a88-919d-144466090928}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -55,7 +55,7 @@ namespace arias::renderer
 		Vector2 offset;
 		Vector2 atlasSize;
 
-		UINT used;
+		UINT type;
 	};
 
 	CBUFFER(FadeCB, CBSLOT_FADE)

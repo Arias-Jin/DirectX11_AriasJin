@@ -25,11 +25,11 @@ cbuffer Grid : register(b2)
 cbuffer Animation : register(b3)
 {
     float2 leftTop;
-    float2 size;
+    float2 spriteSize;
     float2 offset;
     float2 atlasSize;
     
-    uint used;
+    uint animationType;
 }
 
 cbuffer Fade : register(b4)
@@ -43,3 +43,6 @@ SamplerState linearSampler : register(s1);
 SamplerState anisotropicSampler : register(s2);
 
 Texture2D defaultTexture : register(t0);
+
+// Atlas Texutre;
+Texture2D atlasTexture : register(t12);

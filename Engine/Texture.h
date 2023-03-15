@@ -31,5 +31,10 @@ namespace arias::graphics
 		virtual HRESULT Load(const std::wstring& name) override;
 		void BindShader(eShaderStage stage, UINT slot);
 		void Clear();
+		static void Clear(UINT startSlot);
+
+	public:
+		size_t GetWidth() const { return mImage.GetMetadata().width; }
+		size_t GetHeight() const { return mImage.GetMetadata().height; }
 	};
 }
