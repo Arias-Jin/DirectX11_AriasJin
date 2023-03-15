@@ -42,7 +42,7 @@ namespace arias
 		bool mbComplete;
 
 	public:
-		void Update();
+		UINT Update();
 		void FixedUpdate();
 		void Render();
 

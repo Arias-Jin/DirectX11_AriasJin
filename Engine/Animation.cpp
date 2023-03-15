@@ -21,11 +21,11 @@ namespace arias
 	{
 	}
 
-	void Animation::Update()
+	UINT Animation::Update()
 	{
 		if (mbComplete)
 		{
-			return;
+			return -1;
 		}
 
 		mTime += Time::DeltaTime();
@@ -40,7 +40,11 @@ namespace arias
 				mbComplete = true;
 				mIndex = mSpriteSheet.size() - 1;
 			}
+
+			return mIndex;
 		}
+
+		return -1;
 	}
 	
 	void Animation::FixedUpdate()

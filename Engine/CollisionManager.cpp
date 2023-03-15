@@ -97,10 +97,10 @@ namespace arias
 				ColliderCollision(left->GetComponent<Collider2D>(), right->GetComponent<Collider2D>());
 			}
 
-			if ((UINT)left == (UINT)right)
-			{
-				break;
-			}
+			// if ((UINT)left == (UINT)right)
+			// {
+			// 	break;
+			// }
 		}
 	}
 	

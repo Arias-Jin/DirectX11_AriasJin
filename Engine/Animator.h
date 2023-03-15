@@ -31,6 +31,8 @@ namespace arias
 			Event mStartEvent;
 			Event mCompleteEvent;
 			Event mEndEvent;
+
+			std::vector<Event> mEvents;
 		};
 
 		Animator();
@@ -61,5 +63,6 @@ namespace arias
 		std::function<void()>& GetStartEvent(const std::wstring& name);
 		std::function<void()>& GetCompleteEvent(const std::wstring& name);
 		std::function<void()>& GetEndEvent(const std::wstring& name);
+		std::function<void()>& GetEvent(const std::wstring& name, UINT index);
 	};
 }
