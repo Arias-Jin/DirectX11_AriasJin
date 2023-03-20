@@ -4,13 +4,13 @@
 #include "Math.h"
 
 #include "Camera.h"
+#include "Light.h"
 
+#include "ConstantBuffer.h"
 #include "GraphicDevice_DX11.h"
 
 #include "Mesh.h"
 #include "Shader.h"
-
-#include "ConstantBuffer.h"
 
 using namespace arias::math;
 using namespace arias::graphics;
@@ -73,6 +73,7 @@ namespace arias::renderer
 
 	extern std::vector<Camera*> cameras[];
 	extern std::vector<DebugMesh> debugMeshes;
+	extern std::vector<LightAttribute> lights;
 
 	void Initialize();
 	void Render();

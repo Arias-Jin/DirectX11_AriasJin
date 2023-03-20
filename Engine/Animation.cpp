@@ -41,7 +41,7 @@ namespace arias
 				mIndex = mSpriteSheet.size() - 1;
 			}
 
-			return mIndex;
+			return (UINT)mIndex;
 		}
 
 		return -1;
@@ -70,7 +70,7 @@ namespace arias
 			sprite.size = Vector2(size.x / width, size.y / height);
 			sprite.offset = offset;
 			sprite.duration = duration;
-			sprite.atlasSize = Vector2(size.x / width, size.y / height);
+			sprite.atlasSize = Vector2(200.0f / width, 200.0f / height);
 
 			mSpriteSheet.push_back(sprite);
 		}

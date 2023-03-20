@@ -55,7 +55,6 @@
     <ClInclude Include="Material.h">
       <Filter>Resource\Material</Filter>
     </ClInclude>
-    <ClInclude Include="ConstantBuffer.h" />
     <ClInclude Include="Texture.h">
       <Filter>Resource\Texture</Filter>
     </ClInclude>
@@ -140,6 +139,11 @@
     <ClInclude Include="Animator.h">
       <Filter>Component\Animator</Filter>
     </ClInclude>
+    <ClInclude Include="ConstantBuffer.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h" />
+    <ClInclude Include="StructedBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Math.cpp">
@@ -184,7 +188,6 @@
     <ClCompile Include="Material.cpp">
       <Filter>Resource\Material</Filter>
     </ClCompile>
-    <ClCompile Include="ConstantBuffer.cpp" />
     <ClCompile Include="Texture.cpp">
       <Filter>Resource\Texture</Filter>
     </ClCompile>
@@ -266,6 +269,11 @@
     <ClCompile Include="Animator.cpp">
       <Filter>Component\Animator</Filter>
     </ClCompile>
+    <ClCompile Include="ConstantBuffer.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Light.cpp" />
+    <ClCompile Include="StructedBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Common">

@@ -19,6 +19,8 @@
 #define CBSLOT_ANIMATION 3
 #define CBSLOT_FADE 4
 
+using namespace arias::math;
+
 namespace arias::graphics
 {
 	enum class ValidationMode
@@ -107,6 +109,12 @@ namespace arias::graphics
 		End,
 	};
 
+	enum class eSRVType
+	{
+		None,
+		End,
+	};
+
 	enum class eGPUParam
 	{
 		Int,
@@ -126,5 +134,20 @@ namespace arias::graphics
 		float radius;
 		float duration;
 		float time;
+	};
+
+	struct LightAttribute
+	{
+		Vector4 diffuse;
+		Vector4 specular;
+		Vector4 ambient;
+		Vector4 emissive;
+		Vector4 position;
+		Vector4 direction;
+
+		enums::eLightType type;
+		float radius;
+		float angle;
+		int padding;
 	};
 }

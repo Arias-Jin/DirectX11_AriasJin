@@ -74,6 +74,8 @@ namespace arias
 		void SetScale(float scale) { mScale = scale; }
 		float GetScale() const { return mScale; }
 
+		Vector3 GetPosition() const { return mPosition; }
+
 		Matrix& GetViewMatrix() { return mView; }
 		Matrix& GetProjectionMatrix() { return mProjection; }
 	};

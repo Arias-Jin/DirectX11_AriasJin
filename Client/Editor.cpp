@@ -47,13 +47,13 @@ namespace arias
 		MeshRenderer* gridRenderer = gridObject->AddComponent<MeshRenderer>();
 		GridScript* gridScript = gridObject->AddComponent<GridScript>();
 		Transform* gridTransform = gridObject->AddComponent<Transform>();
-
+		
 		gridRenderer->SetMesh(ResourceManager::Find<Mesh>(L"RectMesh"));
 		gridRenderer->SetMaterial(ResourceManager::Find<Material>(L"GridMaterial"));
-
+		
 		gridScript->SetCamera(mainCamera);
 		gridScript->Initialize();
-
+		
 		mEditorObjects.push_back(gridObject);
 #pragma endregion
 	}

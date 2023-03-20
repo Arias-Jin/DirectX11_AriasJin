@@ -56,7 +56,7 @@ namespace arias
 		playerAnimator->Play(L"Idle", true);
 		
 		playerCollider->SetType(eColliderType::Circle);
-		playerCollider->SetRadius(100.0f);
+		playerCollider->SetRadius(50.0f);
 		
 		playerTransform->SetPosition(Vector3(0.0f, 0.0f, 1.0f));
 		playerTransform->SetScale(Vector3(100.0f, 100.0f, 1.0f));

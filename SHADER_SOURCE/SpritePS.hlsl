@@ -35,10 +35,10 @@ float4 main(VSOut In) : SV_Target
     }
     
     
-    // if (color.a == 0.0f)
-    // {
-    //     discard;
-    // }
+    if (color.a == 0.0f)
+    {
+        discard;
+    }
     
     return color;
 }
