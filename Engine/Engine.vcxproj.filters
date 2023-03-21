@@ -142,8 +142,12 @@
     <ClInclude Include="ConstantBuffer.h">
       <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Light.h" />
-    <ClInclude Include="StructedBuffer.h" />
+    <ClInclude Include="Light.h">
+      <Filter>Component\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="StructedBuffer.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Math.cpp">
@@ -272,8 +276,12 @@
     <ClCompile Include="ConstantBuffer.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="Light.cpp" />
-    <ClCompile Include="StructedBuffer.cpp" />
+    <ClCompile Include="Light.cpp">
+      <Filter>Component\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="StructedBuffer.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Common">
@@ -371,6 +379,9 @@
     </Filter>
     <Filter Include="Component\Animator">
       <UniqueIdentifier>{bc9a3640-e690-4a88-919d-144466090928}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\Light">
+      <UniqueIdentifier>{ef3a5a1f-e3bf-445e-87f6-3c758da4a9f8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

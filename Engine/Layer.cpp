@@ -90,14 +90,24 @@ namespace arias
 	void Layer::Destroy()
 	{
 		std::set<GameObject*> deleteObjects;
+		std::vector<GameObject*> dontGameObjects = GetDontDestroyGameObjects();
 
 		// 삭제할 오브젝트들을 전부 찾아온다.
 		for (GameObject* gameObj : mGameObjects)
 		{
-			if (gameObj->GetState() == GameObject::eState::Dead)
+			// if (gameObj->GetState() == GameObject::eState::Dead)
+			// {
+			// 	deleteObjects.insert(gameObj);
+			// }
+
+			auto findResult = find(dontGameObjects.begin(), dontGameObjects.end(), gameObj);
+			
+			if (findResult != dontGameObjects.end())
 			{
-				deleteObjects.insert(gameObj);
+				continue;
 			}
+			
+			deleteObjects.insert(gameObj);
 		}
 
 		// 지워야할 오브젝트들 게임 오브젝트 모음안에서 삭제

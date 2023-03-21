@@ -63,44 +63,27 @@ namespace arias
 		float width = (float)atlas->GetWidth();
 		float height = (float)atlas->GetHeight();
 
+		int maxSpritesPerRow = (int)(width / size.x);
+		int rowIndex = 0;
+
 		for (size_t i = 0; i < spriteLength; ++i)
 		{
 			Sprite sprite = {};
-			sprite.leftTop = Vector2((leftTop.x + (size.x * (float)i)) / width, leftTop.y / height);
+			sprite.leftTop = Vector2((leftTop.x + (size.x * (float)(i % maxSpritesPerRow))) / width, (leftTop.y + (size.y * (float)rowIndex)) / height);
 			sprite.size = Vector2(size.x / width, size.y / height);
 			sprite.offset = offset;
 			sprite.duration = duration;
-			sprite.atlasSize = Vector2(200.0f / width, 200.0f / height);
+			sprite.atlasSize = Vector2(size.x / width, size.y / height);
 
 			mSpriteSheet.push_back(sprite);
-		}
-	}
 
-	void Animation::Create(const std::wstring& name, std::shared_ptr<Texture> atlas, Vector2 leftTop, Vector2 size, Vector2 offset, UINT spriteLength, UINT colLength, float duration)
-	{
-		mAnimationName = name;
-		mAtlas = atlas;
-
-		float width = (float)atlas->GetWidth();
-		float height = (float)atlas->GetHeight();
-
-		for (size_t i = 0; i < colLength; ++i)
-		{
-			for (size_t j = 0; j < spriteLength; ++j)
+			if ((i + 1) % maxSpritesPerRow == 0)
 			{
-				Sprite sprite = {};
-				sprite.leftTop = Vector2((leftTop.x + (size.x * (float)j)) / width, (leftTop.y + size.y * (float)i) / height);
-				sprite.size = Vector2(size.x / width, size.y / height);
-				sprite.offset = offset;
-				sprite.duration = duration;
-				sprite.atlasSize = Vector2(200.0f / width, 200.0f / height);
-
-				mSpriteSheet.push_back(sprite);
+				rowIndex++;
 			}
 		}
-
 	}
-	
+
 	void Animation::BindShader()
 	{
 		mAtlas->BindShader(eShaderStage::PS, 12);

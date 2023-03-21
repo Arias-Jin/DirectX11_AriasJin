@@ -29,7 +29,7 @@ namespace arias
 		void SetAmbient(Vector4 ambient) { mAttribute.ambient = ambient; }
 
 		void SetType(eLightType type) { mAttribute.type = type; }
-		eLightType GetType() const { return mAttribute.type; }
+		eLightType GetType() const { return (eLightType)mAttribute.type; }
 
 		void SetRadius(float radius) { mAttribute.radius = radius; }
 		float GetRadius() { return mAttribute.radius; }

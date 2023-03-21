@@ -48,7 +48,6 @@ namespace arias
 
 	public:
 		void Create(const std::wstring& name, std::shared_ptr<Texture> atlas, Vector2 leftTop, Vector2 size, Vector2 offset, UINT spriteLength, float duration);
-		void Create(const std::wstring& name, std::shared_ptr<Texture> atlas, Vector2 leftTop, Vector2 size, Vector2 offset, UINT spriteLength, UINT colLength, float duration);
 		void BindShader();
 		void Reset();
 		void Clear();

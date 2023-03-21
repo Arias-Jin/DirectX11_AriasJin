@@ -3,6 +3,7 @@
 struct VSOut
 {
     float4 Pos : SV_Position;
+    float3 WorldPos : POSITION;
     float4 Color : COLOR;
     float2 UV : TEXCOORD;
 };
@@ -34,6 +35,14 @@ float4 main(VSOut In) : SV_Target
         color = defaultTexture.Sample(anisotropicSampler, In.UV);
     }
     
+    // LightColor lightColor = (LightColor) 0.0f;
+    // 
+    // for (int i = 0; i < numberOfLight; ++i)
+    // {
+    //     CalculateLight(lightColor, In.WorldPos.xzy, i);
+    // }
+    // 
+    // color *= lightColor.diffuse;
     
     if (color.a == 0.0f)
     {

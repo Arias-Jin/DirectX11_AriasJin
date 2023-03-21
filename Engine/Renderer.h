@@ -7,6 +7,7 @@
 #include "Light.h"
 
 #include "ConstantBuffer.h"
+#include "StructedBuffer.h"
 #include "GraphicDevice_DX11.h"
 
 #include "Mesh.h"
@@ -58,6 +59,11 @@ namespace arias::renderer
 		UINT type;
 	};
 
+	CBUFFER(LightCB, CBSLOT_NUMBEROFLIGHT)
+	{
+		UINT numberOfLight;
+	};
+
 	CBUFFER(FadeCB, CBSLOT_FADE)
 	{
 		float time;
@@ -74,8 +80,13 @@ namespace arias::renderer
 	extern std::vector<Camera*> cameras[];
 	extern std::vector<DebugMesh> debugMeshes;
 	extern std::vector<LightAttribute> lights;
+	extern StructedBuffer* lightBuffer;
 
 	void Initialize();
 	void Render();
 	void Release();
+
+	// Renderer
+	void PushLightAttribute(LightAttribute lightAttribute);
+	void BindLights();
 }

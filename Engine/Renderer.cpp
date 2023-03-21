@@ -18,6 +18,7 @@ namespace arias::renderer
 	std::vector<Camera*> cameras[(UINT)eSceneType::End];
 	std::vector<DebugMesh> debugMeshes;
 	std::vector<LightAttribute> lights;
+	StructedBuffer* lightBuffer = nullptr;
 
 	void LoadMesh()
 	{
@@ -321,8 +322,15 @@ namespace arias::renderer
 		constantBuffers[(UINT)eCBType::Animation] = new ConstantBuffer(eCBType::Animation);
 		constantBuffers[(UINT)eCBType::Animation]->Create(sizeof(AnimationCB));
 
+		constantBuffers[(UINT)eCBType::Light] = new ConstantBuffer(eCBType::Light);
+		constantBuffers[(UINT)eCBType::Light]->Create(sizeof(LightCB));
+
 		constantBuffers[(UINT)eCBType::Fade] = new ConstantBuffer(eCBType::Fade);
 		constantBuffers[(UINT)eCBType::Fade]->Create(sizeof(FadeCB));
+
+		// Structed Buffer
+		lightBuffer = new StructedBuffer();
+		lightBuffer->Create(sizeof(LightAttribute), 128, eSRVType::None, nullptr);
 	}
 
 	void LoadShader()
@@ -468,45 +476,24 @@ namespace arias::renderer
 #pragma endregion
 
 #pragma region Test
-		// UI
-		std::shared_ptr<Texture> uiTexture = ResourceManager::Find<Texture>(L"HPBarTexture");
-		std::shared_ptr<Shader> uiShader = ResourceManager::Find<Shader>(L"UIShader");
-		std::shared_ptr<Material> uiMaterial = std::make_shared<Material>();
-		uiMaterial->SetRenderingMode(eRenderingMode::Transparent);
-		uiMaterial->SetShader(uiShader);
-		uiMaterial->SetTexture(uiTexture);
-		ResourceManager::Insert<Material>(L"UIMaterial", uiMaterial);
-
-		// Fade
-		std::shared_ptr<Texture> fadeTexture = ResourceManager::Find<Texture>(L"SmileTexture");
-		std::shared_ptr<Shader> fadeShader = ResourceManager::Find<Shader>(L"FadeShader");
-		std::shared_ptr<Material> fadeMaterial = std::make_shared<Material>();
-		fadeMaterial->SetRenderingMode(eRenderingMode::Transparent);
-		fadeMaterial->SetShader(fadeShader);
-		fadeMaterial->SetTexture(fadeTexture);
-		ResourceManager::Insert<Material>(L"FadeMaterial", fadeMaterial);
-#pragma endregion
-
-
-
-
-
-		// // Default
-		// std::shared_ptr<Texture> texture = ResourceManager::Find<Texture>(L"SmileTexture");
-		// std::shared_ptr<Shader> shader = ResourceManager::Find<Shader>(L"RectShader");
-		// std::shared_ptr<Material> material = std::make_shared<Material>();
-		// material->SetShader(shader);
-		// material->SetTexture(texture);
-		// ResourceManager::Insert<Material>(L"RectMaterial", material);
+		// // UI
+		// std::shared_ptr<Texture> uiTexture = ResourceManager::Find<Texture>(L"HPBarTexture");
+		// std::shared_ptr<Shader> uiShader = ResourceManager::Find<Shader>(L"UIShader");
+		// std::shared_ptr<Material> uiMaterial = std::make_shared<Material>();
+		// uiMaterial->SetRenderingMode(eRenderingMode::Transparent);
+		// uiMaterial->SetShader(uiShader);
+		// uiMaterial->SetTexture(uiTexture);
+		// ResourceManager::Insert<Material>(L"UIMaterial", uiMaterial);
 		// 
-		// // Sprite
-		// std::shared_ptr<Texture> spriteTexture = ResourceManager::Find<Texture>(L"DefaultSprite");
-		// std::shared_ptr<Shader> spriteShader = ResourceManager::Find<Shader>(L"SpriteShader");
-		// std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
-		// spriteMaterial->SetRenderingMode(eRenderingMode::Transparent);
-		// spriteMaterial->SetShader(spriteShader);
-		// spriteMaterial->SetTexture(spriteTexture);
-		// ResourceManager::Insert<Material>(L"SpriteMaterial", spriteMaterial);
+		// // Fade
+		// std::shared_ptr<Texture> fadeTexture = ResourceManager::Find<Texture>(L"SmileTexture");
+		// std::shared_ptr<Shader> fadeShader = ResourceManager::Find<Shader>(L"FadeShader");
+		// std::shared_ptr<Material> fadeMaterial = std::make_shared<Material>();
+		// fadeMaterial->SetRenderingMode(eRenderingMode::Transparent);
+		// fadeMaterial->SetShader(fadeShader);
+		// fadeMaterial->SetTexture(fadeTexture);
+		// ResourceManager::Insert<Material>(L"FadeMaterial", fadeMaterial);
+#pragma endregion
 	}
 
 	void Initialize()
@@ -521,6 +508,8 @@ namespace arias::renderer
 
 	void Render()
 	{
+		BindLights();
+
 		eSceneType type = SceneManager::GetActiveScene()->GetSceneType();
 
 		for (Camera* cam : cameras[(UINT)type])
@@ -534,6 +523,7 @@ namespace arias::renderer
 		}
 
 		cameras[(UINT)type].clear();
+		renderer::lights.clear();
 	}
 
 	void Release()
@@ -543,5 +533,28 @@ namespace arias::renderer
 			delete constantBuffers[i];
 			constantBuffers[i] = nullptr;
 		}
+
+		delete lightBuffer;
+		lightBuffer = nullptr;
+	}
+	
+	void PushLightAttribute(LightAttribute lightAttribute)
+	{
+		lights.push_back(lightAttribute);
+	}
+
+	void BindLights()
+	{
+		lightBuffer->Bind(lights.data(), (UINT)lights.size());
+		lightBuffer->SetPipeline(eShaderStage::VS, 13);
+		lightBuffer->SetPipeline(eShaderStage::PS, 13);
+
+		renderer::LightCB trCb = {};
+		trCb.numberOfLight = (UINT)lights.size();
+
+		ConstantBuffer* cb = renderer::constantBuffers[(UINT)eCBType::Light];
+		cb->Bind(&trCb);
+		cb->SetPipeline(eShaderStage::VS);
+		cb->SetPipeline(eShaderStage::PS);
 	}
 }

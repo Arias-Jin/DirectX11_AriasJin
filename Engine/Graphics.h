@@ -17,7 +17,8 @@
 #define CBSLOT_MATERIAL 1
 #define CBSLOT_GRID 2
 #define CBSLOT_ANIMATION 3
-#define CBSLOT_FADE 4
+#define CBSLOT_NUMBEROFLIGHT 4
+#define CBSLOT_FADE 5
 
 using namespace arias::math;
 
@@ -105,6 +106,7 @@ namespace arias::graphics
 		Material,
 		Grid,
 		Animation,
+		Light,
 		Fade,
 		End,
 	};
@@ -141,7 +143,6 @@ namespace arias::graphics
 		Vector4 diffuse;
 		Vector4 specular;
 		Vector4 ambient;
-		Vector4 emissive;
 		Vector4 position;
 		Vector4 direction;
 

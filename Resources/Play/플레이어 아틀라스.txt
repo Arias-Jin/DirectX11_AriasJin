@@ -1,0 +1,32 @@
+<스프라이트 크기>
+X : 400
+Y : 400
+
+<Idle>
+Handgun 21개 (0, 0)
+Knife 21개 (400, 400)
+Rifle 21개 (800, 800)
+Shotgun 21개 (1200, 1200)
+
+<Melee>
+Handgun 16개 (1600, 1600)
+Knife 16개 (0, 2000)
+Rifle 16개 (6400, 2000)
+Shotgun 16개 (4800, 2400)
+
+<Move>
+Handgun 21개 (3200, 2800)
+Knife 21개 (3600, 3200)
+Rifle 21개 (4000, 3600)
+Shotgun 21개 (4400, 4000)
+
+
+<Reload>
+Handgun 16개 (4800, 4400)
+Rifle 21개 (3200, 4800)
+Shotgun 21개 (3600, 5200)
+
+<Shoot>
+Handgun 4개 (4000, 5600)
+Rifle 4개 (5600, 5600)
+Shotgun 4개 (7200, 5600)
