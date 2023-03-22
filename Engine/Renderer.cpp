@@ -310,6 +310,7 @@ namespace arias::renderer
 
 	void LoadBuffer()
 	{
+		// Constant Buffer
 		constantBuffers[(UINT)eCBType::Transform] = new ConstantBuffer(eCBType::Transform);
 		constantBuffers[(UINT)eCBType::Transform]->Create(sizeof(TransformCB));
 
@@ -372,9 +373,6 @@ namespace arias::renderer
 		std::shared_ptr<Shader> debugShader = std::make_shared<Shader>();
 		debugShader->Create(eShaderStage::VS, L"DebugVS.hlsl", "main");
 		debugShader->Create(eShaderStage::PS, L"DebugPS.hlsl", "main");
-		gridShader->SetRSState(eRSType::SolidNone);
-		gridShader->SetDSState(eDSType::NoWrite);
-		gridShader->SetBSState(eBSType::AlphaBlend);
 		debugShader->SetTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP);
 		ResourceManager::Insert<Shader>(L"DebugShader", debugShader);
 	}
@@ -393,7 +391,7 @@ namespace arias::renderer
 #pragma endregion
 
 #pragma region Play Scene
-		ResourceManager::Load<Texture>(L"PlayerTexture", L"Player\\Handgun\\Move\\Player_Handgun_Move_00.png");
+		ResourceManager::Load<Texture>(L"PlayerTexture", L"Play\\Player_Atlas.png");
 #pragma endregion
 
 #pragma region Public
@@ -422,7 +420,7 @@ namespace arias::renderer
 
 		// Crosshair
 		std::shared_ptr<Texture> crosshairTexture = ResourceManager::Find<Texture>(L"CrosshairTexture");
-		std::shared_ptr<Shader> crosshairShader = ResourceManager::Find<Shader>(L"SpriteShader");
+		std::shared_ptr<Shader> crosshairShader = ResourceManager::Find<Shader>(L"UIShader");
 		std::shared_ptr<Material> crosshairMaterial = std::make_shared<Material>();
 		crosshairMaterial->SetRenderingMode(eRenderingMode::Transparent);
 		crosshairMaterial->SetShader(crosshairShader);
@@ -433,7 +431,7 @@ namespace arias::renderer
 #pragma region Title Scene
 		// Title Background
 		std::shared_ptr<Texture> backgroundTexture = ResourceManager::Find<Texture>(L"BackgroundTexture");
-		std::shared_ptr<Shader> backgroundShader = ResourceManager::Find<Shader>(L"SpriteShader");
+		std::shared_ptr<Shader> backgroundShader = ResourceManager::Find<Shader>(L"UIShader");
 		std::shared_ptr<Material> backgroundMaterial = std::make_shared<Material>();
 		backgroundMaterial->SetShader(backgroundShader);
 		backgroundMaterial->SetTexture(backgroundTexture);
@@ -441,7 +439,7 @@ namespace arias::renderer
 
 		// Title Play Button
 		std::shared_ptr<Texture> playButtonTexture = ResourceManager::Find<Texture>(L"PlayButtonTexture");
-		std::shared_ptr<Shader> playButtonShader = ResourceManager::Find<Shader>(L"SpriteShader");
+		std::shared_ptr<Shader> playButtonShader = ResourceManager::Find<Shader>(L"UIShader");
 		std::shared_ptr<Material> playButtonMaterial = std::make_shared<Material>();
 		playButtonMaterial->SetShader(playButtonShader);
 		playButtonMaterial->SetTexture(playButtonTexture);
@@ -449,7 +447,7 @@ namespace arias::renderer
 
 		// Title Option Button
 		std::shared_ptr<Texture> optionButtonTexture = ResourceManager::Find<Texture>(L"OptionButtonTexture");
-		std::shared_ptr<Shader> optionButtonShader = ResourceManager::Find<Shader>(L"SpriteShader");
+		std::shared_ptr<Shader> optionButtonShader = ResourceManager::Find<Shader>(L"UIShader");
 		std::shared_ptr<Material> optionButtonMaterial = std::make_shared<Material>();
 		optionButtonMaterial->SetShader(optionButtonShader);
 		optionButtonMaterial->SetTexture(optionButtonTexture);
@@ -457,7 +455,7 @@ namespace arias::renderer
 
 		// Title Exit Button
 		std::shared_ptr<Texture> exitButtonTexture = ResourceManager::Find<Texture>(L"ExitButtonTexture");
-		std::shared_ptr<Shader> exitButtonShader = ResourceManager::Find<Shader>(L"SpriteShader");
+		std::shared_ptr<Shader> exitButtonShader = ResourceManager::Find<Shader>(L"UIShader");
 		std::shared_ptr<Material> exitButtonMaterial = std::make_shared<Material>();
 		exitButtonMaterial->SetShader(exitButtonShader);
 		exitButtonMaterial->SetTexture(exitButtonTexture);

@@ -32,7 +32,6 @@ namespace arias
 
 		mAttribute.position = Vector4(position.x, position.y, position.z, 1.0f);
 		mAttribute.direction = Vector4(trans->Right().x, trans->Right().y, trans->Right().z, 1.0f);
-		// mAttribute.type = enums::eLightType::Directional;
 
 		renderer::PushLightAttribute(mAttribute);
 	}

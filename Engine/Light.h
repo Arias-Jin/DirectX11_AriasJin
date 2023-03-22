@@ -32,9 +32,9 @@ namespace arias
 		eLightType GetType() const { return (eLightType)mAttribute.type; }
 
 		void SetRadius(float radius) { mAttribute.radius = radius; }
-		float GetRadius() { return mAttribute.radius; }
+		float GetRadius() const { return mAttribute.radius; }
 
 		void SetAngle(float angle) { mAttribute.angle = angle; }
-		float GetAngle() { return mAttribute.angle; }
+		float GetAngle() const { return mAttribute.angle; }
 	};
 }

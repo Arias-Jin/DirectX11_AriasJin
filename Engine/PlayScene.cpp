@@ -38,22 +38,24 @@ namespace arias
 
 	void PlayScene::Initialize()
 	{
-		{
-			GameObject* directionalLight = object::Instantiate<GameObject>(eLayerType::Player);
-			directionalLight->AddComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, -100.0f));
-			Light* lightComp = directionalLight->AddComponent<Light>();
-			lightComp->SetType(eLightType::Directional);
-			lightComp->SetDiffuse(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
-		}
+		GameObject* directionalObject = object::Instantiate<GameObject>(eLayerType::None, this);
+		Light* directionalLight = directionalObject->AddComponent<Light>();
+		Transform* directionalTransform = directionalObject->AddComponent<Transform>();
+		
+		directionalLight->SetType(eLightType::Directional);
+		directionalLight->SetDiffuse(Vector4(0.5f, 0.5f, 0.5f, 1.0f));
 
-		{
-			GameObject* directionalLight = object::Instantiate<GameObject>(eLayerType::Player);
-			directionalLight->AddComponent<Transform>()->SetPosition(Vector3(3.0f, 0.0f, 0.0f));
-			Light* lightComp = directionalLight->AddComponent<Light>();
-			lightComp->SetType(eLightType::Point);
-			lightComp->SetRadius(10.0f);
-			lightComp->SetDiffuse(Vector4(1.0f, 0.0f, 0.0f, 1.0f));
-		}
+		directionalTransform->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
+
+		GameObject* pointObject = object::Instantiate<GameObject>(eLayerType::None, this);
+		Light* pointLight = pointObject->AddComponent<Light>();
+		Transform* pointTransform = pointObject->AddComponent<Transform>();
+		
+		pointLight->SetType(eLightType::Point);
+		pointLight->SetRadius(300.0f);
+		pointLight->SetDiffuse(Vector4(2.0f, 2.0f, 2.0f, 1.0f));
+		
+		pointTransform->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
 
 #pragma region Player
 		Player* playerObject = object::Instantiate<Player>(eLayerType::Player, this);
@@ -65,16 +67,16 @@ namespace arias
 		
 		std::shared_ptr<Mesh> playerMesh = ResourceManager::Find<Mesh>(L"RectMesh");
 		std::shared_ptr<Material> playerMaterial = ResourceManager::Find<Material>(L"PlayerMaterial");
-		std::shared_ptr<Texture> playerTexture = ResourceManager::Load<Texture>(L"Player", L"Play\\Player_Atlas.png");
+		std::shared_ptr<Texture> playerTexture = ResourceManager::Find<Texture>(L"PlayerTexture");
 		
 		playerSprite->SetMesh(playerMesh);
 		playerSprite->SetMaterial(playerMaterial);
 
-		playerAnimator->Create(L"Idle", playerTexture, Vector2(0.0f, 0.0f), Vector2(400.0f, 400.0f), Vector2::Zero, 21 , 0.05f);
+		playerAnimator->Create(L"Idle", playerTexture, Vector2(0.0f, 2000.0f), Vector2(400.0f, 400.0f), Vector2::Zero, 302, 0.05f);
 		playerAnimator->Play(L"Idle", true);
 		
 		playerCollider->SetType(eColliderType::Circle);
-		playerCollider->SetRadius(50.0f);
+		playerCollider->SetRadius(40.0f);
 		
 		playerTransform->SetPosition(Vector3(0.0f, 0.0f, 1.0f));
 		playerTransform->SetScale(Vector3(150.0f, 150.0f, 1.0f));

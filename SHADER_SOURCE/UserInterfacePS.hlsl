@@ -13,5 +13,10 @@ float4 main(VSOut In) : SV_Target
     
     color = defaultTexture.Sample(anisotropicSampler, In.UV);
     
+    if (color.a == 0.0f)
+    {
+        discard;
+    }
+    
     return color;
 }

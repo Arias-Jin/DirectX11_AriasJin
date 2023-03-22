@@ -47,6 +47,15 @@ namespace arias::graphics
 			}
 		}
 
+		D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
+		srvDesc.BufferEx.NumElements = mStride;
+		srvDesc.ViewDimension = D3D_SRV_DIMENSION_BUFFEREX;
+
+		if (FAILED(GetDevice()->CreateShaderResourceView(buffer.Get(), &srvDesc, mSRV.GetAddressOf())))
+		{
+			return false;
+		}
+
 		return true;
 	}
 	
