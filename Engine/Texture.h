@@ -44,8 +44,8 @@ namespace arias::graphics
 		static void Clear(UINT startSlot);
 
 	public:
-		size_t GetWidth() const { return mImage.GetMetadata().width; }
-		size_t GetHeight() const { return mImage.GetMetadata().height; }
+		size_t GetWidth() const { return mDesc.Width; }
+		size_t GetHeight() const { return mDesc.Height; }
 
 		Microsoft::WRL::ComPtr<ID3D11Texture2D> GetTexture() const { return mTexture; }
 		Microsoft::WRL::ComPtr<ID3D11DepthStencilView> GetDSV() const { return mDSV; }

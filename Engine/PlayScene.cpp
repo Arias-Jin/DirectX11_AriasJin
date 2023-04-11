@@ -23,6 +23,7 @@
 #include "Renderer.h"
 
 #include "ResourceManager.h"
+#include "PaintShader.h"
 #include "Texture.h"
 
 namespace arias
@@ -38,6 +39,14 @@ namespace arias
 
 	void PlayScene::Initialize()
 	{
+		//paint shader
+		std::shared_ptr<PaintShader> paintShader = ResourceManager::Find<PaintShader>(L"PaintShader");
+		//L"SmileTexture"
+		std::shared_ptr<Texture> paintTex = ResourceManager::Find<Texture>(L"PaintTexture");
+		paintShader->SetTarget(paintTex);
+		paintShader->OnExcute();
+
+#pragma region Light
 		GameObject* directionalObject = object::Instantiate<GameObject>(eLayerType::None, this);
 		Light* directionalLight = directionalObject->AddComponent<Light>();
 		Transform* directionalTransform = directionalObject->AddComponent<Transform>();
@@ -56,6 +65,7 @@ namespace arias
 		pointLight->SetDiffuse(Vector4(2.0f, 2.0f, 2.0f, 1.0f));
 		
 		pointTransform->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
+#pragma endregion
 
 #pragma region Player
 		Player* playerObject = object::Instantiate<Player>(eLayerType::Player, this);
@@ -71,11 +81,11 @@ namespace arias
 		
 		playerSprite->SetMesh(playerMesh);
 		playerSprite->SetMaterial(playerMaterial);
-
+		
 		playerAnimator->Create(L"Idle", playerTexture, Vector2(0.0f, 2000.0f), Vector2(400.0f, 400.0f), Vector2::Zero, 302, 0.05f);
 		playerAnimator->Play(L"Idle", true);
 		
-		playerCollider->SetType(eColliderType::Circle);
+		playerCollider->SetType(eColliderType::Circle); 
 		playerCollider->SetRadius(40.0f);
 		
 		playerTransform->SetPosition(Vector3(0.0f, 0.0f, 1.0f));

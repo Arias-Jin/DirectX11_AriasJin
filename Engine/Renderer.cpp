@@ -2,6 +2,7 @@
 
 #include "ResourceManager.h"
 #include "Material.h"
+#include "PaintShader.h"
 
 #include "SceneManager.h"
 
@@ -375,6 +376,11 @@ namespace arias::renderer
 		debugShader->Create(eShaderStage::PS, L"DebugPS.hlsl", "main");
 		debugShader->SetTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP);
 		ResourceManager::Insert<Shader>(L"DebugShader", debugShader);
+
+		// Paint Shader
+		std::shared_ptr<PaintShader> paintShader = std::make_shared<PaintShader>();
+		paintShader->Create(L"PaintCS.hlsl", "main");
+		ResourceManager::Insert<PaintShader>(L"PaintShader", paintShader);
 	}
 
 	void LoadTexture()
@@ -398,6 +404,12 @@ namespace arias::renderer
 		ResourceManager::Load<Texture>(L"SmileTexture", L"Smile.png");
 		ResourceManager::Load<Texture>(L"DefaultSprite", L"Light.png");
 		ResourceManager::Load<Texture>(L"HPBarTexture", L"HPBar.png");
+#pragma endregion
+
+#pragma region Test
+		std::shared_ptr<Texture> uavTexture = std::make_shared<Texture>();
+		uavTexture->Create(1024, 1024, DXGI_FORMAT_R8G8B8A8_UNORM, D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS);
+		ResourceManager::Insert<Texture>(L"PaintTexture", uavTexture);
 #pragma endregion
 	}
 
@@ -474,6 +486,14 @@ namespace arias::renderer
 #pragma endregion
 
 #pragma region Test
+		// Default
+		std::shared_ptr <Texture> texture = ResourceManager::Find<Texture>(L"PaintTexture");
+		std::shared_ptr<Shader> shader = ResourceManager::Find<Shader>(L"RectShader");
+		std::shared_ptr<Material> material = std::make_shared<Material>();
+		material->SetShader(shader);
+		material->SetTexture(texture);
+		ResourceManager::Insert<Material>(L"RectMaterial", material);
+
 		// // UI
 		// std::shared_ptr<Texture> uiTexture = ResourceManager::Find<Texture>(L"HPBarTexture");
 		// std::shared_ptr<Shader> uiShader = ResourceManager::Find<Shader>(L"UIShader");
