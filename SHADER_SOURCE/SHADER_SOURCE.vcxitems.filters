@@ -37,6 +37,9 @@
     <FxCompile Include="$(MSBuildThisFileDirectory)DebugPS.hlsl">
       <Filter>PS</Filter>
     </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)PaintCS.hlsl">
+      <Filter>CS</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="VS">
@@ -44,6 +47,9 @@
     </Filter>
     <Filter Include="PS">
       <UniqueIdentifier>{ec894d62-6b6a-4e09-9e77-8ca4b1f206b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CS">
+      <UniqueIdentifier>{57bcd66b-12d8-44fa-872f-73579b8762d2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

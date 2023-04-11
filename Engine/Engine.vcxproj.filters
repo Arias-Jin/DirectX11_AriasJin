@@ -148,6 +148,10 @@
     <ClInclude Include="StructedBuffer.h">
       <Filter>Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="PaintShader.h" />
+    <ClInclude Include="ComputeShader.h">
+      <Filter>Resource\Shader\CS</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Math.cpp">
@@ -282,6 +286,10 @@
     <ClCompile Include="StructedBuffer.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="PaintShader.cpp" />
+    <ClCompile Include="ComputeShader.cpp">
+      <Filter>Resource\Shader\CS</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Common">
@@ -382,6 +390,9 @@
     </Filter>
     <Filter Include="Component\Light">
       <UniqueIdentifier>{ef3a5a1f-e3bf-445e-87f6-3c758da4a9f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Shader\CS">
+      <UniqueIdentifier>{89fdb1b1-02e3-47c5-ba97-7196c1284cb3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -38,6 +38,6 @@ namespace arias::graphics
 
     void ConstantBuffer::SetPipeline(eShaderStage stage)
     {
-        GetDevice()->SetConstantBuffer(stage, mType, buffer.Get());
+        GetDevice()->BindConstantBuffer(stage, mType, buffer.Get());
     }
 }

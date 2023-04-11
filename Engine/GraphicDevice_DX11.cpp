@@ -6,6 +6,7 @@
 
 #include "Renderer.h"
 
+#include "Texture.h"
 #include "Mesh.h"
 
 extern arias::Application application;
@@ -15,13 +16,13 @@ namespace arias::graphics
 	GraphicDevice_DX11::GraphicDevice_DX11(ValidationMode validationMode) :
 		mDevice(nullptr),
 		mContext(nullptr),
-		mRenderTarget(nullptr),
-		mRenderTargetView(nullptr),
-		mDepthStencilBuffer(nullptr),
-		mDepthStencilView(nullptr),
+		mRenderTargetTexture(nullptr),
+		mDepthStencilBufferTexture(nullptr),
 		mSwapChain(nullptr),
 		mViewPort{}
 	{
+		graphics::GetDevice() = this;
+
 		HWND hwnd = application.GetHwnd();
 
 		UINT DeviceFlag = D3D11_CREATE_DEVICE_DEBUG;
@@ -64,11 +65,15 @@ namespace arias::graphics
 			return;
 		}
 
+		mRenderTargetTexture = std::make_shared<Texture>();
+		Microsoft::WRL::ComPtr<ID3D11Texture2D> renderTarget;
+
 		// Get RenderTarget for SwapChain
-		hr = mSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)mRenderTarget.GetAddressOf());
+		hr = mSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)renderTarget.GetAddressOf());
+		mRenderTargetTexture->Create(renderTarget);
 
 		// Create RenderTarget View
-		hr = mDevice->CreateRenderTargetView(mRenderTarget.Get(), nullptr, mRenderTargetView.GetAddressOf());
+		// hr = mDevice->CreateRenderTargetView(mRenderTargetTexture.Get(), nullptr, mRenderTargetView.GetAddressOf());
 
 		D3D11_TEXTURE2D_DESC depthBuffer = {};
 
@@ -84,14 +89,17 @@ namespace arias::graphics
 		depthBuffer.MipLevels = 0;
 		depthBuffer.MiscFlags = 0;
 
+		mDepthStencilBufferTexture = std::make_shared<Texture>();
+		mDepthStencilBufferTexture->Create(1600, 900, DXGI_FORMAT_D24_UNORM_S8_UINT, D3D11_BIND_FLAG::D3D11_BIND_DEPTH_STENCIL);
+
 		// Depth Stencil Buffer
-		if (!CreateTexture(&depthBuffer, mDepthStencilBuffer.GetAddressOf()))
+		if (!CreateTexture(&depthBuffer, mDepthStencilBufferTexture->GetTexture().GetAddressOf()))
 		{
 			return;
 		}
 
 		// Depth Stencil Buffer View
-		if (FAILED(mDevice->CreateDepthStencilView(mDepthStencilBuffer.Get(), nullptr, mDepthStencilView.GetAddressOf())))
+		if (FAILED(mDevice->CreateDepthStencilView(mDepthStencilBufferTexture->GetTexture().Get(), nullptr, mDepthStencilBufferTexture->GetDSV().GetAddressOf())))
 		{
 			return;
 		}
@@ -100,7 +108,7 @@ namespace arias::graphics
 		GetClientRect(application.GetHwnd(), &winRect);
 		mViewPort = { 0.0f, 0.0f, FLOAT(winRect.right - winRect.left), FLOAT(winRect.bottom - winRect.top), 0.0f, 1.0f };
 		BindViewports(&mViewPort);
-		mContext->OMSetRenderTargets(1, mRenderTargetView.GetAddressOf(), mDepthStencilView.Get());
+		mContext->OMSetRenderTargets(1, mRenderTargetTexture->GetRTV().GetAddressOf(), mDepthStencilBufferTexture->GetDSV().Get());
 	}
 
 	GraphicDevice_DX11::~GraphicDevice_DX11()
@@ -168,6 +176,36 @@ namespace arias::graphics
 		return true;
 	}
 
+	bool GraphicDevice_DX11::CreateRenderTargetView(ID3D11Resource* pResource, const D3D11_RENDER_TARGET_VIEW_DESC* pDesc, ID3D11RenderTargetView** ppRTView)
+	{
+		if (FAILED(mDevice->CreateRenderTargetView(pResource, pDesc, ppRTView)))
+		{
+			return false;
+		}
+
+		return true;
+	}
+
+	bool GraphicDevice_DX11::CreateUnorderedAccessView(ID3D11Resource* pResource, const D3D11_UNORDERED_ACCESS_VIEW_DESC* pDesc, ID3D11UnorderedAccessView** ppUAView)
+	{
+		if (FAILED(mDevice->CreateUnorderedAccessView(pResource, pDesc, ppUAView)))
+		{
+			return false;
+		}
+
+		return true;
+	}
+
+	bool GraphicDevice_DX11::CreateDepthStencilView(ID3D11Resource* pResource, const D3D11_DEPTH_STENCIL_VIEW_DESC* pDesc, ID3D11DepthStencilView** ppDSView)
+	{
+		if (FAILED(mDevice->CreateDepthStencilView(pResource, pDesc, ppDSView)))
+		{
+			return false;
+		}
+
+		return true;
+	}
+
 	bool GraphicDevice_DX11::CreateShaderResourceView(ID3D11Resource* pResource, const D3D11_SHADER_RESOURCE_VIEW_DESC* pDesc, ID3D11ShaderResourceView** ppSRView)
 	{
 		if (FAILED(mDevice->CreateShaderResourceView(pResource, pDesc, ppSRView)))
@@ -191,6 +229,16 @@ namespace arias::graphics
 	bool GraphicDevice_DX11::CreatePixelShader(const void* pShaderBytecode, SIZE_T BytecodeLength, ID3D11ClassLinkage* pClassLinkage, ID3D11PixelShader** ppPixelShader)
 	{
 		if (FAILED(mDevice->CreatePixelShader(pShaderBytecode, BytecodeLength, pClassLinkage, ppPixelShader)))
+		{
+			return false;
+		}
+
+		return true;
+	}
+
+	bool GraphicDevice_DX11::CreateComputeShader(const void* pShaderBytecode, SIZE_T BytecodeLength, ID3D11ClassLinkage* pClassLinkage, ID3D11ComputeShader** ppComputeShader)
+	{
+		if (FAILED(mDevice->CreateComputeShader(pShaderBytecode, BytecodeLength, pClassLinkage, ppComputeShader)))
 		{
 			return false;
 		}
@@ -268,6 +316,16 @@ namespace arias::graphics
 		mContext->PSSetShader(pPixelShader, ppClassInstances, NumClassInstances);
 	}
 
+	void GraphicDevice_DX11::BindComputeShader(ID3D11ComputeShader* pComputeShader, ID3D11ClassInstance* const* ppClassInstances, UINT NumClassInstances)
+	{
+		mContext->CSSetShader(pComputeShader, ppClassInstances, NumClassInstances);
+	}
+
+	void GraphicDevice_DX11::Dispatch(UINT ThreadGroupCountX, UINT ThreadGroupCountY, UINT ThreadGroupCountZ)
+	{
+		mContext->Dispatch(ThreadGroupCountX, ThreadGroupCountY, ThreadGroupCountZ);
+	}
+
 	void GraphicDevice_DX11::BindViewports(D3D11_VIEWPORT* viewPort)
 	{
 		mContext->RSSetViewports(1, viewPort);
@@ -281,7 +339,12 @@ namespace arias::graphics
 		mContext->Unmap(buffer, 0);
 	}
 
-	void GraphicDevice_DX11::SetConstantBuffer(eShaderStage stage, eCBType type, ID3D11Buffer* buffer)
+	void GraphicDevice_DX11::BindUnorderedAccessView(UINT startSlot, UINT NumUAVs, ID3D11UnorderedAccessView* const* ppUnorderedAccessViews, const UINT* pUAVInitialCounts)
+	{
+		mContext->CSSetUnorderedAccessViews(startSlot, NumUAVs, ppUnorderedAccessViews, pUAVInitialCounts);
+	}
+
+	void GraphicDevice_DX11::BindConstantBuffer(eShaderStage stage, eCBType type, ID3D11Buffer* buffer)
 	{
 		switch (stage)
 		{
@@ -308,7 +371,7 @@ namespace arias::graphics
 		}
 	}
 
-	void GraphicDevice_DX11::SetShaderResource(eShaderStage stage, UINT slot, ID3D11ShaderResourceView* const* ppShaderResourceViews)
+	void GraphicDevice_DX11::BindShaderResource(eShaderStage stage, UINT slot, ID3D11ShaderResourceView* const* ppShaderResourceViews)
 	{
 		switch (stage)
 		{
@@ -390,8 +453,8 @@ namespace arias::graphics
 	{
 		// Clear
 		FLOAT backgroundColor[4] = { 0.15f, 0.15f, 0.15f, 1.0f };
-		mContext->ClearRenderTargetView(mRenderTargetView.Get(), backgroundColor);
-		mContext->ClearDepthStencilView(mDepthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.f, 0);
+		mContext->ClearRenderTargetView(mRenderTargetTexture->GetRTV().Get(), backgroundColor);
+		mContext->ClearDepthStencilView(mDepthStencilBufferTexture->GetDSV().Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.f, 0);
 	}
 
 	void GraphicDevice_DX11::AdjustViewPorts()
@@ -401,7 +464,7 @@ namespace arias::graphics
 		GetClientRect(application.GetHwnd(), &winRect);
 		mViewPort = { 0.0f, 0.0f, FLOAT(winRect.right - winRect.left), FLOAT(winRect.bottom - winRect.top), 0.0f, 1.0f };
 		BindViewports(&mViewPort);
-		mContext->OMSetRenderTargets(1, mRenderTargetView.GetAddressOf(), mDepthStencilView.Get());
+		mContext->OMSetRenderTargets(1, mRenderTargetTexture->GetRTV().GetAddressOf(), mDepthStencilBufferTexture->GetDSV().Get());
 	}
 
 	void GraphicDevice_DX11::Draw()

@@ -172,6 +172,7 @@
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="CommonInclude.h" />
     <ClInclude Include="Component.h" />
+    <ClInclude Include="ComputeShader.h" />
     <ClInclude Include="ConstantBuffer.h" />
     <ClInclude Include="CrosshairScript.h" />
     <ClInclude Include="Enemy.h" />
@@ -191,6 +192,7 @@
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="MeshRenderer.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="PaintShader.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerScript.h" />
     <ClInclude Include="PlayScene.h" />
@@ -222,6 +224,7 @@
     <ClCompile Include="Collider3D.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="Component.cpp" />
+    <ClCompile Include="ComputeShader.cpp" />
     <ClCompile Include="ConstantBuffer.cpp" />
     <ClCompile Include="CrosshairScript.cpp" />
     <ClCompile Include="Enemy.cpp" />
@@ -237,6 +240,7 @@
     <ClCompile Include="Math.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="MeshRenderer.cpp" />
+    <ClCompile Include="PaintShader.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerScript.cpp" />
     <ClCompile Include="PlayScene.cpp" />

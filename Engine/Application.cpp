@@ -101,7 +101,7 @@ namespace arias
 
             ValidationMode validationMode = ValidationMode::Disabled;
             mGraphicDevice = std::make_unique<GraphicDevice_DX11>();
-            graphics::GetDevice() = mGraphicDevice.get();
+            // graphics::GetDevice() = mGraphicDevice.get();
         }
 
         RECT windowRect = { 0, 0, (LONG)width, (LONG)height };
