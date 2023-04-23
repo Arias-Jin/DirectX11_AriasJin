@@ -80,6 +80,8 @@ namespace arias
 				comp->SetOwner(this);
 			}
 
+			// comp->Initialize();
+
 			return comp;
 		}
 

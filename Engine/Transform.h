@@ -38,7 +38,7 @@ namespace arias
 		void SetPosition(Vector3 position) { mPosition = position; }
 		Vector3 GetPosition() const { return mPosition; }
 
-		void SetRotation(Vector3 rotation) { mRotation = rotation; }
+		void SetRotation(Vector3 degree) { mRotation = degree; }
 		Vector3 GetRotation() const { return mRotation; }
 
 		void SetScale(Vector3 scale) { mScale = scale; }

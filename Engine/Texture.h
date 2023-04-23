@@ -36,6 +36,8 @@ namespace arias::graphics
 		bool Create(UINT width, UINT height, DXGI_FORMAT format, UINT bindFlag);
 		bool Create(Microsoft::WRL::ComPtr<ID3D11Texture2D> texture);
 		virtual HRESULT Load(const std::wstring& name) override;
+		void LoadFile(const std::wstring& fullPath);
+		void InitializeResource();
 		void BindShaderResource(eShaderStage stage, UINT slot);
 		void BindUnorderedAccessView(UINT startSlot);
 		void ClearUnorderedAccessView(UINT startSlot);
@@ -48,12 +50,12 @@ namespace arias::graphics
 		size_t GetWidth() const { return mDesc.Width; }
 		size_t GetHeight() const { return mDesc.Height; }
 
+		void SetTexture(Microsoft::WRL::ComPtr<ID3D11Texture2D> texture) { mTexture = texture; }
 		Microsoft::WRL::ComPtr<ID3D11Texture2D> GetTexture() const { return mTexture; }
+
 		Microsoft::WRL::ComPtr<ID3D11DepthStencilView> GetDSV() const { return mDSV; }
 		Microsoft::WRL::ComPtr<ID3D11RenderTargetView> GetRTV() const { return mRTV; }
 		Microsoft::WRL::ComPtr<ID3D11UnorderedAccessView> GetUAV() const { return mUAV; }
 		Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> GetSRV() const { return mSRV; }
-
-		void SetTexture(Microsoft::WRL::ComPtr<ID3D11Texture2D> texture) { mTexture = texture; }
 	};
 }
