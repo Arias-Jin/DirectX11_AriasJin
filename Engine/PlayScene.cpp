@@ -5,6 +5,7 @@
 #include "CollisionManager.h"
 #include "Collider2D.h"
 #include "Light.h"
+#include "ParticleSystem.h"
 #include "MeshRenderer.h"
 #include "SpriteRenderer.h"
 #include "CameraScript.h"
@@ -91,7 +92,15 @@ namespace arias
 		playerTransform->SetPosition(Vector3(0.0f, 0.0f, 1.0f));
 		playerTransform->SetScale(Vector3(150.0f, 150.0f, 1.0f));
 #pragma endregion
-		
+
+		//Particle
+		{
+			Player* particleObject = object::Instantiate<Player>(eLayerType::Particle, this);
+			Transform* particleTransform = particleObject->AddComponent<Transform>();
+			particleObject->SetName(L"PARTICLE");
+			particleTransform->SetPosition(Vector3(0.0f, 0.0f, 100.0f));
+			particleObject->AddComponent<ParticleSystem>();
+		}
 #pragma region Enemy
 		// Enemy* enemyObject = object::Instantiate<Enemy>(eLayerType::Enemy, this);
 		// SpriteRenderer* enemySprite = enemyObject->AddComponent<SpriteRenderer>();

@@ -64,6 +64,11 @@ namespace arias::renderer
 		UINT numberOfLight;
 	};
 
+	CBUFFER(ParticleSystemCB, CBSLOT_PARTICLESYSTEM)
+	{
+		Vector4 color;
+	};
+
 	CBUFFER(FadeCB, CBSLOT_FADE)
 	{
 		float time;

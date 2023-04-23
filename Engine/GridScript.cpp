@@ -68,9 +68,9 @@ namespace arias
 		data.cameraScale = Vector2(mScale, mScale);
 		data.resolution = mWinResolution;
 
-		cb->Bind(&data);
-		cb->SetPipeline(eShaderStage::VS);
-		cb->SetPipeline(eShaderStage::PS);
+		cb->SetData(&data);
+		cb->Bind(eShaderStage::VS);
+		cb->Bind(eShaderStage::PS);
 	}	 
 		 
 	void GridScript::FixedUpdate()

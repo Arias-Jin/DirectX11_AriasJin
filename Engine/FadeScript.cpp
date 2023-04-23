@@ -30,9 +30,9 @@ namespace arias
 		// data.endColor = Vector4(0.0f, 0.0f, 0.0f, 0.0f);
 		data.time = Time::SecondTime();
 
-		cb->Bind(&data);
-		cb->SetPipeline(eShaderStage::VS);
-		cb->SetPipeline(eShaderStage::PS);
+		cb->SetData(&data);
+		cb->Bind(eShaderStage::VS);
+		cb->Bind(eShaderStage::PS);
 	}
 
 	void FadeScript::FixedUpdate()

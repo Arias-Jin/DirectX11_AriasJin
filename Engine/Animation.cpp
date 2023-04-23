@@ -97,8 +97,8 @@ namespace arias
 		info.size = mSpriteSheet[mIndex].size;
 		info.atlasSize = mSpriteSheet[mIndex].atlasSize;
 
-		cb->Bind(&info);
-		cb->SetPipeline(eShaderStage::PS);
+		cb->SetData(&info);
+		cb->Bind(eShaderStage::PS);
 	}
 	
 	void Animation::Reset()
@@ -117,7 +117,7 @@ namespace arias
 		renderer::AnimationCB info = {};
 		info.type = (UINT)eAnimationType::None;
 
-		cb->Bind(&info);
-		cb->SetPipeline(eShaderStage::PS);
+		cb->SetData(&info);
+		cb->Bind(eShaderStage::PS);
 	}
 }

@@ -148,9 +148,14 @@
     <ClInclude Include="StructedBuffer.h">
       <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="PaintShader.h" />
     <ClInclude Include="ComputeShader.h">
       <Filter>Resource\Shader\CS</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleSystem.h">
+      <Filter>Component\ParticleSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="PaintShader.h">
+      <Filter>Resource\Shader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -286,9 +291,14 @@
     <ClCompile Include="StructedBuffer.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="PaintShader.cpp" />
     <ClCompile Include="ComputeShader.cpp">
       <Filter>Resource\Shader\CS</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleSystem.cpp">
+      <Filter>Component\ParticleSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="PaintShader.cpp">
+      <Filter>Resource\Shader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -393,6 +403,9 @@
     </Filter>
     <Filter Include="Resource\Shader\CS">
       <UniqueIdentifier>{89fdb1b1-02e3-47c5-ba97-7196c1284cb3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\ParticleSystem">
+      <UniqueIdentifier>{34926f39-d579-40e1-a96b-f0074007a364}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

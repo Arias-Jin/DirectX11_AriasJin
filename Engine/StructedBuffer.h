@@ -20,8 +20,8 @@ namespace arias::graphics
 
 	public:
 		bool Create(UINT size, UINT stride, eSRVType type, void* data);
-		void Bind(void* data, UINT bufferCount);
-		void SetPipeline(eShaderStage stage, UINT slot);
+		void SetData(void* data, UINT bufferCount);
+		void Bind(eShaderStage stage, UINT slot);
 
 	public:
 		UINT GetSize() const { return mSize; }

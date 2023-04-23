@@ -78,8 +78,8 @@ namespace arias
         trCb.projection = Camera::GetGpuProjectionMatrix();
 
         ConstantBuffer* cb = renderer::constantBuffers[(UINT)eCBType::Transform];
-        cb->Bind(&trCb);
 
-        cb->SetPipeline(eShaderStage::VS);
+        cb->SetData(&trCb);
+        cb->Bind(eShaderStage::VS);
     }
 }

@@ -34,14 +34,14 @@ namespace arias::graphics
 			D3D11_SUBRESOURCE_DATA tSub = {};
 			tSub.pSysMem = data;
 
-			if (FAILED(GetDevice()->CreateBuffer(&desc, &tSub, buffer.GetAddressOf())))
+			if (!(GetDevice()->CreateBuffer(&desc, &tSub, buffer.GetAddressOf())))
 			{
 				return false;
 			}
 		}
 		else
 		{
-			if (FAILED(GetDevice()->CreateBuffer(&desc, nullptr, buffer.GetAddressOf())))
+			if (!(GetDevice()->CreateBuffer(&desc, nullptr, buffer.GetAddressOf())))
 			{
 				return false;
 			}
@@ -59,7 +59,7 @@ namespace arias::graphics
 		return true;
 	}
 	
-	void StructedBuffer::Bind(void* data, UINT bufferCount)
+	void StructedBuffer::SetData(void* data, UINT bufferCount)
 	{
 		if (mStride < bufferCount)
 		{
@@ -71,7 +71,7 @@ namespace arias::graphics
 		}
 	}
 	
-	void StructedBuffer::SetPipeline(eShaderStage stage, UINT slot)
+	void StructedBuffer::Bind(eShaderStage stage, UINT slot)
 	{
 		GetDevice()->BindShaderResource(stage, slot, mSRV.GetAddressOf());
 	}

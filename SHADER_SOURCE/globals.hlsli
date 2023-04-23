@@ -1,4 +1,5 @@
 #include "Light.hlsli"
+#include "Particle.hlsli"
 
 cbuffer Transform : register(b0)
 {
@@ -39,11 +40,15 @@ cbuffer NumberOfLight : register(b4)
     uint numberOfLight;
 }
 
-cbuffer Fade : register(b5)
+cbuffer ParticleSystem : register(b5)
+{
+    float4 particleColor;
+}
+
+cbuffer Fade : register(b6)
 {
     float time;
 }
-
 
 SamplerState pointSampler : register(s0);
 SamplerState linearSampler : register(s1);
@@ -56,6 +61,7 @@ Texture2D defaultTexture : register(t0);
 Texture2D atlasTexture : register(t12);
 
 StructuredBuffer<LightAttribute> lightAttributes : register(t13);
+StructuredBuffer<Particle> particleBuffer : register(t15);
 
 void CalculateLight(in out LightColor pLightColor, float3 position, int idx)
 {

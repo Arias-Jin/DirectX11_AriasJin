@@ -18,7 +18,8 @@
 #define CBSLOT_GRID 2
 #define CBSLOT_ANIMATION 3
 #define CBSLOT_NUMBEROFLIGHT 4
-#define CBSLOT_FADE 5
+#define CBSLOT_PARTICLESYSTEM 5
+#define CBSLOT_FADE 6
 
 using namespace arias::math;
 
@@ -107,6 +108,7 @@ namespace arias::graphics
 		Grid,
 		Animation,
 		Light,
+		ParticleSystem,
 		Fade,
 		End,
 	};
@@ -150,5 +152,16 @@ namespace arias::graphics
 		float radius;
 		float angle;
 		int padding;
+	};
+
+	struct Particle
+	{
+		Vector4 position;
+		Vector4 direction;
+
+		float lifeTime;
+		float time;
+		float speed;
+		UINT active;
 	};
 }

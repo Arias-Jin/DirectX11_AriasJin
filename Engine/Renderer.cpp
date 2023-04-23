@@ -23,6 +23,13 @@ namespace arias::renderer
 
 	void LoadMesh()
 	{
+		// Point Mesh
+		Vertex v = {};
+		std::shared_ptr<Mesh> pointMesh = std::make_shared<Mesh>();
+		ResourceManager::Insert<Mesh>(L"PointMesh", pointMesh);
+		UINT pointIndex = 0;
+		pointMesh->CreateIndexBuffer(&pointIndex, 1);
+
 		// Rect
 		vertexes[0].pos = Vector4(-0.5f, 0.5f, 0.0f, 1.0f);
 		vertexes[0].color = Vector4(0.f, 1.f, 0.f, 1.f);
@@ -187,15 +194,6 @@ namespace arias::renderer
 			gridShader->GetInputLayoutAddressOf()
 		);
 
-		std::shared_ptr<Shader> fadeShader = ResourceManager::Find<Shader>(L"FadeShader");
-		GetDevice()->CreateInputLayout(
-			arrLayoutDesc,
-			3,
-			fadeShader->GetVSBlobBufferPointer(),
-			fadeShader->GetVSBlobBufferSize(),
-			fadeShader->GetInputLayoutAddressOf()
-		);
-
 		std::shared_ptr<Shader> debugShader = ResourceManager::Find<Shader>(L"DebugShader");
 		GetDevice()->CreateInputLayout(
 			arrLayoutDesc,
@@ -203,6 +201,24 @@ namespace arias::renderer
 			debugShader->GetVSBlobBufferPointer(),
 			debugShader->GetVSBlobBufferSize(),
 			debugShader->GetInputLayoutAddressOf()
+		);
+
+		std::shared_ptr<Shader> particleShader = ResourceManager::Find<Shader>(L"ParticleShader");
+		GetDevice()->CreateInputLayout(
+			arrLayoutDesc,
+			3,
+			particleShader->GetVSBlobBufferPointer(),
+			particleShader->GetVSBlobBufferSize(),
+			particleShader->GetInputLayoutAddressOf()
+		);
+
+		std::shared_ptr<Shader> fadeShader = ResourceManager::Find<Shader>(L"FadeShader");
+		GetDevice()->CreateInputLayout(
+			arrLayoutDesc,
+			3,
+			fadeShader->GetVSBlobBufferPointer(),
+			fadeShader->GetVSBlobBufferSize(),
+			fadeShader->GetInputLayoutAddressOf()
 		);
 #pragma endregion
 #pragma region Sampler State
@@ -330,6 +346,9 @@ namespace arias::renderer
 		constantBuffers[(UINT)eCBType::Fade] = new ConstantBuffer(eCBType::Fade);
 		constantBuffers[(UINT)eCBType::Fade]->Create(sizeof(FadeCB));
 
+		constantBuffers[(UINT)eCBType::ParticleSystem] = new ConstantBuffer(eCBType::ParticleSystem);
+		constantBuffers[(UINT)eCBType::ParticleSystem]->Create(sizeof(ParticleSystemCB));
+
 		// Structed Buffer
 		lightBuffer = new StructedBuffer();
 		lightBuffer->Create(sizeof(LightAttribute), 128, eSRVType::None, nullptr);
@@ -364,12 +383,6 @@ namespace arias::renderer
 		gridShader->SetBSState(eBSType::AlphaBlend);
 		ResourceManager::Insert<Shader>(L"GridShader", gridShader);
 
-		// Fade Shader
-		std::shared_ptr<Shader> fadeShader = std::make_shared<Shader>();
-		fadeShader->Create(eShaderStage::VS, L"FadeVS.hlsl", "main");
-		fadeShader->Create(eShaderStage::PS, L"FadePS.hlsl", "main");
-		ResourceManager::Insert<Shader>(L"FadeShader", fadeShader);
-
 		// Debug Shader
 		std::shared_ptr<Shader> debugShader = std::make_shared<Shader>();
 		debugShader->Create(eShaderStage::VS, L"DebugVS.hlsl", "main");
@@ -381,6 +394,21 @@ namespace arias::renderer
 		std::shared_ptr<PaintShader> paintShader = std::make_shared<PaintShader>();
 		paintShader->Create(L"PaintCS.hlsl", "main");
 		ResourceManager::Insert<PaintShader>(L"PaintShader", paintShader);
+
+		// Particle Shader
+		std::shared_ptr<Shader> particleShader = std::make_shared<Shader>();
+		particleShader->Create(eShaderStage::VS, L"ParticleVS.hlsl", "main");
+		particleShader->Create(eShaderStage::PS, L"ParticlePS.hlsl", "main");
+		particleShader->SetRSState(eRSType::SolidNone);
+		particleShader->SetDSState(eDSType::NoWrite);
+		particleShader->SetBSState(eBSType::AlphaBlend);
+		ResourceManager::Insert<Shader>(L"ParticleShader", particleShader);
+
+		// Fade Shader
+		std::shared_ptr<Shader> fadeShader = std::make_shared<Shader>();
+		fadeShader->Create(eShaderStage::VS, L"FadeVS.hlsl", "main");
+		fadeShader->Create(eShaderStage::PS, L"FadePS.hlsl", "main");
+		ResourceManager::Insert<Shader>(L"FadeShader", fadeShader);
 	}
 
 	void LoadTexture()
@@ -494,6 +522,13 @@ namespace arias::renderer
 		material->SetTexture(texture);
 		ResourceManager::Insert<Material>(L"RectMaterial", material);
 
+		// Particle
+		std::shared_ptr<Shader> particleShader = ResourceManager::Find<Shader>(L"ParticleShader");
+		std::shared_ptr<Material> particleMaterial = std::make_shared<Material>();
+		particleMaterial->SetRenderingMode(eRenderingMode::Transparent);
+		particleMaterial->SetShader(particleShader);
+		ResourceManager::Insert<Material>(L"ParticleMaterial", particleMaterial);
+
 		// // UI
 		// std::shared_ptr<Texture> uiTexture = ResourceManager::Find<Texture>(L"HPBarTexture");
 		// std::shared_ptr<Shader> uiShader = ResourceManager::Find<Shader>(L"UIShader");
@@ -563,16 +598,16 @@ namespace arias::renderer
 
 	void BindLights()
 	{
-		lightBuffer->Bind(lights.data(), (UINT)lights.size());
-		lightBuffer->SetPipeline(eShaderStage::VS, 13);
-		lightBuffer->SetPipeline(eShaderStage::PS, 13);
+		lightBuffer->SetData(lights.data(), (UINT)lights.size());
+		lightBuffer->Bind(eShaderStage::VS, 13);
+		lightBuffer->Bind(eShaderStage::PS, 13);
 
 		renderer::LightCB trCb = {};
 		trCb.numberOfLight = (UINT)lights.size();
 
 		ConstantBuffer* cb = renderer::constantBuffers[(UINT)eCBType::Light];
-		cb->Bind(&trCb);
-		cb->SetPipeline(eShaderStage::VS);
-		cb->SetPipeline(eShaderStage::PS);
+		cb->SetData(&trCb);
+		cb->Bind(eShaderStage::VS);
+		cb->Bind(eShaderStage::PS);
 	}
 }

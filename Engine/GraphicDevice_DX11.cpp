@@ -6,6 +6,7 @@
 
 #include "Renderer.h"
 
+#include "ResourceManager.h"
 #include "Texture.h"
 #include "Mesh.h"
 
@@ -471,10 +472,17 @@ namespace arias::graphics
 	{
 		mContext->Draw(0, 0);
 	}
+	
 	void GraphicDevice_DX11::DrawIndexed(UINT indexCount, UINT StartIndexLocation, UINT BaseVertexLocation)
 	{
 		mContext->DrawIndexed(indexCount, StartIndexLocation, BaseVertexLocation);
 	}
+	
+	void GraphicDevice_DX11::DrawIndexedInstanced(UINT IndexCountPerInstance, UINT InstanceCount, UINT StartIndexLocation, INT BaseVertexLocation, UINT StartInstanceLocation)
+	{
+		mContext->DrawIndexedInstanced(IndexCountPerInstance, InstanceCount, StartIndexLocation, BaseVertexLocation, StartInstanceLocation);
+	}
+	
 	void GraphicDevice_DX11::Present()
 	{
 		mSwapChain->Present(0, 0);
