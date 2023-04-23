@@ -398,10 +398,12 @@ namespace arias::renderer
 		// Particle Shader
 		std::shared_ptr<Shader> particleShader = std::make_shared<Shader>();
 		particleShader->Create(eShaderStage::VS, L"ParticleVS.hlsl", "main");
+		particleShader->Create(eShaderStage::GS, L"ParticleGS.hlsl", "main");
 		particleShader->Create(eShaderStage::PS, L"ParticlePS.hlsl", "main");
 		particleShader->SetRSState(eRSType::SolidNone);
 		particleShader->SetDSState(eDSType::NoWrite);
 		particleShader->SetBSState(eBSType::AlphaBlend);
+		particleShader->SetTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_POINTLIST);
 		ResourceManager::Insert<Shader>(L"ParticleShader", particleShader);
 
 		// Fade Shader
@@ -432,6 +434,7 @@ namespace arias::renderer
 		ResourceManager::Load<Texture>(L"SmileTexture", L"Smile.png");
 		ResourceManager::Load<Texture>(L"DefaultSprite", L"Light.png");
 		ResourceManager::Load<Texture>(L"HPBarTexture", L"HPBar.png");
+		ResourceManager::Load<Texture>(L"CartoonSmoke", L"particle\\CartoonSmoke.png");
 #pragma endregion
 
 #pragma region Test
@@ -464,7 +467,7 @@ namespace arias::renderer
 		std::shared_ptr<Material> crosshairMaterial = std::make_shared<Material>();
 		crosshairMaterial->SetRenderingMode(eRenderingMode::Transparent);
 		crosshairMaterial->SetShader(crosshairShader);
-		crosshairMaterial->SetTexture(crosshairTexture); 
+		crosshairMaterial->SetTexture(eTextureSlot::T0, crosshairTexture);
 		ResourceManager::Insert<Material>(L"CrosshairMaterial", crosshairMaterial);
 #pragma endregion
 
@@ -474,7 +477,7 @@ namespace arias::renderer
 		std::shared_ptr<Shader> backgroundShader = ResourceManager::Find<Shader>(L"UIShader");
 		std::shared_ptr<Material> backgroundMaterial = std::make_shared<Material>();
 		backgroundMaterial->SetShader(backgroundShader);
-		backgroundMaterial->SetTexture(backgroundTexture);
+		backgroundMaterial->SetTexture(eTextureSlot::T0, backgroundTexture);
 		ResourceManager::Insert<Material>(L"BackgroundMaterial", backgroundMaterial);
 
 		// Title Play Button
@@ -482,7 +485,7 @@ namespace arias::renderer
 		std::shared_ptr<Shader> playButtonShader = ResourceManager::Find<Shader>(L"UIShader");
 		std::shared_ptr<Material> playButtonMaterial = std::make_shared<Material>();
 		playButtonMaterial->SetShader(playButtonShader);
-		playButtonMaterial->SetTexture(playButtonTexture);
+		playButtonMaterial->SetTexture(eTextureSlot::T0, playButtonTexture);
 		ResourceManager::Insert<Material>(L"PlayButtonMaterial", playButtonMaterial);
 
 		// Title Option Button
@@ -490,7 +493,7 @@ namespace arias::renderer
 		std::shared_ptr<Shader> optionButtonShader = ResourceManager::Find<Shader>(L"UIShader");
 		std::shared_ptr<Material> optionButtonMaterial = std::make_shared<Material>();
 		optionButtonMaterial->SetShader(optionButtonShader);
-		optionButtonMaterial->SetTexture(optionButtonTexture);
+		optionButtonMaterial->SetTexture(eTextureSlot::T0, optionButtonTexture);
 		ResourceManager::Insert<Material>(L"OptionButtonMaterial", optionButtonMaterial);
 
 		// Title Exit Button
@@ -498,7 +501,7 @@ namespace arias::renderer
 		std::shared_ptr<Shader> exitButtonShader = ResourceManager::Find<Shader>(L"UIShader");
 		std::shared_ptr<Material> exitButtonMaterial = std::make_shared<Material>();
 		exitButtonMaterial->SetShader(exitButtonShader);
-		exitButtonMaterial->SetTexture(exitButtonTexture);
+		exitButtonMaterial->SetTexture(eTextureSlot::T0, exitButtonTexture);
 		ResourceManager::Insert<Material>(L"ExitButtonMaterial", exitButtonMaterial);
 #pragma endregion
 
@@ -509,7 +512,7 @@ namespace arias::renderer
 		std::shared_ptr<Material> playerMaterial = std::make_shared<Material>();
 		playerMaterial->SetRenderingMode(eRenderingMode::Transparent);
 		playerMaterial->SetShader(playerShader);
-		playerMaterial->SetTexture(playerTexture);
+		playerMaterial->SetTexture(eTextureSlot::T0, playerTexture);
 		ResourceManager::Insert<Material>(L"PlayerMaterial", playerMaterial);
 #pragma endregion
 
@@ -519,7 +522,7 @@ namespace arias::renderer
 		std::shared_ptr<Shader> shader = ResourceManager::Find<Shader>(L"RectShader");
 		std::shared_ptr<Material> material = std::make_shared<Material>();
 		material->SetShader(shader);
-		material->SetTexture(texture);
+		material->SetTexture(eTextureSlot::T0, texture);
 		ResourceManager::Insert<Material>(L"RectMaterial", material);
 
 		// Particle

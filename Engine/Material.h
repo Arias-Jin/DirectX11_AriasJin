@@ -18,7 +18,7 @@ namespace arias::graphics
 
 	private:
 		std::shared_ptr<Shader> mShader;
-		std::shared_ptr<Texture> mTexture;
+		std::shared_ptr<Texture> mTexture[(UINT)eTextureSlot::End];
 		MaterialCB mCB;
 		eRenderingMode mMode;
 
@@ -32,9 +32,8 @@ namespace arias::graphics
 	public:
 		void SetShader(std::shared_ptr<Shader> shader) { mShader = shader; }
 		std::shared_ptr<Shader> GetShader() const { return mShader; }
-
-		void SetTexture(std::shared_ptr<Texture> texture) { mTexture = texture; }
-		std::shared_ptr<Texture> GetTexture() const { return mTexture; }
+		void SetTexture(eTextureSlot slot, std::shared_ptr<Texture> texture) { mTexture[(UINT)slot] = texture; }
+		std::shared_ptr<Texture> GetTexture(eTextureSlot slot) { return mTexture[(UINT)slot]; }
 
 		void SetRenderingMode(eRenderingMode mode) { mMode = mode; }
 		eRenderingMode GetRenderingMode() { return mMode; }

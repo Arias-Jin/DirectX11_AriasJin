@@ -46,6 +46,9 @@
     <FxCompile Include="$(MSBuildThisFileDirectory)ParticlePS.hlsl">
       <Filter>PS</Filter>
     </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)ParticleGS.hlsl">
+      <Filter>GS</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="VS">
@@ -56,6 +59,9 @@
     </Filter>
     <Filter Include="CS">
       <UniqueIdentifier>{57bcd66b-12d8-44fa-872f-73579b8762d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GS">
+      <UniqueIdentifier>{13fcd788-b0d6-46e5-acd5-caf6b9cf403c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

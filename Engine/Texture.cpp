@@ -174,7 +174,7 @@ namespace arias::graphics
 		return S_OK;
 	}
 
-	void Texture::BindShader(eShaderStage stage, UINT slot)
+	void Texture::BindShaderResource(eShaderStage stage, UINT slot)
 	{
 		GetDevice()->BindShaderResource(stage, slot, mSRV.GetAddressOf());
 	}

@@ -22,12 +22,15 @@ namespace arias
 		mEndColor(Vector4::Zero),
 		mStartLifeTime(0.0f)
 	{
-		std::shared_ptr<Mesh> rect = ResourceManager::Find<Mesh>(L"RectMesh");
-		SetMesh(rect);
+		std::shared_ptr<Mesh> point = ResourceManager::Find<Mesh>(L"PointMesh");
+		SetMesh(point);
 
 		// Material ¼¼ÆÃ
 		std::shared_ptr<Material> material = ResourceManager::Find<Material>(L"ParticleMaterial");
 		SetMaterial(material);
+
+		std::shared_ptr<Texture> tex = ResourceManager::Find<Texture>(L"CartoonSmoke");
+		material->SetTexture(eTextureSlot::T0, tex);
 
 		Particle particles[1000] = {};
 		Vector4 startPos = Vector4(-800.0f, -450.0f, 0.0f, 0.0f);
@@ -37,6 +40,8 @@ namespace arias
 			for (size_t x = 0; x < 16; x++)
 			{
 				particles[16 * y + x].position = startPos + Vector4(x * 100.0f, y * 100.0f, 0.0f, 0.0f);
+
+				particles[16 * y + x].active = 1;
 			}
 		}
 
@@ -67,6 +72,7 @@ namespace arias
 	{
 		GetOwner()->GetComponent<Transform>()->SetConstantBuffer();
 		mBuffer->Bind(eShaderStage::VS, 15);
+		mBuffer->Bind(eShaderStage::GS, 15);
 		mBuffer->Bind(eShaderStage::PS, 15);
 
 		GetMaterial()->Bind();
