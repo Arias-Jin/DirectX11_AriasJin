@@ -93,18 +93,6 @@ namespace arias::graphics
 		mDepthStencilBufferTexture = std::make_shared<Texture>();
 		mDepthStencilBufferTexture->Create(1600, 900, DXGI_FORMAT_D24_UNORM_S8_UINT, D3D11_BIND_FLAG::D3D11_BIND_DEPTH_STENCIL);
 
-		// Depth Stencil Buffer
-		if (!CreateTexture(&depthBuffer, mDepthStencilBufferTexture->GetTexture().GetAddressOf()))
-		{
-			return;
-		}
-
-		// Depth Stencil Buffer View
-		if (FAILED(mDevice->CreateDepthStencilView(mDepthStencilBufferTexture->GetTexture().Get(), nullptr, mDepthStencilBufferTexture->GetDSV().GetAddressOf())))
-		{
-			return;
-		}
-
 		RECT winRect;
 		GetClientRect(application.GetHwnd(), &winRect);
 		mViewPort = { 0.0f, 0.0f, FLOAT(winRect.right - winRect.left), FLOAT(winRect.bottom - winRect.top), 0.0f, 1.0f };

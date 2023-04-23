@@ -43,6 +43,7 @@ namespace arias::graphics
 		void Clear();
 		static void Clear(UINT startSlot);
 
+
 	public:
 		size_t GetWidth() const { return mDesc.Width; }
 		size_t GetHeight() const { return mDesc.Height; }
@@ -53,5 +54,6 @@ namespace arias::graphics
 		Microsoft::WRL::ComPtr<ID3D11UnorderedAccessView> GetUAV() const { return mUAV; }
 		Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> GetSRV() const { return mSRV; }
 
+		void SetTexture(Microsoft::WRL::ComPtr<ID3D11Texture2D> texture) { mTexture = texture; }
 	};
 }
