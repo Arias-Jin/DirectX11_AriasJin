@@ -10,8 +10,8 @@ namespace arias::graphics
 		mType(eSRVType::SRV),
 		mSize(0),
 		mStride(0),
-		mSRVSlot(-1),
-		mUAVSlot(-1)
+		mSRVSlot(0),
+		mUAVSlot(0)
 	{
 	}
 	

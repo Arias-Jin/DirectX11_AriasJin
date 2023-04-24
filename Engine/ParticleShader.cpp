@@ -22,7 +22,7 @@ namespace arias::graphics
 	{
 		mBuffer->BindUAV(eShaderStage::CS, 0);
 
-		mGroupX = mBuffer->GetStride() / mThreadGroupCountX;
+		mGroupX = mBuffer->GetStride() / mThreadGroupCountX + 1;
 		mGroupY = 1;
 		mGroupZ = 1;
 	}

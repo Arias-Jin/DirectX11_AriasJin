@@ -3,6 +3,7 @@
 #include "ResourceManager.h"
 #include "Material.h"
 #include "PaintShader.h"
+#include "ParticleShader.h"
 
 #include "SceneManager.h"
 
@@ -406,6 +407,10 @@ namespace arias::renderer
 		particleShader->SetBSState(eBSType::AlphaBlend);
 		particleShader->SetTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_POINTLIST);
 		ResourceManager::Insert<Shader>(L"ParticleShader", particleShader);
+
+		std::shared_ptr<ParticleShader> particleCS = std::make_shared<ParticleShader>();
+		ResourceManager::Insert<ParticleShader>(L"ParticleCS", particleCS);
+		particleCS->Create(L"ParticleCS.hlsl", "main");
 
 		// Fade Shader
 		std::shared_ptr<Shader> fadeShader = std::make_shared<Shader>();
