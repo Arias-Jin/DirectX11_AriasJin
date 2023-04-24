@@ -95,11 +95,15 @@ namespace arias::graphics
 
 	void StructedBuffer::BindSRV(eShaderStage stage, UINT slot)
 	{
+		mSRVSlot = slot;
+
 		GetDevice()->BindShaderResource(stage, slot, mSRV.GetAddressOf());
 	}
 
 	void StructedBuffer::BindUAV(eShaderStage stage, UINT slot)
 	{
+		mUAVSlot = slot;
+
 		UINT i = -1;
 		GetDevice()->BindUnorderedAccessView(slot, 1, mUAV.GetAddressOf(), &i);
 	}
