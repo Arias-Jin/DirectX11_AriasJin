@@ -351,7 +351,7 @@ namespace arias::renderer
 
 		// Structed Buffer
 		lightBuffer = new StructedBuffer();
-		lightBuffer->Create(sizeof(LightAttribute), 128, eSRVType::None, nullptr);
+		lightBuffer->Create(sizeof(LightAttribute), 128, eSRVType::SRV, nullptr);
 	}
 
 	void LoadShader()
@@ -603,8 +603,8 @@ namespace arias::renderer
 	void BindLights()
 	{
 		lightBuffer->SetData(lights.data(), (UINT)lights.size());
-		lightBuffer->Bind(eShaderStage::VS, 13);
-		lightBuffer->Bind(eShaderStage::PS, 13);
+		lightBuffer->BindSRV(eShaderStage::VS, 13);
+		lightBuffer->BindSRV(eShaderStage::PS, 13);
 
 		renderer::LightCB trCb = {};
 		trCb.numberOfLight = (UINT)lights.size();

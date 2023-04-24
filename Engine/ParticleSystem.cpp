@@ -47,7 +47,7 @@ namespace arias
 
 		mCount = 144;
 		mBuffer = new StructedBuffer();
-		mBuffer->Create(sizeof(Particle), mCount, eSRVType::None, particles);
+		mBuffer->Create(sizeof(Particle), mCount, eSRVType::SRV, particles);
 	}
 
 	ParticleSystem::~ParticleSystem()
@@ -71,9 +71,9 @@ namespace arias
 	void ParticleSystem::Render()
 	{
 		GetOwner()->GetComponent<Transform>()->SetConstantBuffer();
-		mBuffer->Bind(eShaderStage::VS, 15);
-		mBuffer->Bind(eShaderStage::GS, 15);
-		mBuffer->Bind(eShaderStage::PS, 15);
+		mBuffer->BindSRV(eShaderStage::VS, 15);
+		mBuffer->BindSRV(eShaderStage::GS, 15);
+		mBuffer->BindSRV(eShaderStage::PS, 15);
 
 		GetMaterial()->Bind();
 		GetMesh()->RenderInstanced(mCount);

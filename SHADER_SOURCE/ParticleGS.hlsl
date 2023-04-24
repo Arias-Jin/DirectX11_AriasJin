@@ -23,7 +23,7 @@ void main(point VSOut input[1], inout TriangleStream<GSOutput> output)
     }
     
     float3 vWorldPos = input[0].Pos.xyz + particleBuffer[input[0].iInstance].position.xyz;
-    float3 vViewPos = mul(float4(vWorldPos, 1.0f), view);
+    float3 vViewPos = mul(float4(vWorldPos, 1.0f), view).xyz;
     float3 NewPos[4] =
     {
         vViewPos + float3(-0.5f, 0.5f, 0.0f) * float3(50.0f, 50.0f, 1.0f),

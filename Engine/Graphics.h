@@ -115,7 +115,8 @@ namespace arias::graphics
 
 	enum class eSRVType
 	{
-		None,
+		SRV,
+		UAV,
 		End,
 	};
 

@@ -2,7 +2,7 @@
 
 struct VSIn
 {
-    float4 Pos : POSITIONT;
+    float4 Pos : POSITION;
     uint iInstance : SV_InstanceID;
 };
 

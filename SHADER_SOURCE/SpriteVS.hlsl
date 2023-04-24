@@ -23,8 +23,8 @@ VSOut main(VSIn In)
     float4 viewPosition = mul(worldPosition, view);
     float4 ProjPosition = mul(viewPosition, projection);
     
+    Out.WorldPos = worldPosition.xyz;
     Out.Pos = ProjPosition;
-    Out.WorldPos = worldPosition;
     Out.Color = In.Color;
     Out.UV = In.UV;
     

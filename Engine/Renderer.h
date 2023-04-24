@@ -67,6 +67,8 @@ namespace arias::renderer
 	CBUFFER(ParticleSystemCB, CBSLOT_PARTICLESYSTEM)
 	{
 		Vector4 color;
+		UINT elementCount;
+		float deltaTime;
 	};
 
 	CBUFFER(FadeCB, CBSLOT_FADE)
