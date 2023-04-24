@@ -61,7 +61,7 @@ namespace arias::graphics
 		void BindComputeShader(ID3D11ComputeShader* pComputeShader, ID3D11ClassInstance* const* ppClassInstances, UINT NumClassInstances);
 		void Dispatch(UINT ThreadGroupCountX, UINT ThreadGroupCountY, UINT ThreadGroupCountZ);
 		void BindViewports(D3D11_VIEWPORT* viewPort);
-		void BindBuffer(ID3D11Buffer* buffer, void* data, UINT size);
+		void SetData(ID3D11Buffer* buffer, void* data, UINT size);
 		void BindConstantBuffer(eShaderStage stage, eCBType type, ID3D11Buffer* buffer);
 		void BindShaderResource(eShaderStage stage, UINT slot, ID3D11ShaderResourceView* const* ppShaderResourceViews);
 		void BindUnorderedAccessView(UINT startSlot, UINT NumUAVs, ID3D11UnorderedAccessView* const* ppUnorderedAccessViews, const UINT* pUAVInitialCounts);
@@ -70,6 +70,7 @@ namespace arias::graphics
 		void BindRasterizerState(ID3D11RasterizerState* pRasterizerState);
 		void BindDepthStencilState(ID3D11DepthStencilState* pDepthStencilState);
 		void BindBlendState(ID3D11BlendState* pBlendState);
+		void CopyResource(ID3D11Resource* pDstResource, ID3D11Resource* pSrcResource);
 
 		void Clear();
 		void AdjustViewPorts();

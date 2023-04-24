@@ -13,11 +13,14 @@ namespace arias::graphics
 
 	private:
 		StructedBuffer* mBuffer;
+		StructedBuffer* mSharedBuffer;
 
 	public:
 		virtual void Binds() override;
 		virtual void Clear() override;
 
-		void SetStrcutedBuffer(StructedBuffer* buffer);
+	public:
+		void SetStrcutedBuffer(StructedBuffer* buffer) { mBuffer = buffer; }
+		void SetSharedStrutedBuffer(StructedBuffer* buffer) { mSharedBuffer = buffer; }
 	};
 }

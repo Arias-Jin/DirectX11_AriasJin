@@ -352,7 +352,7 @@ namespace arias::renderer
 
 		// Structed Buffer
 		lightBuffer = new StructedBuffer();
-		lightBuffer->Create(sizeof(LightAttribute), 128, eSRVType::SRV, nullptr);
+		lightBuffer->Create(sizeof(LightAttribute), 128, eSRVType::SRV, nullptr, true);
 	}
 
 	void LoadShader()
