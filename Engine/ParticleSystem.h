@@ -16,6 +16,7 @@ namespace arias
 		class StructedBuffer* mSharedBuffer;
 
 		std::shared_ptr<graphics::ParticleShader> mCS;
+		renderer::ParticleSystemCB mCBData;
 
 		UINT mCount;
 

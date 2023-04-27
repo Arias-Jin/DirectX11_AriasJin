@@ -25,7 +25,8 @@ namespace arias
 		mEndColor(Vector4::Zero),
 		mStartLifeTime(0.0f), 
 		mFrequency(1.0f),
-		mTime(0.0f)
+		mTime(0.0f),
+		mCBData{}
 	{
 	}
 
@@ -53,7 +54,7 @@ namespace arias
 		material->SetTexture(eTextureSlot::T0, tex);
 
 		Particle particles[100] = {};
-		Vector4 startPos = Vector4(-800.0f, -450.0f, 0.0f, 0.0f);
+		Vector4 startPos = Vector4(0.0f, 0.0f, 0.0f, 0.0f);
 
 		for (size_t i = 0; i < mCount; i++)
 		{
@@ -96,12 +97,12 @@ namespace arias
 			mSharedBuffer->SetData(&shared, 1);
 		}
 
-		renderer::ParticleSystemCB info = {};
-		info.elementCount = mBuffer->GetStride();
-		info.deltaTime = Time::DeltaTime();
+		mCBData.elementCount = mBuffer->GetStride();
+		mCBData.deltaTime = Time::DeltaTime();
+		mCBData.elapsedTime += Time::DeltaTime();
 
 		ConstantBuffer* cb = renderer::constantBuffers[(UINT)eCBType::ParticleSystem];
-		cb->SetData(&info);
+		cb->SetData(&mCBData);
 		cb->Bind(eShaderStage::CS);
 
 		mCS->SetSharedStrutedBuffer(mSharedBuffer);
@@ -112,9 +113,7 @@ namespace arias
 	void ParticleSystem::Render()
 	{
 		GetOwner()->GetComponent<Transform>()->SetConstantBuffer();
-		mBuffer->BindSRV(eShaderStage::VS, 15);
 		mBuffer->BindSRV(eShaderStage::GS, 15);
-		mBuffer->BindSRV(eShaderStage::PS, 15);
 
 		GetMaterial()->Bind();
 		GetMesh()->RenderInstanced(mCount);

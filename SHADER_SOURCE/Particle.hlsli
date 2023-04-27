@@ -4,7 +4,7 @@ struct Particle
     float4 direction;
     
     float lifeTime;
-    float Time;
+    float time;
     float speed;
     uint active;
 };
