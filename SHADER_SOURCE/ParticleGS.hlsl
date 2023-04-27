@@ -10,6 +10,7 @@ struct GSOutput
 {
     float4 Pos : SV_Position;
     float2 UV : TEXCOORD;
+    uint iInstance : SV_InstanceID;
 };
 
 StructuredBuffer<Particle> particleBuffer : register(t15);
@@ -25,13 +26,23 @@ void main(point VSOut input[1], inout TriangleStream<GSOutput> output)
     }
     
     float3 vWorldPos = input[0].Pos.xyz + particleBuffer[input[0].iInstance].position.xyz;
+    
+    if (simulationSpace == 0)
+    {
+        vWorldPos += world._41_42_43;
+
+    }
+    
     float3 vViewPos = mul(float4(vWorldPos, 1.0f), view).xyz;
+    
+    float3 vScale = startSize.xyz;
+    
     float3 NewPos[4] =
     {
-        vViewPos + float3(-0.5f, 0.5f, 0.0f) * float3(50.0f, 50.0f, 1.0f),
-        vViewPos + float3(0.5f, 0.5f, 0.0f) * float3(50.0f, 50.0f, 1.0f),
-        vViewPos + float3(0.5f, -0.5f, 0.0f) * float3(50.0f, 50.0f, 1.0f),
-        vViewPos + float3(-0.5f, -0.5f, 0.0f) * float3(50.0f, 50.0f, 1.0f)
+        vViewPos + float3(-0.5f, 0.5f, 0.0f) * vScale,
+        vViewPos + float3(0.5f, 0.5f, 0.0f) * vScale,
+        vViewPos + float3(0.5f, -0.5f, 0.0f) * vScale,
+        vViewPos + float3(-0.5f, -0.5f, 0.0f) * vScale
     };
     
     for (int i = 0; i < 4; i++)
@@ -44,6 +55,11 @@ void main(point VSOut input[1], inout TriangleStream<GSOutput> output)
     Out[2].UV = float2(1.0f, 1.0f);
     Out[3].UV = float2(0.0f, 1.0f);
 	
+    Out[0].iInstance = input[0].iInstance;
+    Out[1].iInstance = input[0].iInstance;
+    Out[2].iInstance = input[0].iInstance;
+    Out[3].iInstance = input[0].iInstance;
+    
     // 0 -- 1
     // | \  |
     // 3 -- 2

@@ -39,10 +39,19 @@ cbuffer NumberOfLight : register(b4)
 
 cbuffer ParticleSystem : register(b5)
 {
-    float4 particleColor;
-    uint elementCount;
+    float4 worldPosition;
+    float4 startColor;
+    float4 startSize;
+    
+    uint maxParticles;
+    uint simulationSpace;
+    float radius;
+    float startSpeed;
+    
+    float startLifeTime;
     float deltaTime;
     float elapsedTime; //누적시간
+    int padding;
 }
 
 //cbuffer Noise : register(b6)

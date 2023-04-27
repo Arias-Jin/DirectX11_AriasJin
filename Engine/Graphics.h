@@ -42,6 +42,7 @@ namespace arias::graphics
 		GS,
 		PS,
 		CS,
+		ALL,
 		Count,
 	};
 
