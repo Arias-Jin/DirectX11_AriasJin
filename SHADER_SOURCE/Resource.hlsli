@@ -15,3 +15,6 @@ Texture2D atlasTexture : register(t12);
 
 // noise
 // Texture2D NoiseTexture : register(t16);
+
+// postProcess
+Texture2D postProcessTexture : register(t60);

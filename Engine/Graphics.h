@@ -85,6 +85,7 @@ namespace arias::graphics
 		Opaque,
 		Cutout,
 		Transparent,
+		PostProcess,
 		End,
 	};
 

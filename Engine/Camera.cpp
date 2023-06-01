@@ -66,6 +66,7 @@ namespace arias
 		RenderOpaque();
 		RenderCutout();
 		RenderTransparent();
+		RenderPostProcess();
 	}
 
 	void Camera::CreateViewMatrix()
@@ -139,6 +140,7 @@ namespace arias
 		mOpaqueGameObjects.clear();
 		mCutoutGameObjects.clear();
 		mTransparentGameObjects.clear();
+		mPostProcessGameObjects.clear();
 
 		Scene* scene = SceneManager::GetActiveScene();
 
@@ -200,6 +202,20 @@ namespace arias
 			obj->Render();
 		}
 	}
+
+	void Camera::RenderPostProcess()
+	{
+		for (GameObject* obj : mPostProcessGameObjects)
+		{
+			if (obj == nullptr)
+			{
+				continue;
+			}
+
+			renderer::CopyRenderTarget();
+			obj->Render();
+		}
+	}
 	
 	void Camera::PushGameObjectToRenderingModes(GameObject* gameObj)
 	{
@@ -223,6 +239,9 @@ namespace arias
 			break;
 		case arias::graphics::eRenderingMode::Transparent:
 			mTransparentGameObjects.push_back(gameObj);
+			break;
+		case arias::graphics::eRenderingMode::PostProcess:
+			mPostProcessGameObjects.push_back(gameObj);
 			break;
 		default:
 			break;

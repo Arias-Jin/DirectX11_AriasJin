@@ -101,6 +101,25 @@ namespace arias
 			particleTransform->SetPosition(Vector3(0.0f, 0.0f, 100.0f));
 			particleObject->AddComponent<ParticleSystem>();
 		}
+
+		//post process object
+		{
+			GameObject* postProcessObject = object::Instantiate<GameObject>(eLayerType::PostProcess);
+			postProcessObject->SetName(L"PostProcessGameObject");
+			Transform* postProcessTransform = postProcessObject->AddComponent<Transform>();
+			postProcessTransform->SetPosition(Vector3(0.0f, 0.0f, 19.0f));
+			postProcessTransform->SetScale(Vector3(200.0f, 200.0f, 1.0f));
+			
+			Collider2D* collider = postProcessObject->AddComponent<Collider2D>();
+			collider->SetType(eColliderType::Rect);
+			//collider->SetSize(Vector2(1.0f, 0.5f));
+			
+			SpriteRenderer* mr = postProcessObject->AddComponent<SpriteRenderer>();
+			std::shared_ptr<Material> mateiral = ResourceManager::Find<Material>(L"PostProcessMaterial");
+			mr->SetMaterial(mateiral);
+			std::shared_ptr<Mesh> mesh = ResourceManager::Find<Mesh>(L"RectMesh");
+			mr->SetMesh(mesh);
+		}
 #pragma region Enemy
 		// Enemy* enemyObject = object::Instantiate<Enemy>(eLayerType::Enemy, this);
 		// SpriteRenderer* enemySprite = enemyObject->AddComponent<SpriteRenderer>();

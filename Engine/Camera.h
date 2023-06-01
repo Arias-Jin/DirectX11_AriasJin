@@ -38,6 +38,7 @@ namespace arias
 		std::vector<GameObject*> mOpaqueGameObjects;
 		std::vector<GameObject*> mCutoutGameObjects;
 		std::vector<GameObject*> mTransparentGameObjects;
+		std::vector<GameObject*> mPostProcessGameObjects;
 
 	public:
 		virtual void Initialize() override;
@@ -57,6 +58,7 @@ namespace arias
 		void RenderOpaque();
 		void RenderCutout();
 		void RenderTransparent();
+		void RenderPostProcess();
 		void PushGameObjectToRenderingModes(GameObject* gameObj);
 
 	public:

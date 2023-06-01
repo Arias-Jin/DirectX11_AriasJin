@@ -17,6 +17,7 @@ namespace arias::enums
 		Player,
 		Enemy,
 		Particle,
+		PostProcess,
 		UI,
 		Background,
 		End = 16,

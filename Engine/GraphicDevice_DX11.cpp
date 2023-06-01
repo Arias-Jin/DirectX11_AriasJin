@@ -72,9 +72,7 @@ namespace arias::graphics
 		// Get RenderTarget for SwapChain
 		hr = mSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)renderTarget.GetAddressOf());
 		mRenderTargetTexture->Create(renderTarget);
-
-		// Create RenderTarget View
-		// hr = mDevice->CreateRenderTargetView(mRenderTargetTexture.Get(), nullptr, mRenderTargetView.GetAddressOf());
+		ResourceManager::Insert<Texture>(L"RenderTargetTexture", mRenderTargetTexture);
 
 		D3D11_TEXTURE2D_DESC depthBuffer = {};
 

@@ -84,6 +84,7 @@ namespace arias::renderer
 	CBUFFER(NoiseCB, CBSLOT_NOISE)
 	{
 		Vector4 noiseSize;
+		float noiseTime;
 	};
 
 	CBUFFER(FadeCB, CBSLOT_FADE)
@@ -112,4 +113,5 @@ namespace arias::renderer
 	void PushLightAttribute(LightAttribute lightAttribute);
 	void BindLights();
 	void BindNoiseTexture();
+	void CopyRenderTarget();
 }
