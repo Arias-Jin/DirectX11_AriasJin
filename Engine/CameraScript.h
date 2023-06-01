@@ -15,13 +15,6 @@ namespace arias
 		~CameraScript();
 
 	private:
-		Camera* mCamera;
-		Transform* mTrans;
-		
-		Vector3 mPos;
-
-		float mMoveSpeed;
-		float mScale;
 
 	public:
 		virtual void Initialize() override;
