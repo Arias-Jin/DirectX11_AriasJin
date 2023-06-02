@@ -39,6 +39,7 @@ namespace arias
 		void Release();
 
 		void SetWindow(HWND hwnd, UINT width, UINT height);
+		Vector2 GetResolutionRatio();
 
 	public:
 		void SetHwnd(HWND hwnd) { mHwnd = hwnd; }
@@ -48,5 +49,6 @@ namespace arias
 
 		UINT GetWidth() const { return mWidth; }
 		UINT GetHeight() const { return mHeight; }
+
 	};
 }

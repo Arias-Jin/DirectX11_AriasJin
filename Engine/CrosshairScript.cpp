@@ -32,7 +32,7 @@ namespace arias
 #pragma region Crosshair Position
 		mPos = mTrans->GetPosition();
 
-		mPos = Input::GetMousePosition();
+		mPos = static_cast<Vector3>(Input::GetMouseWorldPosition());
 
 		mTrans->SetPosition(mPos);
 #pragma endregion

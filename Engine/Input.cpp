@@ -1,17 +1,24 @@
 #include "Input.h"
 
+#include "Component.h"
 #include "Camera.h"
+#include "Transform.h"
+
+#include "GameObject.h"
 
 #include "GraphicDevice_DX11.h"
 
 #include "Application.h"
+
+#include "Renderer.h"
 
 extern arias::Application application;
 
 namespace arias
 {
 	std::vector<Input::Key> Input::mKeys;
-	math::Vector3 Input::mMousePosition;
+	math::Vector2 Input::mMousePosition;
+	math::Vector2 Input::mMouseWorldPosition;
 	float Input::mWinWidthCenter;
 	float Input::mWinHeightCenter;
 
@@ -95,11 +102,7 @@ namespace arias
 				}
 			}
 
-			POINT mousePos = {};
-			GetCursorPos(&mousePos);
-			ScreenToClient(application.GetHwnd(), &mousePos);
-			mMousePosition.x = ((float)mousePos.x - mWinWidthCenter);
-			mMousePosition.y = -((float)mousePos.y - mWinHeightCenter);
+			ComputeMousePos();
 		}
 		else
 		{
@@ -127,5 +130,36 @@ namespace arias
 		swprintf_s(szFloat, 50, L"X : %f | Y : %f", mMousePosition.x, mMousePosition.y);
 		
 		SetWindowText(hWnd, szFloat);
+	}
+
+	void Input::ComputeMousePos()
+	{
+		using namespace math;
+
+		POINT ptMouse = {};
+		GetCursorPos(&ptMouse);
+		ScreenToClient(application.GetHwnd(), &ptMouse);
+
+		RECT windowRect;
+		GetClientRect(application.GetHwnd(), &windowRect);
+
+		Vector2 resolutionRatio = application.GetResolutionRatio();
+		Vector2 mousePos;
+
+		mousePos.x = static_cast<float>(ptMouse.x - (windowRect.right - windowRect.left) * 0.5f) * resolutionRatio.x;
+		mousePos.y = static_cast<float>((windowRect.bottom - windowRect.top) * 0.5f - ptMouse.y) * resolutionRatio.y;
+
+		mMousePosition = mousePos;
+
+		Camera* cameraComp = renderer::mainCamera;
+
+		if (cameraComp == nullptr)
+		{
+			return;
+		}
+
+		Vector3 cameraPos = cameraComp->GetOwner()->GetComponent<Transform>()->GetPosition();
+
+		mMouseWorldPosition = mMousePosition + Vector2(cameraPos.x, cameraPos.y);
 	}
 }

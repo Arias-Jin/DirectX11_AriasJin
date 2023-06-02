@@ -61,7 +61,7 @@ namespace arias
 		mTrans->SetPosition(mPos);
 #pragma endregion
 #pragma region Player Rotation
-		mMousePos = Input::GetMousePosition();
+		mMousePos = Input::GetMouseWorldPosition();
 		mRot = mTrans->GetRotation();
 
 		mRot.z = atan2(mMousePos.y - mPos.y, mMousePos.x - mPos.x);

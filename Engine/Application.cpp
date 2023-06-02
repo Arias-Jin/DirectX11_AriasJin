@@ -110,4 +110,16 @@ namespace arias
         ShowWindow(mHwnd, true);
         UpdateWindow(mHwnd);
     }
+
+    Vector2 Application::GetResolutionRatio()
+    {
+        RECT windowRect;
+
+        GetClientRect(mHwnd, &windowRect);
+
+        float width = static_cast<float>(windowRect.right - windowRect.left);
+        float height = static_cast<float>(windowRect.bottom - windowRect.top);
+
+        return Vector2(mWidth / width, mHeight / height);
+    }
 }

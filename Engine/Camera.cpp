@@ -101,8 +101,9 @@ namespace arias
 		
 		if (width <= 0.0f || height <= 0.0f)
 		{
-			width = 0.1f;
-			height = 0.1f;
+			mProjection = Matrix::Identity;
+
+			return;
 		}
 
 		mAspectRatio = width / height;

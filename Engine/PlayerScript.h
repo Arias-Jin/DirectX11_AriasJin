@@ -16,7 +16,7 @@ namespace arias
 	private:
 		Transform* mTrans;
 
-		Vector3 mMousePos;
+		Vector2 mMousePos;
 		Vector3 mPos;
 		Vector3 mRot;
 
