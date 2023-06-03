@@ -3,7 +3,7 @@
 namespace arias
 {
 	Entity::Entity() :
-		mName{},
+		mName(L""),
 		mID(reinterpret_cast<UINT64>(this))
 	{
 	}

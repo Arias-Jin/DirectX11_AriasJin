@@ -36,7 +36,9 @@ namespace arias
 		mScenes.resize((UINT)eSceneType::End);
 
 		mScenes[(UINT)eSceneType::Title] = new TitleScene();
+		mScenes[(UINT)eSceneType::Title]->SetName(L"TitleScene");
 		mScenes[(UINT)eSceneType::Play] = new PlayScene();
+		mScenes[(UINT)eSceneType::Play]->SetName(L"PlayScene");
 
 		mActiveScene = mScenes[(UINT)eSceneType::Title];
 

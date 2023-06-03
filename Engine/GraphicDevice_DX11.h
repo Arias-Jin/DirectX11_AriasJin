@@ -83,6 +83,7 @@ namespace arias::graphics
 
 	public:
 		ID3D11Device* GetID3D11Device() const { return mDevice.Get(); }
+		ID3D11DeviceContext* GetID3D11DeviceContext() const { return mContext.Get(); }
 	};
 
 	inline GraphicDevice_DX11*& GetDevice()

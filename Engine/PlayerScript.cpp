@@ -17,6 +17,7 @@ namespace arias
 		mMousePos{},
 		mPos{},
 		mRot{},
+		bMove(false),
 		mMoveSpeed(150.0f)
 	{
 	}
@@ -27,54 +28,17 @@ namespace arias
 
 	void PlayerScript::Initialize()
 	{
-		// Animator* animator = GetOwner()->GetComponent<Animator>();
-		// animator->GetStartEvent(L"MoveDown") = std::bind(&PlayerScript::Start, this);
-		// animator->GetCompleteEvent(L"Idle") = std::bind(&PlayerScript::Action, this);
-		// animator->GetEndEvent(L"Idle") = std::bind(&PlayerScript::End, this);
-		// animator->GetEvent(L"Idle", 1) = std::bind(&PlayerScript::End, this);
-
 		mTrans = GetOwner()->GetComponent<Transform>();
 	}
 
 	void PlayerScript::Update()
 	{
-#pragma region Player Position
-		mPos = mTrans->GetPosition();
+		KeyboardInput();
+		MouseInput();
+	}
 
-		if (Input::GetKeyState(eKeyCode::D) == eKeyState::PRESSED)
-		{
-			mPos.x += mMoveSpeed * Time::DeltaTime();
-		}
-		else if (Input::GetKeyState(eKeyCode::A) == eKeyState::PRESSED)
-		{
-			mPos.x -= mMoveSpeed * Time::DeltaTime();
-		}
-		else if (Input::GetKeyState(eKeyCode::W) == eKeyState::PRESSED)
-		{
-			mPos.y += mMoveSpeed * Time::DeltaTime();
-		}
-		else if (Input::GetKeyState(eKeyCode::S) == eKeyState::PRESSED)
-		{
-			mPos.y -= mMoveSpeed * Time::DeltaTime();
-		}
-
-		mTrans->SetPosition(mPos);
-#pragma endregion
-#pragma region Player Rotation
-		mMousePos = Input::GetMouseWorldPosition();
-		mRot = mTrans->GetRotation();
-
-		mRot.z = atan2(mMousePos.y - mPos.y, mMousePos.x - mPos.x);
-
-		mTrans->SetRotation(mRot);
-#pragma endregion
-
-		Animator* animator = GetOwner()->GetComponent<Animator>();
-		
-		// if (Input::GetKeyDown(eKeyCode::N_1))
-		// {
-		// 	animator->Play(L"MoveDown");
-		// }
+	void PlayerScript::FixedUpdate()
+	{
 	}
 
 	void PlayerScript::Render()
@@ -92,16 +56,80 @@ namespace arias
 	void PlayerScript::OnCollisionExit(Collider2D* collider)
 	{
 	}
-	
-	void PlayerScript::Start()
+
+	void PlayerScript::KeyboardInput()
 	{
+		Player* player = dynamic_cast<Player*>(GetOwner());
+
+		// Move
+		mPos = mTrans->GetPosition();
+
+		if (Input::GetKeyPress(eKeyCode::D))
+		{
+			player->ChangeState(ePlayerState::Move);
+			mPos.x += mMoveSpeed * Time::DeltaTime();
+		}
+		if (Input::GetKeyPress(eKeyCode::A))
+		{
+			player->ChangeState(ePlayerState::Move);
+			mPos.x -= mMoveSpeed * Time::DeltaTime();
+		}
+		if (Input::GetKeyPress(eKeyCode::W))
+		{
+			player->ChangeState(ePlayerState::Move);
+			mPos.y += mMoveSpeed * Time::DeltaTime();
+		}
+		if (Input::GetKeyPress(eKeyCode::S))
+		{
+			player->ChangeState(ePlayerState::Move);
+			mPos.y -= mMoveSpeed * Time::DeltaTime();
+		}
+
+		mTrans->SetPosition(mPos);
+
+		if (Input::GetKeyUp(eKeyCode::D) || Input::GetKeyUp(eKeyCode::A) || Input::GetKeyUp(eKeyCode::W) || Input::GetKeyUp(eKeyCode::S))
+		{
+			player->ChangeState(ePlayerState::Idle);
+		}
+
+		// Change Weapon
+		if (Input::GetKeyDown(eKeyCode::N_1))
+		{
+			player->ChangeWeapon(ePlayerWeapon::Knife);
+		}
+		if (Input::GetKeyDown(eKeyCode::N_2))
+		{
+			player->ChangeWeapon(ePlayerWeapon::Pistol);
+		}
+		if (Input::GetKeyDown(eKeyCode::N_3))
+		{
+			player->ChangeWeapon(ePlayerWeapon::Rifle);
+		}
+		if (Input::GetKeyDown(eKeyCode::N_4))
+		{
+			player->ChangeWeapon(ePlayerWeapon::Shotgun);
+		}
+
+		if (Input::GetKeyDown(eKeyCode::V))
+		{
+			player->ChangeState(ePlayerState::Melee);
+		}
+
+		if (Input::GetKeyDown(eKeyCode::R))
+		{
+			player->ChangeState(ePlayerState::Reload);
+		}
 	}
-	
-	void PlayerScript::Action()
+
+	void PlayerScript::MouseInput()
 	{
-	}
-	
-	void PlayerScript::End()
-	{
+		mMousePos = Input::GetMouseWorldPosition();
+		mRot = mTrans->GetRotation();
+
+		mRot.z = atan2(mMousePos.y - mPos.y, mMousePos.x - mPos.x);
+
+		mTrans->SetRotation(mRot);
+
+		// if (Input::GetKeyDown())
 	}
 }

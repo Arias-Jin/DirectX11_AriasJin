@@ -25,5 +25,7 @@ namespace arias
 
 		void SetPath(const std::wstring& path) { mPath = path; }
 		const std::wstring& GetPath() const { return mPath; }
+
+		eResourceType GetType() { return mType; }
 	};
 }

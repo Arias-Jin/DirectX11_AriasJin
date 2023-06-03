@@ -63,24 +63,25 @@ namespace arias
 		float width = (float)atlas->GetWidth();
 		float height = (float)atlas->GetHeight();
 
-		int maxSpritesPerRow = (int)(width / size.x);
+		int colIndex = (int)(leftTop.x / size.x);
 		int rowIndex = 0;
+		int maxSpritesPerRow = (int)(width / size.x);
 
-		for (size_t i = 0; i < spriteLength; ++i)
+		for (size_t i = colIndex; i < colIndex + spriteLength; ++i)
 		{
 			Sprite sprite = {};
-			sprite.leftTop = Vector2((leftTop.x + (size.x * (float)(i % maxSpritesPerRow))) / width, (leftTop.y + (size.y * (float)rowIndex)) / height);
+			sprite.leftTop = Vector2(((size.x * (float)(i % maxSpritesPerRow))) / width, (leftTop.y + (size.y * (float)rowIndex)) / height);
 			sprite.size = Vector2(size.x / width, size.y / height);
 			sprite.offset = offset;
 			sprite.duration = duration;
 			sprite.atlasSize = Vector2(size.x / width, size.y / height);
 
-			mSpriteSheet.push_back(sprite);
-
 			if ((i + 1) % maxSpritesPerRow == 0)
 			{
 				rowIndex++;
 			}
+
+			mSpriteSheet.push_back(sprite);
 		}
 	}
 

@@ -68,34 +68,12 @@ namespace arias
 		pointTransform->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
 #pragma endregion
 
-#pragma region Player
+		// Player
 		Player* playerObject = object::Instantiate<Player>(eLayerType::Player, this);
-		SpriteRenderer* playerSprite = playerObject->AddComponent<SpriteRenderer>();
-		Animator* playerAnimator = playerObject->AddComponent<Animator>();
-		Collider2D* playerCollider = playerObject->AddComponent<Collider2D>();
-		Transform* playerTransform = playerObject->AddComponent<Transform>();
-		playerObject->AddComponent<PlayerScript>();
-		
-		std::shared_ptr<Mesh> playerMesh = ResourceManager::Find<Mesh>(L"RectMesh");
-		std::shared_ptr<Material> playerMaterial = ResourceManager::Find<Material>(L"PlayerMaterial");
-		std::shared_ptr<Texture> playerTexture = ResourceManager::Find<Texture>(L"PlayerTexture");
-		
-		playerSprite->SetMesh(playerMesh);
-		playerSprite->SetMaterial(playerMaterial);
-		
-		playerAnimator->Create(L"Idle", playerTexture, Vector2(0.0f, 2000.0f), Vector2(400.0f, 400.0f), Vector2::Zero, 302, 0.05f);
-		playerAnimator->Play(L"Idle", true);
-		
-		playerCollider->SetType(eColliderType::Circle); 
-		playerCollider->SetRadius(40.0f);
-		
-		playerTransform->SetPosition(Vector3(0.0f, 0.0f, 1.0f));
-		playerTransform->SetScale(Vector3(150.0f, 150.0f, 1.0f));
-#pragma endregion
 
 		//Particle
 		{
-			Player* particleObject = object::Instantiate<Player>(eLayerType::Particle, this);
+			GameObject* particleObject = object::Instantiate<GameObject>(eLayerType::Particle, this);
 			Transform* particleTransform = particleObject->AddComponent<Transform>();
 			particleObject->SetName(L"PARTICLE");
 			particleTransform->SetPosition(Vector3(0.0f, 0.0f, 100.0f));

@@ -43,7 +43,7 @@ namespace arias
 		{
 			if (events)
 			{
-				events->mCompleteEvent();
+				events->mCompleteEvent();	
 			}
 
 			if (mbLoop)
@@ -163,6 +163,11 @@ namespace arias
 		}
 
 		mActiveAnimation->Clear();
+	}
+
+	bool Animator::IsAnimationRunning(const std::wstring& name)
+	{
+		return (mActiveAnimation && mActiveAnimation->AnimationName() == name);
 	}
 	
 	std::function<void()>& Animator::GetStartEvent(const std::wstring& name)

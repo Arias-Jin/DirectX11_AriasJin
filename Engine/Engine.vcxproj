@@ -245,7 +245,9 @@
     <ClCompile Include="PaintShader.cpp" />
     <ClCompile Include="ParticleShader.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
-    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Player.cpp">
+      <DeploymentContent>true</DeploymentContent>
+    </ClCompile>
     <ClCompile Include="PlayerScript.cpp" />
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="Prefab.cpp" />

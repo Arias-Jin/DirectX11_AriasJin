@@ -33,7 +33,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
     UNREFERENCED_PARAMETER(lpCmdLine);
 
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-    // _CrtSetBreakAlloc(1074);
+    // _CrtSetBreakAlloc(4721);
 
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
     LoadStringW(hInstance, IDC_CLIENT, szWindowClass, MAX_LOADSTRING);
@@ -116,12 +116,13 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
       return FALSE;
    }
 
+   ShowWindow(hWnd, nCmdShow);
+   UpdateWindow(hWnd);
+
    application.SetWindow(hWnd, 1600, 900);
    application.Initialize();
    editor.Initialize();
 
-   ShowWindow(hWnd, nCmdShow);
-   UpdateWindow(hWnd);
    ShowCursor(false);
 
    return TRUE;

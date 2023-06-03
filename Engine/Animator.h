@@ -60,6 +60,8 @@ namespace arias
 		void Binds();
 		void Clear();
 
+		bool IsAnimationRunning(const std::wstring& name);
+
 		std::function<void()>& GetStartEvent(const std::wstring& name);
 		std::function<void()>& GetCompleteEvent(const std::wstring& name);
 		std::function<void()>& GetEndEvent(const std::wstring& name);

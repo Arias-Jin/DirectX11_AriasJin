@@ -30,6 +30,7 @@ namespace arias
 	void CameraScript::Update()
 	{
 		std::vector<GameObject*> objects = SceneManager::GetActiveScene()->GetGameObjects(eLayerType::Player);
+
 		bool isPlayerExist = false;
 
 		for (auto iter : objects)

@@ -1,5 +1,6 @@
 #include "MeshRenderer.h"
 
+#include "Animator.h"
 #include "Transform.h"
 
 #include "GameObject.h"
@@ -31,11 +32,22 @@ namespace arias
 	{
 		GetOwner()->GetComponent<Transform>()->SetConstantBuffer();
 
-		GetMaterial()->Bind();
 		GetMesh()->BindBuffer();
+		GetMaterial()->Bind();
+
+		Animator* animator = GetOwner()->GetComponent<Animator>();
+
+		if (animator)
+		{
+			animator->Binds();
+		}
 
 		GetMesh()->Render();
-
 		GetMaterial()->Clear();
+
+		if (animator)
+		{
+			animator->Clear();
+		}
 	}
 }

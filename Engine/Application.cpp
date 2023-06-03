@@ -57,16 +57,13 @@ namespace arias
 
     void Application::Render()
     {
-        Time::Render(mHdc);
-        // Input::Render(mHdc);
-
         mGraphicDevice->Clear();
         mGraphicDevice->AdjustViewPorts();
 
-        renderer::Render();
-        CollisionManager::Render();
+        // CollisionManager::Render();
 
-        // mGraphicDevice->Present();
+        Time::Render(mHdc);
+        renderer::Render();
     }
 
     void Application::Destroy()

@@ -71,7 +71,12 @@ namespace arias::graphics
 
 		// Get RenderTarget for SwapChain
 		hr = mSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)renderTarget.GetAddressOf());
-		mRenderTargetTexture->Create(renderTarget);
+
+		if (!mRenderTargetTexture->Create(renderTarget))
+		{
+			return;
+		}
+
 		ResourceManager::Insert<Texture>(L"RenderTargetTexture", mRenderTargetTexture);
 
 		D3D11_TEXTURE2D_DESC depthBuffer = {};
@@ -89,7 +94,11 @@ namespace arias::graphics
 		depthBuffer.MiscFlags = 0;
 
 		mDepthStencilBufferTexture = std::make_shared<Texture>();
-		mDepthStencilBufferTexture->Create(1600, 900, DXGI_FORMAT_D24_UNORM_S8_UINT, D3D11_BIND_FLAG::D3D11_BIND_DEPTH_STENCIL);
+
+		if (!mDepthStencilBufferTexture->Create(1600, 900, DXGI_FORMAT_D24_UNORM_S8_UINT, D3D11_BIND_FLAG::D3D11_BIND_DEPTH_STENCIL))
+		{
+			return;
+		}
 
 		RECT winRect;
 		GetClientRect(application.GetHwnd(), &winRect);
@@ -501,6 +510,6 @@ namespace arias::graphics
 	
 	void GraphicDevice_DX11::Present()
 	{
-		mSwapChain->Present(0, 0);
+		mSwapChain->Present(1, 0);
 	}
 }

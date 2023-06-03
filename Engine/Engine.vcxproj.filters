@@ -67,9 +67,6 @@
     <ClInclude Include="Script.h">
       <Filter>Component\Script</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerScript.h">
-      <Filter>Component\Script\Contents</Filter>
-    </ClInclude>
     <ClInclude Include="SceneManager.h">
       <Filter>Scene\Manager</Filter>
     </ClInclude>
@@ -158,6 +155,9 @@
       <Filter>Resource\Shader</Filter>
     </ClInclude>
     <ClInclude Include="ParticleShader.h" />
+    <ClInclude Include="PlayerScript.h">
+      <Filter>Component\Script\Contents\Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Math.cpp">
@@ -213,9 +213,6 @@
     </ClCompile>
     <ClCompile Include="Script.cpp">
       <Filter>Component\Script</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerScript.cpp">
-      <Filter>Component\Script\Contents</Filter>
     </ClCompile>
     <ClCompile Include="SceneManager.cpp">
       <Filter>Scene\Manager</Filter>
@@ -302,6 +299,9 @@
       <Filter>Resource\Shader</Filter>
     </ClCompile>
     <ClCompile Include="ParticleShader.cpp" />
+    <ClCompile Include="PlayerScript.cpp">
+      <Filter>Component\Script\Contents\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Common">
@@ -408,6 +408,9 @@
     </Filter>
     <Filter Include="Component\ParticleSystem">
       <UniqueIdentifier>{34926f39-d579-40e1-a96b-f0074007a364}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\Script\Contents\Player">
+      <UniqueIdentifier>{4b9b6ad7-fee0-48cf-ae6a-e39fa54cfece}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

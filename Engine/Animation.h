@@ -30,6 +30,7 @@ namespace arias
 		};
 
 		Animation();
+		Animation(const Animation&);
 		~Animation();
 
 	private:
@@ -53,7 +54,9 @@ namespace arias
 		void Clear();
 
 	public:
-		bool IsComplete() const { return mbComplete; }
+		void SetFalse() { mbComplete = false; }
+		bool IsComplete() { return mbComplete; }
+
 		std::wstring& AnimationName() { return mAnimationName; }
 	};
 }
